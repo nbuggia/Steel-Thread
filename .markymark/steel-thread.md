@@ -49,8 +49,6 @@ project/
     examples/
       good/              ← reference examples, write like these
       bad/               ← anti-patterns, avoid these
-    extensions/
-      dev-thread.md      ← coding extension, loaded when activated
 ```
 
 ---
@@ -399,10 +397,9 @@ customer should feel like the system just works.
 
 ## Foundational Skills
 
-These three skills are model-invoked primitives. They are never
-called directly by the customer — they are called automatically
-by other skills whenever the task calls for them. Everything in
-Steel Thread and its extensions builds on these three primitives.
+These skills are model-invoked primitives. They are never called
+directly by the customer — they are called automatically by other
+skills whenever the task calls for them.
 
 ---
 
@@ -414,8 +411,8 @@ based-on: mattpocock/skills grill-with-docs
 ```
 
 The grilling loop resolves ambiguity before any work begins.
-Used by /onboard, /prd, /spec, /tech-design, /grill-me, and
-any skill that needs deep understanding of intent before acting.
+Used by /onboard and any skill that needs deep understanding
+of intent before acting.
 
 **The loop:**
 - Ask one question at a time
@@ -435,79 +432,6 @@ context?" One-tap approval. Do not wait until the end.
 Shared understanding recorded in the relevant document.
 New vocabulary proposed for CONTEXT.md.
 Key decisions proposed as style or architecture records.
-
----
-
-### Simplicity
-
-```
-invoke: model
-based-on: DietrichGebert/ponytail, Claude Code /code-review
-```
-
-The simplicity discipline. Ensures the minimum viable approach
-is chosen before building, and the output is clean after building.
-Used by /tech-design, simplify-pre, simplify-post, and any skill
-that involves proposing or reviewing technical approaches.
-
-Two modes — the caller specifies which:
-
-**Pre-build mode**
-Run before proposing any technical approach or writing any code.
-Climb the decision ladder — stop at the first rung that holds:
-
-1. Does this already exist in the codebase? Reuse it.
-2. Does the standard library or platform handle this? Use it.
-3. Does an already-installed dependency solve it? Use it.
-4. Can this be one function or one line? Make it so.
-5. Only then: propose the minimum new code that works.
-
-Document the result as rationale:
-"We considered reusing X but it doesn't handle Y. We considered
-library Z but it conflicts with W. The minimum new approach is..."
-
-YAGNI check: does this need to exist at all? If it's not in the
-spec or explicitly requested, don't build it.
-
-Deliberate shortcuts get documented inline:
-```
-// simplicity: global lock — per-account if throughput > 1k req/s
-// simplicity: O(n²) scan — index if dataset exceeds ~1000 items
-```
-
-**Post-build mode**
-Run after implementation on recently changed files.
-Three parallel passes — each focused on one class of issue:
-
-Pass 1 — Reuse:
-- Hand-rolled logic that duplicates standard library functions
-- Custom helpers that already exist elsewhere in the codebase
-- Dependencies installed but unused
-- Reinvented patterns that should reference the existing one
-
-Pass 2 — Clarity:
-- Nested conditionals that should be guard clauses
-- Single-letter variables outside loop counters
-- Comments that explain what instead of why
-- Functions that do more than one thing
-- Implicit logic that should be explicit
-
-Pass 3 — Complexity:
-- Speculative abstractions for requirements that don't exist
-- Unnecessary dependencies for simple operations
-- Dead flexibility — parameters, options, or modes never used
-- Code that could be deleted without changing behavior
-
-Rules:
-- Never changes behavior — only how the code achieves it
-- Runs only on recently changed files unless explicitly told otherwise
-- One-line summary per finding: location, what to change, why
-- Applies fixes directly — does not just report
-- Runs a smoke test after fixes to verify behavior is preserved
-
-Output to customer after post-build:
-"Simplified [N] files — [brief summary of what changed]."
-Customer can review the diff if they want detail.
 
 ---
 
@@ -589,11 +513,6 @@ Never just flag problems. Always suggest the next move.
 The customer should finish reading the review knowing
 exactly what to do, not just what is wrong.
 
-**Dev extension:**
-The dev extension version of this skill adds correctness,
-security, architecture, and cross-feature integrity checks
-specific to software implementation. See dev-thread.md.
-
 ---
 
 ## Available Skills
@@ -611,13 +530,12 @@ Two skill types:
 
 ---
 
-### Foundational (model-invoked, used by all other skills)
+### Foundational (model-invoked)
 - `Grilling` — one-question-at-a-time interview loop, resolves
   ambiguity before any work begins. Used by /onboard and any
   skill that needs deep understanding before acting.
 - `Adversarial Review` — domain expert review after significant
-  outputs. Steelman first, then attack. BLOCK/CONCERNS/CLEAN
-  verdict. Used by /prd, /spec, /tech-design, and writing skills.
+  outputs. Steelman first, then attack. BLOCK/CONCERNS/CLEAN verdict.
 
 ---
 
@@ -626,52 +544,6 @@ Two skill types:
   interview. The entry point for every new project.
 - `/pickup` — show current pickup note, optionally adjust it.
   Optional — the system works without it.
-
----
-
-### Writing (user-invoked)
-- `/voice-check` — reads the document as the target audience
-  and flags anything that breaks the established tone or style
-- `/trim` — ruthless length editing without losing meaning
-- `/punch-up-opening` — rewrites the first paragraph to hook
-  the reader
-- `/audience-check` — reads as the target reader and flags
-  confusion points
-- `/simplify` — finds redundancy and over-explanation, fixes it
-
----
-
-### Coding (user-invoked)
-These skills support coding work in any project. For the full
-coding pipeline — PRD, specs, tech design, implementation plans,
-and bug tracking — see dev-thread.md.
-
-- `/grill-me` — relentless interview about a plan or design
-  before any code is written. Walks every branch of the
-  decision tree. Recommended answer provided for each question.
-- `/rubber-duck` — you explain the problem, Claude asks
-  clarifying questions before suggesting anything
-- `/find-the-bug` — reviews a file for issues without
-  making any changes
-- `/tdd` — red-green-refactor loop, one vertical slice at a time
-- `/diagnose-bug` — root cause loop: reproduce → minimise →
-  hypothesise → instrument → fix → regression test
-
-### Coding (model-invoked)
-These run automatically — the customer never invokes them directly.
-Full definitions in dev-thread.md.
-
-- `simplify-pre` — lazy senior dev discipline before any
-  implementation. Climbs the decision ladder, identifies minimum
-  viable approach, documents deliberate shortcuts. Based on
-  DietrichGebert/ponytail.
-- `simplify-post` — three parallel agents after implementation:
-  reuse, clarity, complexity. Finds and fixes issues in recently
-  changed files. Based on Claude Code /code-review.
-- `adversarial-review` (dev) — staff engineer review across the
-  full phase diff when all phase tasks are complete. Correctness,
-  security, architecture, cross-feature integrity.
-  BLOCK/CONCERNS/CLEAN verdict.
 
 ---
 
