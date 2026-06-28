@@ -5,7 +5,7 @@ invoke: model
 based-on: mattpocock/skills grill-with-docs
 ---
 
-The grilling loop resolves ambiguity before any work begins. Used by /onboard, /prd, /spec, /tech-design, /grill-me, and any skill that needs deep understanding of intent before acting.
+The grilling loop resolves ambiguity before any work begins. Used by /onboard and any skill that needs deep understanding of intent before acting.
 
 ## The loop
 

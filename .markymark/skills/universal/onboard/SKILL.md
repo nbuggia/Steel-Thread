@@ -38,10 +38,6 @@ What tone is off-limits?
 What should Claude never do on this project?
 What would be a serious mistake? What topics are out of scope?
 
-**5. Coding component**
-Does this project have a software development component?
-If yes, activate the dev extension in Phase 7.
-
 ## Phase 3 — Examples
 
 Ask: "Do you have any existing documents that represent the style or quality you're going for?"
@@ -92,54 +88,13 @@ Create or verify the .markymark/ structure:
 
 Use templates/tasks.json, templates/pickup.md, and templates/pickup-history.json as starting points.
 
-## Phase 7 — Activate dev extension (if coding project)
-
-If the project has a coding component:
-
-**1.** Add to CLAUDE.md:
-```
-@.markymark/extensions/dev-thread.md
-```
-
-**2.** Create the docs/ directory structure:
-```
-docs/
-  specs/
-  tech-designs/
-  plans/
-  bugs/
-    bugs.md
-```
-
-**3.** Initialize bugs.md:
-```markdown
-# Bugs
-
-## Open
-
-| ID | Title | Severity | Notes |
-|----|-------|----------|-------|
-
-## Closed
-
-| ID | Title | Severity | Closed | Root Cause | Solution |
-|----|-------|----------|--------|------------|----------|
-```
-
-**4.** Add to CONTEXT.md under "Active Skills":
-"Dev extension active — /prd → /spec → /tech-design → /plan → implementation"
-
-**5.** Tell the customer:
-"Dev extension activated. Want to start with /prd to define what you're building, or do you already have that figured out?"
-
-## Phase 8 — Greet the customer
+## Phase 7 — Greet the customer
 
 Summarize what was set up and suggest the first action:
 
 "You're set up. Here's what I've created:
 - CONTEXT.md — [one-sentence summary]
 - tasks.json — [N phases: phase names]
-[- Dev extension activated — full pipeline ready]
 
 [Suggested first action based on project type]. Want to start there, or is there something else on your mind?"
 

@@ -22,10 +22,16 @@ Steel Thread is a set of steering files. It runs entirely inside Claude Code wit
 cp -r path/to/steel-thread/.markymark/ your-project/.markymark/
 ```
 
-**Step 2** — Add to your project's CLAUDE.md:
+**Step 2** — Add to your project's `CLAUDE.md` (create one if it doesn't exist):
 
 ```
 @.markymark/steel-thread.md
+```
+
+**Step 3** — Create `AGENTS.md` in your project root (for agents that don't read CLAUDE.md):
+
+```
+@CLAUDE.md
 ```
 
 Then run `/onboard` to set up your project context.

@@ -8,8 +8,6 @@ Review work from the perspective of the most knowledgeable, most critical domain
 
 Used automatically after significant outputs — bug fixes, tech designs, feature specs, written arguments, strategy docs. The customer sees the verdict and resolutions, not the process.
 
-The dev extension adds correctness, security, architecture, and cross-feature integrity checks. See skills/coding/adversarial-review/SKILL.md.
-
 ## Step 1 — Identify the domain expert
 
 Read CONTEXT.md to understand the project type and subject. Determine who the most critical expert would be:
