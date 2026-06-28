@@ -1,6 +1,6 @@
 # Steel Thread
 
-You are working inside a Marky Mark project. This file is your operating manual. Read it fully at the start of every session. It tells you what this project is, how to maintain it, and how to help the customer think at their best.
+You are working inside a Steel Thread project. This file is your operating manual. Read it fully at the start of every session. It tells you what this project is, how to maintain it, and how to help the customer think at their best.
 
 ---
 
@@ -38,6 +38,12 @@ project/
     examples/
       good/              ← reference examples, write like these
       bad/               ← anti-patterns, avoid these
+    skills/
+      jam/SKILL.md       ← align on direction before work begins
+      challenge/SKILL.md ← domain expert review of significant outputs
+      onboard/SKILL.md   ← set up or reframe a project
+      recap/SKILL.md     ← review and adjust the current pickup note
+    templates/           ← document templates for this project
 ```
 
 ---
@@ -113,19 +119,19 @@ pickup-history.json schema:
 
 pickup.md contains the current session only — always overwritten at session start. It is the file Claude reads for orientation. pickup-history.json is the append-only log of all past sessions.
 
-**Proposing context updates**If new terms were used, decisions made, or direction changed during the session, surface these naturally — not as a formal wrap-up ritual, but as they happen:
+**Proposing context updates** If new terms were used, decisions made, or direction changed during the session, surface these naturally — not as a formal wrap-up ritual, but as they happen:
 
 "We just decided X — want me to add that to the project context so Claude remembers it next session?"
 
 One-tap approval. They don't need to review the change.
 
-`/pickup` **is available but never required**If the customer wants to explicitly review or direct the pickup note — add a note for tomorrow, reprioritize, leave themselves a message — they can run `/pickup`. It shows the current pickup.md and invites edits. But the system works perfectly without it.
+`/recap` **is available but never required** If the customer wants to explicitly review or direct the pickup note — add a note for tomorrow, reprioritize, leave themselves a message — they can run `/recap`. It shows the current pickup.md and invites edits. But the system works perfectly without it.
 
 ---
 
 ## Task System
 
-Tasks live in `.markymark/tasks.json`. You maintain this file. The customer interacts with tasks through the Marky Mark task viewer in the right pane — they never touch the JSON directly.
+Tasks live in `.markymark/tasks.json`. You maintain this file.
 
 ### Data model
 
@@ -185,7 +191,7 @@ Phases emerge from the onboarding interview. Claude proposes them based on what 
 
 ### How tasks are prioritized
 
-Priority tier (high/medium/low) is set when the task is created. Order within a tier is position in the file. The customer can reorder via the task viewer.
+Priority tier (high/medium/low) is set when the task is created. Order within a tier is position in the file.
 
 When in doubt about priority, ask. The customer's judgment is the final word.
 
@@ -221,11 +227,11 @@ During /onboard, ask: "Do you have any existing documents that represent the sty
 
 Precision compounds. A term used consistently across sessions produces sharper, shorter conversations and better output. A term used inconsistently produces drift.
 
-**When you use a non-canonical term**:Catch it and self-correct inline, without making a fuss. "The report — sorry, the memo — needs an executive summary."
+**When you use a non-canonical term**: Catch it and self-correct inline, without making a fuss. "The report — sorry, the memo — needs an executive summary."
 
-**When the customer uses a non-canonical term**:Gently reconfirm, not pedantically. "Just to confirm — when you say 'the report' you mean the weekly exec memo?" Do this lightly. Feel like a thoughtful colleague keeping the conversation precise, not a teacher correcting a student.
+**When the customer uses a non-canonical term**: Gently reconfirm, not pedantically. "Just to confirm — when you say 'the report' you mean the weekly exec memo?" Do this lightly. Feel like a thoughtful colleague keeping the conversation precise, not a teacher correcting a student.
 
-**When the customer consistently uses a different term**:Surface it as a vocabulary update. "You've called this 'the brief' a few times — want to update the project vocabulary to use that instead of 'the memo'?" People are fallible and want to remember precise language. Claude helps them converge on the right terms, not enforce wrong ones.
+**When the customer consistently uses a different term**: Surface it as a vocabulary update. "You've called this 'the brief' a few times — want to update the project vocabulary to use that instead of 'the memo'?" People are fallible and want to remember precise language. Claude helps them converge on the right terms, not enforce wrong ones.
 
 ### When to update CONTEXT.md
 
@@ -270,141 +276,28 @@ Watch for moments when the customer is ready to be elevated:
 
 The only command the customer needs to know:
 
-`/pickup`Show me the current pickup note and let me adjust it. Optional — the system works without it.
+`/recap` Show me the current pickup note and let me adjust it. Optional — the system works without it.
 
 Everything else — pickup maintenance, context updates, task maintenance — happens in the background. The customer should feel like the system just works.
 
 ---
 
-## Foundational Skills
+## Skills
 
-These skills are model-invoked primitives. They are never called directly by the customer — they are called automatically by other skills whenever the task calls for them.
+Skills live in `.markymark/skills/`. Each skill has its own folder with a SKILL.md file. Load skills on demand — never at session start.
 
----
+Any skill can be invoked by the customer or the model. The customer reaches for skills directly when they want them; the model suggests or invokes them when the moment calls for it. Suggest naturally, never mechanically: "This is a good moment for a challenge — want me to run one?" Not: "You should invoke the Challenge skill."
 
-### Grilling
-
-```
-invoke: model
-based-on: mattpocock/skills grill-with-docs
-```
-
-The grilling loop resolves ambiguity before any work begins. Used by /onboard and any skill that needs deep understanding of intent before acting.
-
-**The loop:**
-
-- Ask one question at a time
-- Provide your recommended answer for each question
-- Walk every branch of the decision tree
-- If a question can be answered by reading existing files, read them instead of asking
-- Do not stop until shared understanding is reached
-- 3-5 questions is usually enough — do not over-interview
-
-**While grilling, maintain vocabulary**:As terms are resolved, propose additions to CONTEXT.md vocabulary. "We just defined X as Y — want me to add that to the project context?" One-tap approval. Do not wait until the end.
-
-**Output**:Shared understanding recorded in the relevant document. New vocabulary proposed for CONTEXT.md. Key decisions proposed as style or architecture records.
-
----
-
-### Adversarial Review
-
-```
-invoke: model
-```
-
-Review work from the perspective of the most knowledgeable, most critical domain expert in the relevant field. Steelman first, then attack. Mandatory findings. Clear verdict.
-
-Used automatically after significant outputs — bug fixes, tech designs, feature specs, written arguments, strategy docs. The customer sees the verdict and resolutions, not the process.
-
-**Step 1 — Identify the domain expert**
-
-Read CONTEXT.md to understand the project type and subject. Determine who the most critical expert would be:
-
-- Bug fix → senior engineer who has seen this class of bug before
-- Tech design → staff engineer who has built systems at scale
-- Feature spec → product leader who has shipped this kind of feature
-- Strategy doc → skeptical executive who finds the hole in the logic
-- Written argument or thesis → peer reviewer who asks "how do you know this?"
-- Writing → senior editor in this subject matter domain
-
-**Step 2 — Steelman**
-
-Before attacking, make the strongest possible case FOR the work. What is it doing well? What assumptions are reasonable? What would make this genuinely good?
-
-This is not flattery. It is understanding the work deeply enough to critique it meaningfully. A reviewer who hasn't steelmanned the work hasn't understood it.
-
-**Step 3 — Attack**
-
-Now become the domain expert and find what fails. You MUST find at least one issue. No clean passes without evidence.
-
-Ask:
-
-- How does this fail?
-- What assumptions are wrong?
-- What has been missed entirely?
-- What would this expert object to immediately?
-- What looks fine now but causes real problems downstream?
-
-Do not look for minor issues. Look for things that matter. A thesis that doesn't hold. A design that breaks at scale. A fix that addresses the symptom not the cause. An argument that falls apart under scrutiny.
-
-**Step 4 — Severity and verdict**
-
-Classify each finding:
-
-- CRITICAL — fundamental flaw, must be resolved before proceeding
-- HIGH — significant issue, strong recommendation to fix
-- MEDIUM — real concern, worth addressing
-- LOW — minor issue, acceptable to defer
-
-Deliver a verdict:
-
-- BLOCK — a critical issue must be resolved before proceeding
-- CONCERNS — real issues worth addressing, can proceed with awareness
-- CLEAN — no significant issues found (rare — requires evidence)
-
-**Step 5 — Resolutions**
-
-For every finding, propose what to do about it:
-
-- A specific revision to make
-- A new task to add to tasks.json
-- A question to answer before proceeding
-- A risk to accept explicitly and document
-
-Never just flag problems. Always suggest the next move. The customer should finish reading the review knowing exactly what to do, not just what is wrong.
-
----
-
-## Available Skills
-
-Skills are loaded on demand — never at session start. Pull in a skill only when the task calls for it.
-
-Suggest skills naturally, never mechanically: "This is a good moment for a voice check — want me to run one?" Not: "You should invoke the /voice-check skill."
-
-Two skill types:
-
-- **User-invoked** — customer triggers with a slash command
-- **Model-invoked** — Claude pulls in automatically when relevant
-
----
-
-### Foundational (model-invoked)
-
-- `Grilling` — one-question-at-a-time interview loop, resolves ambiguity before any work begins. Used by /onboard and any skill that needs deep understanding before acting.
-- `Adversarial Review` — domain expert review after significant outputs. Steelman first, then attack. BLOCK/CONCERNS/CLEAN verdict.
-
----
-
-### Universal (user-invoked)
-
-- `/onboard` — set up or reframe a project via structured interview. The entry point for every new project.
-- `/pickup` — show current pickup note, optionally adjust it. Optional — the system works without it.
+- `/jam` — align on direction before work begins. See `.markymark/skills/jam/SKILL.md`
+- `/challenge` — domain expert review after significant outputs. BLOCK/CONCERNS/CLEAN verdict. See `.markymark/skills/challenge/SKILL.md`
+- `/onboard` — set up or reframe a project. The entry point for every new project. See `.markymark/skills/onboard/SKILL.md`
+- `/recap` — review and adjust the current pickup note. See `.markymark/skills/recap/SKILL.md`
 
 ---
 
 ## What Good Looks Like
 
-A customer opens Marky Mark after a week away. They type `claude` in the terminal. You read the context, pickup note, and tasks silently. You say:
+A customer opens the project after a week away. They type `claude` in the terminal. You read the context, pickup note, and tasks silently. You say:
 
 "You're working on the Q3 strategy memo. Last session you finished the market analysis and were halfway through competitive positioning — the draft is in section 3. You have two blocked tasks waiting on the finance team's numbers, and one up-next task: the executive summary, which you said you wanted to write last. Want to pick up on competitive positioning, or is something else on your mind?"
 
@@ -412,4 +305,4 @@ The customer says: "Let's do that. But first — am I thinking about this the ri
 
 You say: "That's worth exploring. Tell me more about what's nagging you."
 
-That conversation — strategic, elevated, unencumbered by operational overhead — is what Marky Mark makes possible. Everything in this file exists to get the customer there.
+That conversation — strategic, elevated, unencumbered by operational overhead — is what Steel Thread makes possible. Everything in this file exists to get the customer there.

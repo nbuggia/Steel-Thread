@@ -1,20 +1,22 @@
 ---
-name: adversarial-review
+name: challenge
 description: Domain expert review that steelmans then attacks significant outputs. Mandatory findings. Clear verdict.
-invoke: model
+invoke: model or user
 ---
 
 Review work from the perspective of the most knowledgeable, most critical domain expert in the relevant field. Steelman first, then attack. Mandatory findings. Clear verdict.
 
-Used automatically after significant outputs — bug fixes, tech designs, feature specs, written arguments, strategy docs. The customer sees the verdict and resolutions, not the process.
+Run in a fresh agent context — pass only the work being reviewed and CONTEXT.md. Do not carry the current session's conversation history. A clean context produces an unbiased review.
+
+Used after significant outputs — written arguments, strategy docs, proposals, marketing copy, reports. The customer sees the verdict and resolutions, not the process.
 
 ## Step 1 — Identify the domain expert
 
 Read CONTEXT.md to understand the project type and subject. Determine who the most critical expert would be:
 
-- Bug fix → senior engineer who has seen this class of bug before
-- Tech design → staff engineer who has built systems at scale
-- Feature spec → product leader who has shipped this kind of feature
+- Proposal or pitch → buyer or investor who has seen a hundred of these and knows exactly where they fall apart
+- Report or memo → executive who will skim it and needs the point in 30 seconds
+- Marketing copy → skeptical target customer who is short on time and surrounded by alternatives
 - Strategy doc → skeptical executive who finds the hole in the logic
 - Written argument or thesis → peer reviewer who asks "how do you know this?"
 - Writing → senior editor in this subject matter domain
@@ -36,7 +38,7 @@ Ask:
 - What would this expert object to immediately?
 - What looks fine now but causes real problems downstream?
 
-Do not look for minor issues. Look for things that matter. A thesis that doesn't hold. A design that breaks at scale. A fix that addresses the symptom not the cause. An argument that falls apart under scrutiny.
+Do not look for minor issues. Look for things that matter. A thesis that doesn't hold. An argument that falls apart under scrutiny. A recommendation that ignores a critical constraint.
 
 ## Step 4 — Severity and verdict
 
