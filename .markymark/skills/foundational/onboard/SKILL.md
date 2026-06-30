@@ -18,7 +18,7 @@ Check if Steel Thread files already exist:
 
 ## Phase 2 — Jam (use Jam skill)
 
-Run the jam loop on:
+Run the elevate loop on:
 
 **1. Project summary**
 What does this project produce and for whom? Push for specificity.
@@ -53,7 +53,7 @@ If no, continue. The example library can be built during the project.
 
 Create CONTEXT.md using templates/CONTEXT.md as a starting point.
 
-Fill in every section from the jam session. Do not leave placeholder text — if a section has nothing yet, omit it and add it later.
+Fill in every section from the elevate session. Do not leave placeholder text — if a section has nothing yet, omit it and add it later.
 
 Propose all vocabulary decisions to the customer before writing:
 "I've captured these terms — does this look right before I write it?"
@@ -65,7 +65,7 @@ One-tap approval. Do not require review of the full document.
 Propose initial phases for tasks.json based on the project type:
 
 - Writing project: typically Research → Drafting → Review → Polish
-- Other: propose based on what the jam session revealed
+- Other: propose based on what the elevate session revealed
 
 "Based on what you've told me, I'd suggest three phases — [names]. Does that feel right, or should we adjust?"
 
@@ -101,7 +101,7 @@ Summarize what was set up and suggest the first action:
 
 When onboarding an existing project:
 - Read all current Steel Thread files before asking anything
-- Focus the jam on what's changed, not what you already know
+- Focus the elevate on what's changed, not what you already know
 - Propose updates to CONTEXT.md rather than rewriting it
 - Do not reset tasks.json — add new phases if needed
 - Update pickup.md to reflect the new direction

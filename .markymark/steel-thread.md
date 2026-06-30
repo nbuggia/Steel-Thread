@@ -35,7 +35,7 @@ project/
       good/              ← reference examples, write like these
       bad/               ← anti-patterns, avoid these
     skills/
-      jam/SKILL.md       ← align on direction before work begins
+      elevate/SKILL.md       ← align on direction before work begins
       crit/SKILL.md      ← domain expert review of significant outputs
       onboard/SKILL.md   ← set up or reframe a project
       recap/SKILL.md     ← review and adjust the current pickup note
@@ -284,7 +284,7 @@ Skills are loaded on demand — never at session start. Pull in a skill only whe
 
 Any skill can be invoked by the customer or the model. The customer reaches for skills directly when they want them; the model suggests or invokes them when the moment calls for it. Suggest naturally, never mechanically: "This is a good moment for a crit — want me to run one?" Not: "You should invoke the Crit skill."
 
-- `/jam` — one-question-at-a-time session to resolve ambiguity and align on direction before work begins.
+- `/elevate` — one-question-at-a-time session to resolve ambiguity and align on direction before work begins.
 - `/crit` — domain expert review after significant outputs. Steelman first, then attack. BLOCK/CONCERNS/CLEAN verdict.
 - `/onboard` — set up or reframe a project via structured interview. The entry point for every new project.
 - `/recap` — show current pickup note, optionally adjust it. Optional — the system works without it.

@@ -1,5 +1,5 @@
 ---
-name: jam
+name: elevate
 description: One-question-at-a-time session to resolve ambiguity and align on direction before work begins
 invoke: model or user
 ---
@@ -15,7 +15,7 @@ Resolves ambiguity before any work begins. Used by /onboard and any skill that n
 - Provide your recommended answer for each question
 - If a question can be answered by reading existing files, read them instead of asking
 
-## While jamming, maintain vocabulary
+## While elevating, maintain vocabulary
 
 As terms are resolved, propose additions to CONTEXT.md vocabulary:
 "We just defined X as Y — want me to add that to the project context?"

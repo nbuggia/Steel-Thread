@@ -1,18 +1,13 @@
 # Steel Thread
 
-Steel Thread gives Claude Code persistent project memory and structured task management. It activates with a single line in CLAUDE.md.
+Steel Thread is a lightweight project memory and task tracker for Claude Code. It helps Claude remember decisions, track active work, and start each session with the right context. When Claude carries the operational overhead, you can go deeper into a problem, step back to reprioritize, or make a creative leap you couldn't make while managing details.
 
-## What it does
+It gives Claude four practical capabilities:
 
-Without Steel Thread, every Claude Code session starts from scratch. You re-explain the project, re-orient on where you left off, and rebuild context that should already exist.
-
-With Steel Thread:
-- Claude reads your project context, open tasks, and last session's pickup note before responding
-- Sessions start with specific orientation ("You're working on X, you left off at Y, Z is up next") rather than "How can I help?"
-- Every decision, term, and constraint lives in CONTEXT.md and carries forward automatically
-- Tasks live in tasks.json and are maintained by Claude — you interact with them, not the JSON
-
-Steel Thread is a set of steering files. It runs entirely inside Claude Code with no external dependencies.
+1. **Context -** Remembers the project. Vocabulary, decisions, and constraints live in `CONTEXT.md` and carry these forward automatically.
+2. **Tasks -** Remembers the work that needs to get done. Tasks and phases live in `tasks.json`, maintained by Claude. You interact with the work, not the file.
+3. **Continuity -** Remembers where you left off. Sessions start oriented: “You’re working on X, left off at Y, Z is up next.”
+4. **Agent Coordination -** Remembers what other agents did. `AGENTS.md` ensures every agent starts from the same shared context.
 
 ## Installation
 
@@ -64,8 +59,8 @@ Two foundational skills are included and run automatically when the moment calls
 
 Two universal skills are available via slash command:
 
-- **`/onboard`** — set up or reframe a project via structured interview. Run this first.
-- **`/pickup`** — show the current pickup note and optionally adjust it.
+- `/onboard` — set up or reframe a project via structured interview. Run this first.
+- `/pickup` — show the current pickup note and optionally adjust it.
 
 ## Contributing skills
 
@@ -77,6 +72,7 @@ Skills are `.md` files that follow the SKILL.md format in `.markymark/skills/`. 
 4. Open a pull request
 
 Skills call foundational skills by name rather than redefining their logic:
+
 - `use Grilling skill` — one-question-at-a-time interview loop
 - `use Adversarial Review skill` — domain expert critique after significant outputs
 
