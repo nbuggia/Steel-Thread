@@ -20,6 +20,6 @@
 
 [One sentence orienting the next session — specific enough that a cold read gives immediate context]
 
-## Proposed Context Updates
+## Proposed Updates
 
-[Terms or decisions from this session worth proposing for CONTEXT.md]
+[Objective changes, vocabulary, or decisions from this session worth proposing for OBJECTIVE.md, CONTEXT.md, or DECISIONS.md]

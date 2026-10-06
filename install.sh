@@ -5,13 +5,19 @@
 #
 # Safe to re-run. Framework files (the manual, templates, and skills) are
 # updated. If you edited one since it was installed, you are asked before it
-# is overwritten. Project state (CONTEXT.md, tasks.json, pickup.md,
-# pickup-history.json, changelog.json, examples/) is never touched.
+# is overwritten. Only .steel-thread/framework/ and the skill folders are
+# written; your project state elsewhere in .steel-thread/ is never touched.
 
 set -eu
 
-SRC=$(cd "$(dirname "$0")" && pwd)
+# Everything under project/ is what gets installed into your project.
+SRC=$(cd "$(dirname "$0")/project" && pwd)
 DEST=$(cd "${1:-.}" && pwd)
+
+if [ "$DEST" = "$SRC" ]; then
+  echo "Refusing to install into Steel Thread's own project/ folder." >&2
+  exit 1
+fi
 
 BEGIN='<!-- steel-thread:start -->'
 END='<!-- steel-thread:end -->'
@@ -21,7 +27,7 @@ SKILL_DIRS=".claude/skills .agents/skills .kiro/skills"
 
 # Fingerprints of what was last installed, used to tell local edits
 # apart from files that are simply out of date.
-MANIFEST="$DEST/.steel-thread/install-manifest"
+MANIFEST="$DEST/.steel-thread/framework/install-manifest"
 
 # Fingerprint a file or folder: names and contents of every file in it.
 fingerprint() {
@@ -83,11 +89,10 @@ install_item() {
 echo "Installing Steel Thread into $DEST"
 
 # 1. Framework files
-mkdir -p "$DEST/.steel-thread/examples/good" "$DEST/.steel-thread/examples/bad"
-if [ "$SRC" != "$DEST" ]; then
-  install_item "$SRC/.steel-thread/steel-thread.md" .steel-thread/steel-thread.md
-  install_item "$SRC/.steel-thread/templates" .steel-thread/templates
-fi
+mkdir -p "$DEST/.steel-thread/framework" "$DEST/.steel-thread/history" \
+  "$DEST/.steel-thread/examples/good" "$DEST/.steel-thread/examples/bad"
+install_item "$SRC/.steel-thread/framework/steel-thread.md" .steel-thread/framework/steel-thread.md
+install_item "$SRC/.steel-thread/framework/templates" .steel-thread/framework/templates
 
 # 2. Skills, one identical copy per agent
 for dir in $SKILL_DIRS; do
@@ -96,14 +101,9 @@ for dir in $SKILL_DIRS; do
   done
 done
 
-# 3. AGENTS.md — the entry point every agent reads
-BLOCK="$BEGIN
-## Steel Thread
-
-This project uses Steel Thread for persistent project memory and task management.
-
-At the start of every session, before responding, read \`.steel-thread/steel-thread.md\` in full and follow it. It is your operating manual for this project. If \`CONTEXT.md\` does not exist yet, suggest running the onboard skill.
-$END"
+# 3. AGENTS.md — the entry point every agent reads. The Steel Thread block
+#    from project/AGENTS.md is added or replaced; the rest is left alone.
+BLOCK=$(cat "$SRC/AGENTS.md")
 
 AGENTS="$DEST/AGENTS.md"
 if [ ! -f "$AGENTS" ]; then
@@ -120,13 +120,15 @@ else
   printf '\n%s\n' "$BLOCK" >> "$AGENTS"
 fi
 
-# 4. CLAUDE.md — Claude Code skips AGENTS.md when CLAUDE.md exists, so import it
+# 4. CLAUDE.md — Claude Code skips AGENTS.md when CLAUDE.md exists, so the
+#    import line from project/CLAUDE.md goes at the top.
+IMPORT=$(cat "$SRC/CLAUDE.md")
 CLAUDE="$DEST/CLAUDE.md"
 if [ ! -f "$CLAUDE" ]; then
-  printf '@AGENTS.md\n' > "$CLAUDE"
-elif ! grep -qxF '@AGENTS.md' "$CLAUDE"; then
+  printf '%s\n' "$IMPORT" > "$CLAUDE"
+elif ! grep -qxF "$IMPORT" "$CLAUDE"; then
   tmp=$(mktemp)
-  { printf '@AGENTS.md\n\n'; cat "$CLAUDE"; } > "$tmp"
+  { printf '%s\n\n' "$IMPORT"; cat "$CLAUDE"; } > "$tmp"
   mv "$tmp" "$CLAUDE"
 fi
 

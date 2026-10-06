@@ -1,0 +1,6 @@
+{
+  "claudeMdExcludes": [
+    "**/project/AGENTS.md",
+    "**/project/CLAUDE.md"
+  ]
+}

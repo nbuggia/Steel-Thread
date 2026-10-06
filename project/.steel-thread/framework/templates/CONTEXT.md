@@ -1,9 +1,5 @@
 # \[Project Name\]
 
-## Project Summary
-
-\[One paragraph: what this project produces and for whom. Be specific. "A technical blog targeting senior engineers" not "a website about technology."\]
-
 ## Vocabulary
 
 \[Defined terms used in this project. Use these precisely — do not use synonyms.\]
@@ -12,9 +8,9 @@
 | --- | --- | --- |
 |  |  |  |
 
-## Style Decisions
+## Style
 
-\[Hard-to-reverse choices about voice, audience, format, and constraints. What would surprise someone joining this project without context.\]
+\[Rules about voice, audience, format, and length. What would surprise someone joining this project without context. Cite the decision behind a rule when there is one: "Voice: first person (D-004)."\]
 
 **Voice:** \[Active/passive, formal/conversational, first/third person\] 
 

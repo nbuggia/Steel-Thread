@@ -17,12 +17,12 @@ Resolves ambiguity before any work begins. Used by the onboard skill and any ski
 
 ## While elevating, maintain vocabulary
 
-As terms are resolved, propose additions to CONTEXT.md vocabulary:
+As terms are resolved, propose additions to the vocabulary in .steel-thread/CONTEXT.md:
 "We just defined X as Y — want me to add that to the project context?"
 One-tap approval. Do not wait until the end.
 
 ## Output
 
 Shared understanding recorded in the relevant document.
-New vocabulary proposed for CONTEXT.md.
-Key decisions proposed as style or architecture records.
+New vocabulary proposed for .steel-thread/CONTEXT.md.
+Key decisions proposed as entries in .steel-thread/DECISIONS.md.
