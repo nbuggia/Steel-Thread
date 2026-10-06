@@ -34,7 +34,7 @@ Rules:
 
 ## Phase 2: Generate Review Package
 
-You are drafting a technical design document (TDD) for a proposed change to the application. You will be given a feature description or problem statement. Produce a complete design doc using the template ".markymark/templates/create-plan-template.md" and store the tech design in the "docs/tech-designs" folder (create the folder if it doesn't exist). Do not skip sections; if a section is genuinely not applicable, state why in one line rather than omitting it. Write for a skeptical reviewer who will approve or block this design. Make claims falsifiable (numbers, not adjectives). Do not present the chosen design as the only option considered.
+You are drafting a technical design document (TDD) for a proposed change to the application. You will be given a feature description or problem statement. Produce a complete design doc using the template "skills/coding/templates/create-plan-template.md" and store the tech design in the "docs/tech-designs" folder (create the folder if it doesn't exist). Do not skip sections; if a section is genuinely not applicable, state why in one line rather than omitting it. Write for a skeptical reviewer who will approve or block this design. Make claims falsifiable (numbers, not adjectives). Do not present the chosen design as the only option considered.
 
 
 ---

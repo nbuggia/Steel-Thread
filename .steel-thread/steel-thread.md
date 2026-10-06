@@ -22,10 +22,10 @@ These files together form the Steel Thread — the continuous through-line of th
 
 ```
 project/
-  CLAUDE.md              ← entry point, imports steel-thread.md
-  AGENTS.md              ← pointer to CLAUDE.md for other agents
+  AGENTS.md              ← entry point for every agent, points here
+  CLAUDE.md              ← imports AGENTS.md (Claude Code only)
   CONTEXT.md             ← what this project is, vocabulary, decisions
-  .markymark/
+  .steel-thread/
     steel-thread.md      ← your operating manual (this file)
     tasks.json           ← what needs to happen, phases and priority
     pickup.md            ← current session only, always overwritten
@@ -34,13 +34,11 @@ project/
     examples/
       good/              ← reference examples, write like these
       bad/               ← anti-patterns, avoid these
-    skills/
-      elevate/SKILL.md       ← align on direction before work begins
-      crit/SKILL.md      ← domain expert review of significant outputs
-      onboard/SKILL.md   ← set up or reframe a project
-      recap/SKILL.md     ← review and adjust the current pickup note
-    templates/           ← document templates for this project
+    templates/           ← starter files used by onboard
+    install-manifest     ← written by install.sh, never edit
 ```
+
+Skills are installed separately, into whichever skills folder each agent reads: `.claude/skills/` (Claude Code), `.agents/skills/` (Codex CLI), `.kiro/skills/` (Kiro CLI). The copies are identical.
 
 ## Session Start Protocol
 
@@ -48,9 +46,9 @@ Run this silently at the start of every session, before responding to the custom
 
 **1. Read CONTEXT.md** Absorb the project summary, vocabulary, and style decisions. You must use this vocabulary throughout the session. Do not use synonyms for defined terms — precision is the point.
 
-**2. Read .markymark/pickup.md if it exists** Understand where the customer left off: what was accomplished, what is in flight, what is blocked, what was deferred.
+**2. Read .steel-thread/pickup.md if it exists** Understand where the customer left off: what was accomplished, what is in flight, what is blocked, what was deferred.
 
-**3. Read .markymark/tasks.json** Know the current task state: what is up next, what is blocked, what is in flight. Form a view on what the customer should work on next.
+**3. Read .steel-thread/tasks.json** Know the current task state: what is up next, what is blocked, what is in flight. Form a view on what the customer should work on next.
 
 **4. Scan changelog.json for recent activity** If significant changes happened since the last session, note them. They may affect priorities.
 
@@ -84,11 +82,7 @@ The pickup note is always current. The customer should be able to close the term
 
 Do not duplicate content already in CONTEXT.md or the changelog. Reference those files by path instead.
 
-**When the customer goes quiet** If the customer has been inactive for a few minutes, offer a brief state summary. Keep it to three sentences. Do not make them feel like they need to do anything:
-
-"You've been quiet for a bit — here's where you'd pick up: \[what's in flight\], \[what's up next\]. If you're done for now, everything is saved. Want to keep going or change anything before you go?"
-
-**Session history** At the start of each new session, append the previous pickup.md content to .markymark/pickup-history.json as a new session entry before overwriting pickup.md with the current session state.
+**Session history** At the start of each new session, append the previous pickup.md content to .steel-thread/pickup-history.json as a new session entry before overwriting pickup.md with the current session state.
 
 pickup-history.json schema:
 
@@ -109,21 +103,21 @@ pickup-history.json schema:
 }
 ```
 
-pickup.md contains the current session only — always overwritten at session start. It is the file Claude reads for orientation. pickup-history.json is the append-only log of all past sessions.
+pickup.md contains the current session only — always overwritten at session start. It is the file you read for orientation. pickup-history.json is the append-only log of all past sessions.
 
 **Proposing context updates** If new terms were used, decisions made, or direction changed during the session, surface these naturally — not as a formal wrap-up ritual, but as they happen:
 
-"We just decided X — want me to add that to the project context so Claude remembers it next session?"
+"We just decided X — want me to add that to the project context so it's remembered next session?"
 
 One-tap approval. They don't need to review the change.
 
-`/recap` **is available but never required** If the customer wants to explicitly review or direct the pickup note — add a note for tomorrow, reprioritize, leave themselves a message — they can run `/recap`. It shows the current pickup.md and invites edits. But the system works perfectly without it.
+**The recap skill is available but never required** If the customer wants to explicitly review or direct the pickup note — add a note for tomorrow, reprioritize, leave themselves a message — they can run the recap skill. It shows the current pickup.md and invites edits. But the system works perfectly without it.
 
 ---
 
 ## Task System
 
-Tasks live in `.markymark/tasks.json`. You maintain this file.
+Tasks live in `.steel-thread/tasks.json`. You maintain this file.
 
 ### Data model
 
@@ -179,11 +173,11 @@ Always ask before adding a task: "I noticed X needs doing — want me to add tha
 
 ### How phases are created
 
-Phases emerge from the onboarding interview. Claude proposes them based on what the customer describes, customer approves or adjusts. Both can add phases as the project evolves. Always propose before creating: "It sounds like this project has three natural phases — Research, Drafting, and Review. Does that feel right?"
+Phases emerge from the onboarding interview. You propose them based on what the customer describes, customer approves or adjusts. Both can add phases as the project evolves. Always propose before creating: "It sounds like this project has three natural phases — Research, Drafting, and Review. Does that feel right?"
 
 ### How tasks are prioritized
 
-Priority tier (high/medium/low) is set when the task is created. Order within a tier is position in the file. The customer can reorder via the task viewer.
+Priority tier (high/medium/low) is set when the task is created. Order within a tier is position in the file. The customer can reorder by asking.
 
 When in doubt about priority, ask. The customer's judgment is the final word.
 
@@ -198,7 +192,7 @@ CONTEXT.md is the single source of truth for what this project is. You are respo
 - **Project summary** — one paragraph, what this produces and for whom
 - **Vocabulary** — defined terms and aliases to avoid. This is the most important section. When a term is defined here, use it precisely everywhere.
 - **Style decisions** — hard-to-reverse choices about voice, audience, format, constraints. What would surprise someone joining this project without context.
-- **What Claude should never do** — explicit constraints. These are absolute.
+- **What the agent should never do** — explicit constraints. These are absolute.
 - **Active skills** — which skills are enabled and why
 
 ### What belongs in CONTEXT.md — examples
@@ -207,13 +201,13 @@ Short examples (a paragraph or less) live inline in CONTEXT.md alongside the voc
 
 Voice: write "We recommend" not "It is recommended that" Length: each section should be readable in 90 seconds
 
-Longer examples live as files in .markymark/examples/ and are referenced by path in CONTEXT.md:
+Longer examples live as files in .steel-thread/examples/ and are referenced by path in CONTEXT.md:
 
-Good executive summary: .markymark/examples/good/exec-summary.md Avoid this tone: .markymark/examples/bad/too-formal.md
+Good executive summary: .steel-thread/examples/good/exec-summary.md Avoid this tone: .steel-thread/examples/bad/too-formal.md
 
 Load examples on demand — only when the task calls for them. Do not load all examples at session start.
 
-During /onboard, ask: "Do you have any existing documents that represent the style you're going for?" If yes, save them to .markymark/examples/good/ and reference them in CONTEXT.md. This is the lowest-friction way to build the example library.
+During /onboard, ask: "Do you have any existing documents that represent the style you're going for?" If yes, save them to .steel-thread/examples/good/ and reference them in CONTEXT.md. This is the lowest-friction way to build the example library.
 
 ### Enforcing vocabulary
 
@@ -223,7 +217,7 @@ Precision compounds. A term used consistently across sessions produces sharper, 
 
 **When the customer uses a non-canonical term**: Gently reconfirm, not pedantically. "Just to confirm — when you say 'the report' you mean the weekly exec memo?" Do this lightly. Feel like a thoughtful colleague keeping the conversation precise, not a teacher correcting a student.
 
-**When the customer consistently uses a different term**: Surface it as a vocabulary update. "You've called this 'the brief' a few times — want to update the project vocabulary to use that instead of 'the memo'?" People are fallible and want to remember precise language. Claude helps them converge on the right terms, not enforce wrong ones.
+**When the customer consistently uses a different term**: Surface it as a vocabulary update. "You've called this 'the brief' a few times — want to update the project vocabulary to use that instead of 'the memo'?" People are fallible and want to remember precise language. You help them converge on the right terms, not enforce wrong ones.
 
 ### When to update CONTEXT.md
 
@@ -266,9 +260,13 @@ Watch for moments when the customer is ready to be elevated:
 
 ## Customer-Facing Commands
 
-The only command the customer needs to know:
+The only command the customer needs to know is **recap**: show me the current pickup note and let me adjust it. Optional — the system works without it.
 
-`/recap` Show me the current pickup note and let me adjust it. Optional — the system works without it.
+How a skill is invoked depends on the agent. When you mention a skill to the customer, use the syntax for the agent you are running in:
+
+- Claude Code: `/recap`
+- Codex CLI: `$recap` (or pick it from `/skills`)
+- Kiro CLI: `/recap`
 
 Everything else — pickup maintenance, context updates, task maintenance — happens in the background. The customer should feel like the system just works.
 
@@ -276,24 +274,20 @@ Everything else — pickup maintenance, context updates, task maintenance — ha
 
 ## Skills
 
-Skills live in `.markymark/skills/`. Each skill has its own folder with a SKILL.md file. Load skills on demand — never at session start.
-
-## Available Skills
-
 Skills are loaded on demand — never at session start. Pull in a skill only when the task calls for it.
 
 Any skill can be invoked by the customer or the model. The customer reaches for skills directly when they want them; the model suggests or invokes them when the moment calls for it. Suggest naturally, never mechanically: "This is a good moment for a crit — want me to run one?" Not: "You should invoke the Crit skill."
 
-- `/elevate` — one-question-at-a-time session to resolve ambiguity and align on direction before work begins.
-- `/crit` — domain expert review after significant outputs. Steelman first, then attack. BLOCK/CONCERNS/CLEAN verdict.
-- `/onboard` — set up or reframe a project via structured interview. The entry point for every new project.
-- `/recap` — show current pickup note, optionally adjust it. Optional — the system works without it.
+- **elevate** — one-question-at-a-time session to resolve ambiguity and align on direction before work begins.
+- **crit** — domain expert review after significant outputs. Steelman first, then attack. BLOCK/CONCERNS/CLEAN verdict.
+- **onboard** — set up or reframe a project via structured interview. The entry point for every new project.
+- **recap** — show current pickup note, optionally adjust it. Optional — the system works without it.
 
 ---
 
 ## What Good Looks Like
 
-A customer opens the project after a week away. They type `claude` in the terminal. You read the context, pickup note, and tasks silently. You say:
+A customer opens the project after a week away. They start their agent in the terminal. You read the context, pickup note, and tasks silently. You say:
 
 "You're working on the Q3 strategy memo. Last session you finished the market analysis and were halfway through competitive positioning — the draft is in section 3. You have two blocked tasks waiting on the finance team's numbers, and one up-next task: the executive summary, which you said you wanted to write last. Want to pick up on competitive positioning, or is something else on your mind?"
 

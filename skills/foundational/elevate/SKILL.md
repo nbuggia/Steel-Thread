@@ -1,10 +1,10 @@
 ---
 name: elevate
 description: One-question-at-a-time session to resolve ambiguity and align on direction before work begins
-invoke: model or user
+based-on: Matt Pocock, grill-with-docs (https://github.com/mattpocock/skills)
 ---
 
-Resolves ambiguity before any work begins. Used by /onboard and any skill that needs deep understanding of intent before acting.
+Resolves ambiguity before any work begins. Used by the onboard skill and any skill that needs deep understanding of intent before acting.
 
 ## The loop
 

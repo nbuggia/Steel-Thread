@@ -22,7 +22,7 @@
 
 **Format:** \[Length constraints, structure conventions, specific requirements\]
 
-## What Claude Should Never Do
+## What the Agent Should Never Do
 
 \[Explicit constraints. These are absolute. One item per line.\]
 
@@ -34,7 +34,7 @@
 
 ## Examples
 
-\[Short examples live inline. Longer examples live in .markymark/examples/ and are referenced here.\]
+\[Short examples live inline. Longer examples live in .steel-thread/examples/ and are referenced here.\]
 
 **Good:**
 
@@ -46,5 +46,5 @@
 
 Longer examples:
 
-- Good: `.markymark/examples/good/[filename]`
-- Avoid: `.markymark/examples/bad/[filename]`
+- Good: `.steel-thread/examples/good/[filename]`
+- Avoid: `.steel-thread/examples/bad/[filename]`

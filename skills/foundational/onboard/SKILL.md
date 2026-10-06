@@ -1,7 +1,6 @@
 ---
 name: onboard
 description: Set up or reframe a project via structured interview. Entry point for every new project.
-invoke: model or user
 ---
 
 Onboarding creates the Steel Thread files for a new project, or reframes an existing one. Every project starts here.
@@ -16,7 +15,7 @@ Check if Steel Thread files already exist:
 
 **Reframe:** Read CONTEXT.md first. Say: "Your project is [summary]. What's changed — new direction, new scope, or moving to a new phase?"
 
-## Phase 2 — Jam (use Jam skill)
+## Phase 2 — Elevate (use the elevate skill)
 
 Run the elevate loop on:
 
@@ -35,7 +34,7 @@ What are the hard rules about format or length?
 What tone is off-limits?
 
 **4. Constraints**
-What should Claude never do on this project?
+What should the agent never do on this project?
 What would be a serious mistake? What topics are out of scope?
 
 ## Phase 3 — Examples
@@ -43,7 +42,7 @@ What would be a serious mistake? What topics are out of scope?
 Ask: "Do you have any existing documents that represent the style or quality you're going for?"
 
 If yes:
-- Save them to .markymark/examples/good/
+- Save them to .steel-thread/examples/good/
 - Reference them in CONTEXT.md under "Examples"
 - Load them on demand when tasks call for them — not at every session start
 
@@ -51,7 +50,7 @@ If no, continue. The example library can be built during the project.
 
 ## Phase 4 — Write CONTEXT.md
 
-Create CONTEXT.md using templates/CONTEXT.md as a starting point.
+Create CONTEXT.md in the project root using .steel-thread/templates/CONTEXT.md as a starting point.
 
 Fill in every section from the elevate session. Do not leave placeholder text — if a section has nothing yet, omit it and add it later.
 
@@ -73,19 +72,20 @@ Write only what the customer approves.
 
 ## Phase 6 — Initialize files
 
-Create or verify the .markymark/ structure:
+Create or verify the .steel-thread/ structure:
 
 ```
-.markymark/
+.steel-thread/
   tasks.json          ← initialize with approved phases, no tasks yet
   pickup.md           ← initialize with this session
   pickup-history.json ← initialize with empty sessions array
+  changelog.json      ← initialize with empty changes array
   examples/
     good/
     bad/
 ```
 
-Use templates/tasks.json, templates/pickup.md, and templates/pickup-history.json as starting points.
+Use the files in .steel-thread/templates/ as starting points. Never overwrite a state file that already exists.
 
 ## Phase 7 — Greet the customer
 
