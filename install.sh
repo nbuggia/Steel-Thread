@@ -52,6 +52,13 @@ record() {
   mv "$tmp" "$MANIFEST"
 }
 
+unrecord() {
+  [ -f "$MANIFEST" ] || return 0
+  tmp=$(mktemp)
+  awk -F '\t' -v k="$1" '$1 != k' "$MANIFEST" > "$tmp"
+  mv "$tmp" "$MANIFEST"
+}
+
 # Ask a yes/no question on the terminal. No terminal means no.
 confirm() {
   if [ -t 0 ]; then
@@ -101,6 +108,25 @@ for dir in $SKILL_DIRS; do
   done
 done
 
+# 2b. Remove skills that Steel Thread no longer ships, asking first if edited
+if [ -f "$MANIFEST" ]; then
+  for dir in $SKILL_DIRS; do
+    for rel in $(awk -F '\t' -v d="$dir/" 'index($1, d) == 1 { print $1 }' "$MANIFEST"); do
+      name=${rel#"$dir/"}
+      [ -d "$SRC/skills/foundational/$name" ] && continue
+      if [ -e "$DEST/$rel" ]; then
+        if [ "$(fingerprint "$DEST/$rel")" != "$(recorded "$rel")" ] &&
+           ! confirm "$rel is no longer part of Steel Thread but has local changes. Delete it?"; then
+          echo "  kept $rel"; unrecord "$rel"; continue
+        fi
+        rm -rf "$DEST/$rel"
+        echo "  removed $rel"
+      fi
+      unrecord "$rel"
+    done
+  done
+fi
+
 # 3. AGENTS.md — the entry point every agent reads. The Steel Thread block
 #    from project/AGENTS.md is added or replaced; the rest is left alone.
 BLOCK=$(cat "$SRC/AGENTS.md")
@@ -132,5 +158,5 @@ elif ! grep -qxF "$IMPORT" "$CLAUDE"; then
   mv "$tmp" "$CLAUDE"
 fi
 
-echo "Done. Start your agent and run the onboard skill:"
-echo "  Claude Code: /onboard    Codex CLI: \$onboard    Kiro CLI: /onboard"
+echo "Done. Start your agent and ask what's next:"
+echo "  Claude Code: /whats-next    Codex CLI: \$whats-next    Kiro CLI: /whats-next"

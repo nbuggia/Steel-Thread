@@ -28,12 +28,12 @@ project/                   ← the product: what lands in a user's project
   .steel-thread/
     framework/
       steel-thread.md      ← framework operating manual (the core product)
-      templates/           ← starter files used by onboard: OBJECTIVE, CONTEXT,
+      templates/           ← starter files used during setup: OBJECTIVE, CONTEXT,
                              TASKS, DECISIONS, pickup, history files
     examples/good/, bad/
   skills/
     foundational/          ← installed into .claude/skills, .agents/skills, .kiro/skills
-      onboard/SKILL.md     ← project setup interview
+      whats-next/SKILL.md  ← step-by-step setup, then resume and recommend the next step
       elevate/SKILL.md     ← alignment loop before work begins
       crit/SKILL.md        ← domain expert review of outputs
       recap/SKILL.md       ← show and adjust current pickup note
@@ -46,7 +46,7 @@ project/                   ← the product: what lands in a user's project
 
 Each skill lives in its own folder with a `SKILL.md` file. Skills are loaded on demand — never at session start. Foundational skills (elevate, crit) are called by name from other skills rather than redefined: "use the elevate skill", "use the crit skill".
 
-Invocation syntax differs by agent: `/onboard` in Claude Code and Kiro CLI, `$onboard` in Codex CLI.
+Invocation syntax differs by agent: `/whats-next` in Claude Code and Kiro CLI, `$whats-next` in Codex CLI.
 
 ## Contribution conventions
 

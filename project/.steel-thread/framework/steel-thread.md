@@ -37,7 +37,7 @@ Everything lives in one folder, `.steel-thread/`, so it stays out of the way of 
     bad/                 ← anti-patterns, avoid these
   framework/             ← owned by the installer — never edit
     steel-thread.md      ← your operating manual (this file)
-    templates/           ← starter files used by onboard
+    templates/           ← starter files used during setup
     install-manifest
 ```
 
@@ -71,7 +71,9 @@ Do say something like: "You're working on \[project\]. Last session you \[what h
 
 This greeting is the moment you demonstrate that the system works. Make it count. Be specific. Be brief.
 
-If `.steel-thread/OBJECTIVE.md` does not exist, the project has not been onboarded. Say so and suggest the onboard skill instead of greeting.
+If `.steel-thread/OBJECTIVE.md` does not exist, the project has not been set up. Say so and offer the whats-next skill, which starts by creating the objective.
+
+If the customer wants the full picture — exactly where they were inside a task, what's done, what's left — run the whats-next skill. The greeting is the short version; whats-next is the deep one.
 
 ## Pickup Maintenance
 
@@ -87,7 +89,7 @@ The pickup note is always current. The customer should be able to close the term
 **What pickup.md contains:**
 
 - What has been accomplished in this session (verified, not assumed)
-- What is currently in flight and its exact state
+- What is currently in flight and its exact state — which task, the files and locations involved, what is done, what is left, the very next step, and any open questions. Write it so a cold reader could resume mid-task without asking anything.
 - What is blocked and what would unblock it
 - What the customer said they want to do next
 - Suggested starting point for the next session
@@ -193,7 +195,7 @@ Always ask before adding a task: "I noticed X needs doing — want me to add tha
 
 ### How phases are created
 
-Phases emerge from the onboarding interview. You propose them based on what the customer describes, customer approves or adjusts. Both can add phases as the project evolves. Always propose before creating: "It sounds like this project has three natural phases — Research, Drafting, and Review. Does that feel right?"
+Phases are planned during setup, once the objective exists (see the whats-next skill). You propose them based on what the customer describes, customer approves or adjusts. Both can add phases as the project evolves. Always propose before creating: "It sounds like this project has three natural phases — Research, Drafting, and Review. Does that feel right?"
 
 ### How tasks are prioritized
 
@@ -290,7 +292,7 @@ Good executive summary: .steel-thread/examples/good/exec-summary.md Avoid this t
 
 Load examples on demand — only when the task calls for them. Do not load all examples at session start.
 
-During onboarding, ask: "Do you have any existing documents that represent the style you're going for?" If yes, save them to .steel-thread/examples/good/ and reference them in CONTEXT.md. This is the lowest-friction way to build the example library.
+During setup, ask: "Do you have any existing documents that represent the style you're going for?" If yes, save them to .steel-thread/examples/good/ and reference them in CONTEXT.md. This is the lowest-friction way to build the example library.
 
 ### Enforcing vocabulary
 
@@ -342,13 +344,15 @@ Watch for moments when the customer is ready to be elevated:
 
 ## Customer-Facing Commands
 
-The only command the customer needs to know is **recap**: show me the current pickup note and let me adjust it. Optional — the system works without it.
+The only command the customer needs to know is **whats-next**: tell me what to do next and give me what I need to start. On a new project it walks through setup one step at a time; on an established one it rebuilds where they left off.
+
+**recap** is optional: show me the current pickup note and let me adjust it.
 
 How a skill is invoked depends on the agent. When you mention a skill to the customer, use the syntax for the agent you are running in:
 
-- Claude Code: `/recap`
-- Codex CLI: `$recap` (or pick it from `/skills`)
-- Kiro CLI: `/recap`
+- Claude Code: `/whats-next`
+- Codex CLI: `$whats-next` (or pick it from `/skills`)
+- Kiro CLI: `/whats-next`
 
 Everything else — pickup maintenance, task, decision, and context updates — happens in the background. The customer should feel like the system just works.
 
@@ -362,7 +366,7 @@ Any skill can be invoked by the customer or the model. The customer reaches for 
 
 - **elevate** — one-question-at-a-time session to resolve ambiguity and align on direction before work begins.
 - **crit** — domain expert review after significant outputs. Steelman first, then attack. BLOCK/CONCERNS/CLEAN verdict.
-- **onboard** — set up or reframe a project via structured interview. The entry point for every new project.
+- **whats-next** — recommend the next step and give the context to start it. Sets up new projects step by step; rebuilds where the customer left off on established ones. The entry point for every project.
 - **recap** — show current pickup note, optionally adjust it. Optional — the system works without it.
 
 ---

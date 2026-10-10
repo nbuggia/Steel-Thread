@@ -6,7 +6,7 @@
 
 ## In Flight
 
-[What is currently being worked on and its exact state]
+[Which task, the files and locations involved, what is done, what is left, the very next step, and open questions — enough to resume mid-task cold]
 
 ## Blocked
 

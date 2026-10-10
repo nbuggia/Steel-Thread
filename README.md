@@ -20,13 +20,15 @@ git clone https://github.com/nbuggia/Steel-Thread.git
 Steel-Thread/install.sh path/to/your-project
 ```
 
-Then start your agent in the project and run the onboard skill:
+Then start your agent in the project and ask what's next:
 
 | Agent | Command |
 | --- | --- |
-| Claude Code | `/onboard` |
-| Codex CLI | `$onboard` |
-| Kiro CLI | `/onboard` |
+| Claude Code | `/whats-next` |
+| Codex CLI | `$whats-next` |
+| Kiro CLI | `/whats-next` |
+
+On a new project, it walks you through setup one step at a time, starting with the objective. After that, it's the command to reach for whenever you sit down to work: it tells you where you left off and what to do next.
 
 The installer has no dependencies beyond a POSIX shell. It:
 
@@ -39,7 +41,7 @@ Commit everything it creates, so your whole team gets Steel Thread.
 
 ### Updating
 
-Pull the latest Steel Thread and run the installer again. Files you haven't changed are updated. If you edited one of Steel Thread's files, the installer asks before overwriting it. Without a terminal to ask, it keeps your version. The installer only writes to `.steel-thread/framework/` and the skills folders — your objective, tasks, decisions, and notes are never touched.
+Pull the latest Steel Thread and run the installer again. Files you haven't changed are updated, and skills Steel Thread no longer includes are removed. If you edited one of Steel Thread's files, the installer asks before overwriting it. Without a terminal to ask, it keeps your version. The installer only writes to `.steel-thread/framework/` and the skills folders — your objective, tasks, decisions, and notes are never touched.
 
 To customize a skill without being asked on every update, add a new skill under a different name instead of editing a Steel Thread one.
 
@@ -73,9 +75,9 @@ All-caps files are yours to read and shape; the agent keeps them current with yo
 
 Four skills are included. Your agent suggests them when the moment calls for one, and you can invoke any of them directly (`/name` in Claude Code and Kiro, `$name` in Codex):
 
-- **onboard** — set up or reframe a project via structured interview. Run this first.
+- **whats-next** — recommends the single most valuable next step and gives you what you need to start it. On a new project, that's setup: objective, then context, then phases. On an established one, it rebuilds exactly where you left off inside a task. Run this first, and whenever you sit down to work.
 - **recap** — show the current pickup note and optionally adjust it. Optional — the pickup note is kept current without it.
-- **elevate** — one-question-at-a-time interview loop. Resolves ambiguity before any work begins. Used by onboard.
+- **elevate** — one-question-at-a-time interview loop. Resolves ambiguity before any work begins. Used by whats-next during setup.
 - **crit** — domain expert review after significant outputs. Steelmans first, then attacks. BLOCK/CONCERNS/CLEAN verdict.
 
 ## Contributing skills
