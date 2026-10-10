@@ -5,7 +5,7 @@ description: Show the current pickup note and optionally adjust it
 
 Show the current pickup note and let the customer adjust it.
 
-This skill is optional — the system maintains pickup.md automatically after every meaningful change. Use recap when the customer wants to review the note, add a message for tomorrow, or explicitly check what's in flight.
+This skill is optional — the system keeps pickup.md current automatically at every checkpoint. Use recap when the customer wants to review the note, add a message for tomorrow, or explicitly check what's in flight.
 
 ## Steps
 

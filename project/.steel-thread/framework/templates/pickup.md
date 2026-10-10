@@ -1,5 +1,7 @@
 # Pickup Note
 
+Session: S-NNN · YYYY-MM-DD
+
 ## Accomplished
 
 [What was completed this session — verified, not assumed]

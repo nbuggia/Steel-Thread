@@ -27,7 +27,8 @@ project/                   ← the product: what lands in a user's project
   CLAUDE.md                ← import line, added to the top of the user's CLAUDE.md
   .steel-thread/
     framework/
-      steel-thread.md      ← framework operating manual (the core product)
+      steel-thread.md      ← framework operating manual (the core product), read every session
+      files.md             ← format and maintenance rules per file, read before editing them
       templates/           ← starter files used during setup: OBJECTIVE, CONTEXT,
                              TASKS, DECISIONS, pickup, history files
     examples/good/, bad/

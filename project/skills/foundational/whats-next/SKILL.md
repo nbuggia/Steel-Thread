@@ -5,7 +5,7 @@ description: Recommend the single most valuable next step and give the customer 
 
 One job: recommend the single most valuable next step, and give the customer everything they need to start it right away. One recommendation, not a menu. Offer at most one alternative, and only when it is a real contender.
 
-All Steel Thread files live in `.steel-thread/`. Starter files are in `.steel-thread/framework/templates/`. Never write anything into `.steel-thread/framework/`.
+All Steel Thread files live in `.steel-thread/`. Starter files are in `.steel-thread/framework/templates/`, and the format and rules for each file are in `.steel-thread/framework/files.md` — read it before writing any of them. Never write anything into `.steel-thread/framework/`.
 
 ## Step 1 — Read the state
 
@@ -40,7 +40,7 @@ Interview, in order:
 3. **Not doing** — what is explicitly out of scope? Get at least two items. If the customer can't name any, the project isn't scoped yet — say so.
 4. **Constraints** — deadlines, budget, platforms, anything that cannot change.
 
-Write .steel-thread/OBJECTIVE.md from the template. At the same time, create whichever of these don't exist yet, from the templates: DECISIONS.md, pickup.md, history/pickup-history.json, history/changelog.json, examples/good/, examples/bad/. Never overwrite a file that exists.
+Write .steel-thread/OBJECTIVE.md from the template. At the same time, create whichever of these don't exist yet, from the templates: DECISIONS.md, pickup.md, history/pickup-history.md, history/changelog.json, examples/good/, examples/bad/. Never overwrite a file that exists.
 
 Log any hard-to-reverse choice the interview surfaced in DECISIONS.md, with approval.
 
@@ -84,7 +84,7 @@ This is the moment the customer would otherwise spend reconstructing where they 
 
 1. Start from pickup.md's In Flight and Suggested Start, and the current task in TASKS.md with its detail lines.
 2. Read the Active decisions that touch that task, and recent changelog entries.
-3. Open the actual files the in-flight work lives in. Check that their state matches the pickup note. Files may have changed outside the session — if version control is available, check what changed since the last entry in history/changelog.json.
+3. Open the actual files the in-flight work lives in. Check that their state matches the pickup note. Files may have changed outside the session — if version control is available, check what changed since the date on the pickup note.
 4. If the note and the files disagree, trust the files and say so: "The pickup note says calculate_window() has no logic, but it's half written — the frost offset is done, the crop lookup isn't."
 
 ### Choose the next step

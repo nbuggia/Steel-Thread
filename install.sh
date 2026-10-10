@@ -99,6 +99,7 @@ echo "Installing Steel Thread into $DEST"
 mkdir -p "$DEST/.steel-thread/framework" "$DEST/.steel-thread/history" \
   "$DEST/.steel-thread/examples/good" "$DEST/.steel-thread/examples/bad"
 install_item "$SRC/.steel-thread/framework/steel-thread.md" .steel-thread/framework/steel-thread.md
+install_item "$SRC/.steel-thread/framework/files.md" .steel-thread/framework/files.md
 install_item "$SRC/.steel-thread/framework/templates" .steel-thread/framework/templates
 
 # 2. Skills, one identical copy per agent
@@ -132,9 +133,29 @@ fi
 BLOCK=$(cat "$SRC/AGENTS.md")
 
 AGENTS="$DEST/AGENTS.md"
+
+# How the markers appear in AGENTS.md: "none", "ok" (one start line followed
+# by one end line), or "broken" (anything else, e.g. an end line lost in a
+# merge). A broken block is never rewritten — that could delete the user's
+# own content after the start marker.
+markers() {
+  BEGIN="$BEGIN" END="$END" awk '
+    $0 == ENVIRON["BEGIN"] { b++; if (e) bad = 1 }
+    $0 == ENVIRON["END"]   { e++; if (!b) bad = 1 }
+    END {
+      if (!b && !e) print "none"
+      else if (b == 1 && e == 1 && !bad) print "ok"
+      else print "broken"
+    }' "$1"
+}
+
 if [ ! -f "$AGENTS" ]; then
   printf '%s\n' "$BLOCK" > "$AGENTS"
-elif grep -qF "$BEGIN" "$AGENTS"; then
+elif [ "$(markers "$AGENTS")" = broken ]; then
+  echo "  skipped AGENTS.md: its Steel Thread section is damaged." >&2
+  echo "  It needs exactly one '$BEGIN' line followed by one '$END' line." >&2
+  echo "  Fix or remove the markers by hand, then run the installer again." >&2
+elif [ "$(markers "$AGENTS")" = ok ]; then
   tmp=$(mktemp)
   BEGIN="$BEGIN" END="$END" BLOCK="$BLOCK" awk '
     $0 == ENVIRON["BEGIN"] { print ENVIRON["BLOCK"]; skip = 1; next }
@@ -146,8 +167,8 @@ else
   printf '\n%s\n' "$BLOCK" >> "$AGENTS"
 fi
 
-# 4. CLAUDE.md — Claude Code skips AGENTS.md when CLAUDE.md exists, so the
-#    import line from project/CLAUDE.md goes at the top.
+# 4. CLAUDE.md — Claude Code reads CLAUDE.md, not AGENTS.md, so the import
+#    line from project/CLAUDE.md goes at the top to pull AGENTS.md in.
 IMPORT=$(cat "$SRC/CLAUDE.md")
 CLAUDE="$DEST/CLAUDE.md"
 if [ ! -f "$CLAUDE" ]; then

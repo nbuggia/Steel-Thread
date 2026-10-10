@@ -28,20 +28,23 @@ Everything lives in one folder, `.steel-thread/`, so it stays out of the way of 
   CONTEXT.md             ← vocabulary, style, what you must never do
   TASKS.md               ← phases and tasks, in priority order
   DECISIONS.md           ← log of decisions and why they were made
-  pickup.md              ← current session only, always overwritten
+  pickup.md              ← the latest session's note
   history/
-    pickup-history.json  ← append-only log of all past sessions
-    changelog.json       ← every change made to project files
+    pickup-history.md    ← log of all past sessions, newest first
+    changelog.json       ← what changed in the project
   examples/
     good/                ← reference examples, write like these
     bad/                 ← anti-patterns, avoid these
   framework/             ← owned by the installer — never edit
     steel-thread.md      ← your operating manual (this file)
+    files.md             ← formats and rules for each file above
     templates/           ← starter files used during setup
     install-manifest
 ```
 
 All-caps files are the customer's: they read them and shape them, and you maintain them with their approval. Lowercase files are working files you maintain on your own.
+
+**Before you first create or edit any Steel Thread file in a session, read `framework/files.md`.** It has the exact format and maintenance rules for each one. You do not need it to read the files.
 
 Never edit anything in `.steel-thread/framework/`. It is replaced when Steel Thread is updated, and edits there are lost or trigger overwrite prompts.
 
@@ -55,13 +58,13 @@ Run this silently at the start of every session, before responding to the custom
 
 **2. Read CONTEXT.md** Absorb the vocabulary, style, and constraints. You must use this vocabulary throughout the session. Do not use synonyms for defined terms — precision is the point.
 
-**3. Read pickup.md if it exists** Understand where the customer left off: what was accomplished, what is in flight, what is blocked, what was deferred.
+**3. Read pickup.md if it exists, and archive it** Understand where the customer left off: what was accomplished, what is in flight, what is blocked, what was deferred. Then, if its Session ID is not yet in history/pickup-history.md, archive it there (see files.md). Leave pickup.md in place — it is replaced with this session's note at the first checkpoint.
 
 **4. Read TASKS.md** Know the current task state: what is up next, what is blocked, what is in flight. Form a view on what the customer should work on next.
 
 **5. Scan DECISIONS.md** Read the headings, and the full entries for any Active decision that touches the work in flight. Do not reopen an Active decision unless the customer does, or new information undercuts its reasoning — then say so explicitly.
 
-**6. Scan history/changelog.json for recent activity** If significant changes happened since the last session, note them. They may affect priorities.
+**6. Check what changed since last time** Scan the recent entries in history/changelog.json. If the project is under version control, also check its log since the date of the last session. If significant changes happened, note them. They may affect priorities.
 
 **7. Greet the customer with orientation, not a blank slate**
 
@@ -77,14 +80,19 @@ If the customer wants the full picture — exactly where they were inside a task
 
 ## Pickup Maintenance
 
-The pickup note is always current. The customer should be able to close the terminal at any moment and lose nothing. You do not wait for them to signal they are done.
+The pickup note is always current. The customer should be able to close the terminal at any moment and lose nothing that matters. You do not wait for them to signal they are done.
 
-**Update pickup.md after:**
+**Update pickup.md at checkpoints:**
 
-- Any file is edited
-- Any decision is made
-- Any task changes state
-- Any significant exchange that would matter to a returning session
+- A task is started, finished, or blocked
+- A decision is made
+- A significant exchange happens that would matter to a returning session — a change of direction, a question answered, a plan agreed
+- The customer signals they are stopping or stepping away
+- Before a long or risky step, such as a large refactor or bulk edit
+
+Do not rewrite it after every small edit. Rewriting the note constantly wastes effort and buries the moments that matter. A checkpoint is a moment the next session would want to know about.
+
+The first checkpoint of a session replaces the previous note (already archived at session start) with a new one: next Session ID, today's date. Later checkpoints in the same session update it in place. At each checkpoint, also log what changed in history/changelog.json (files.md says what to log).
 
 **What pickup.md contains:**
 
@@ -97,29 +105,6 @@ The pickup note is always current. The customer should be able to close the term
 
 Do not duplicate content already in the other Steel Thread files. Reference tasks and decisions by ID (T-003, D-002) and files by path instead.
 
-**Session history** At the start of each new session, append the previous pickup.md content to history/pickup-history.json as a new session entry before overwriting pickup.md with the current session state.
-
-pickup-history.json schema:
-
-```json
-{
-  "sessions": [
-    {
-      "id": "session-00001",
-      "date": "2026-06-20",
-      "accomplished": "What was completed this session",
-      "in_flight": "What was being worked on when session ended",
-      "blocked": "What is blocked and why",
-      "up_next": "Suggested starting point for next session",
-      "context_updates_proposed": ["Any objective, vocabulary, or decision updates proposed"],
-      "suggested_start": "One sentence orienting the next session"
-    }
-  ]
-}
-```
-
-pickup.md contains the current session only — always overwritten at session start. It is the file you read for orientation. pickup-history.json is the append-only log of all past sessions.
-
 **Proposing updates** If new terms were used, decisions made, or direction changed during the session, surface these naturally — not as a formal wrap-up ritual, but as they happen:
 
 "We just decided X — want me to log that so it's remembered next session?"
@@ -130,169 +115,15 @@ One-tap approval. They don't need to review the change.
 
 ---
 
-## Objective
+## Keeping the Customer's Files
 
-OBJECTIVE.md says why the project exists and what done means. It is short enough to read at every session start, and it changes rarely.
+The customer's files — OBJECTIVE.md, CONTEXT.md, TASKS.md, DECISIONS.md — change only with their approval. These rules always apply; the details are in files.md.
 
-### What belongs in OBJECTIVE.md
-
-- **Outcome** — one paragraph: what this produces, for whom, and why it matters
-- **Done means** — testable criteria, not activities. "A zone 7 gardener gets this week's plantings in one command," not "build the planting feature."
-- **Not doing** — at least two things that are explicitly out of scope, and why. An objective with nothing out of scope has not been scoped.
-- **Constraints** — deadlines, budget, platforms, anything that cannot change
-
-### When to update OBJECTIVE.md
-
-- When the customer changes direction, scope, or what done means
-- Never unilaterally — always propose, customer approves
-- Every change to OBJECTIVE.md also gets a DECISIONS.md entry recording what changed and why
-
-If work drifts away from the objective, say so: "This doesn't obviously serve the objective — is the objective changing, or is this a detour?"
-
----
-
-## Task System
-
-Tasks live in `.steel-thread/TASKS.md`. You maintain this file. The customer can read and edit it directly; respect their edits.
-
-### Format
-
-```markdown
-# Tasks
-
-## Phase 1 — Data ✓ 2026-10-03
-- [x] T-001 Import frost date table · high · done 2026-10-03
-
-## Phase 2 — CLI
-- [ ] T-002 Write planting window calculator · high
-      Signature is in src/window.py; logic not started.
-- [ ] T-003 Add --zip flag · medium
-      Blocked: waiting on decision about non-US postal codes.
-```
-
-- Each phase is a `##` heading: `## Phase N — Name`. A completed phase gets ` ✓ YYYY-MM-DD` appended.
-- Each task is one checkbox line: `- [ ] T-NNN Title · priority`. A completed task becomes `- [x]` with ` · done YYYY-MM-DD` appended.
-- Detail goes on indented lines under the task.
-- IDs are `T-` plus three digits. A new task takes the highest existing ID plus one. IDs are never reused or changed, so other files can refer to a task by ID even after its title changes.
-
-### Rules
-
-- Phases are complete or incomplete. Sequence in the file is the sequence they appear. The current phase is the first incomplete phase.
-- Tasks are complete or incomplete. Sequence within a phase is the sequence they appear. The current task is the first incomplete task in the current phase.
-- Priority is high, medium, or low — a category, not an order. Order within priority is determined by position in the file.
-- Tasks belong to exactly one phase.
-- Tasks and phases are never deleted or moved — only marked complete with a date. The full history stays in the file.
-- Blocked tasks stay incomplete. The blocked reason goes on an indented line starting `Blocked:`.
-
-### How tasks are created
-
-- When you notice something that needs doing while working
-- When the customer mentions something they want to do
-- When a document review surfaces a gap
-- When a blocker is resolved and a new task becomes available
-
-Always ask before adding a task: "I noticed X needs doing — want me to add that to your task list?"
-
-### How phases are created
-
-Phases are planned during setup, once the objective exists (see the whats-next skill). You propose them based on what the customer describes, customer approves or adjusts. Both can add phases as the project evolves. Always propose before creating: "It sounds like this project has three natural phases — Research, Drafting, and Review. Does that feel right?"
-
-### How tasks are prioritized
-
-Priority tier (high/medium/low) is set when the task is created. Order within a tier is position in the file. The customer can reorder by asking, or by editing the file.
-
-When in doubt about priority, ask. The customer's judgment is the final word.
-
----
-
-## Decisions
-
-DECISIONS.md is the log of choices that are hard to reverse or likely to be argued again, and the reasoning behind them. It answers "why is it like this?" so the customer never has to reconstruct it, and so no session re-litigates a settled question by accident.
-
-### Format
-
-Newest entry first:
-
-```markdown
-## D-002 · US zip codes only · 2026-10-06
-Status: Active
-Context: --zip needed a scope; non-US postal codes need a different frost-date source.
-Decision: Support US 5-digit zip codes only.
-Why: Matches the objective; international users are listed under Not doing.
-Rejected: Any postal code with a fallback lookup — needs a second data source.
-Affects: T-003, OBJECTIVE.md
-```
-
-- IDs are `D-` plus three digits, assigned the same way as task IDs.
-- Status is `Active` or `Superseded by D-NNN`.
-- `Rejected` and `Affects` can be omitted when there is nothing to say.
-
-### Rules
-
-- Entries are never edited or deleted. When a decision changes, add a new entry and change only the old entry's Status line to `Superseded by D-NNN`.
-- Record decisions that constrain future work, would surprise someone joining the project, or are likely to be suggested again. Routine choices do not belong here.
-- Never record unilaterally — always propose: "We just decided X — want me to log that as a decision?"
-- Other files state the current rule and cite the decision for the reason: "Voice: first person (D-004)."
-
----
-
-## Changelog
-
-`.steel-thread/history/changelog.json` is the record of what changed in the project, so a returning session can see what moved since it last looked. You maintain it on your own — it needs no approval.
-
-### Format
-
-```json
-{
-  "changes": [
-    {
-      "date": "2026-10-06",
-      "file": ".steel-thread/DECISIONS.md",
-      "change": "Added D-002: US 5-digit zip codes only."
-    }
-  ]
-}
-```
-
-- `date` — the day of the change, YYYY-MM-DD
-- `file` — the path from the project root
-- `change` — one sentence on what changed. Cite task and decision IDs instead of repeating them: "Unblocked T-003 (D-002)."
-
-### Rules
-
-- Append an entry right after you edit a file. Newest entries go last. Entries are never edited or deleted.
-- Log every edit to the customer's files and to OBJECTIVE.md, CONTEXT.md, TASKS.md, and DECISIONS.md.
-- Do not log edits to pickup.md or to the history files themselves. They change every session and would bury the real changes.
-- One entry per file per change. Several edits to one file for the same reason are one entry.
-
----
-
-## Context Maintenance
-
-CONTEXT.md holds the standing rules for how to work on this project. You are responsible for keeping it current.
-
-### What belongs in CONTEXT.md
-
-- **Vocabulary** — defined terms and aliases to avoid. This is the most important section. When a term is defined here, use it precisely everywhere.
-- **Style** — voice, audience, format, and length rules. What would surprise someone joining this project without context. Cite the decision behind a rule when there is one.
-- **What the agent should never do** — explicit constraints. These are absolute.
-- **Active skills** — which skills are enabled and why
-
-What the project is for belongs in OBJECTIVE.md. Why a rule exists belongs in DECISIONS.md.
-
-### Examples
-
-Short examples (a paragraph or less) live inline in CONTEXT.md alongside the vocabulary or style rule they illustrate:
-
-Voice: write "We recommend" not "It is recommended that" Length: each section should be readable in 90 seconds
-
-Longer examples live as files in .steel-thread/examples/ and are referenced by path in CONTEXT.md:
-
-Good executive summary: .steel-thread/examples/good/exec-summary.md Avoid this tone: .steel-thread/examples/bad/too-formal.md
-
-Load examples on demand — only when the task calls for them. Do not load all examples at session start.
-
-During setup, ask: "Do you have any existing documents that represent the style you're going for?" If yes, save them to .steel-thread/examples/good/ and reference them in CONTEXT.md. This is the lowest-friction way to build the example library.
+- **Propose, never write unilaterally.** One-tap approval: "I noticed X needs doing — want me to add that to your task list?" "We just decided X — want me to log that as a decision?"
+- **Respect their edits.** They can edit any of these files directly. Treat what they wrote as current.
+- **Never delete history.** Tasks, phases, and decisions are marked complete or superseded, never removed.
+- **Guard the objective.** If work drifts away from it, say so: "This doesn't obviously serve the objective — is the objective changing, or is this a detour?" Every change to the objective also gets a decision entry.
+- **When in doubt about priority, ask.** The customer's judgment is the final word.
 
 ### Enforcing vocabulary
 
@@ -303,13 +134,6 @@ Precision compounds. A term used consistently across sessions produces sharper, 
 **When the customer uses a non-canonical term**: Gently reconfirm, not pedantically. "Just to confirm — when you say 'the report' you mean the weekly exec memo?" Do this lightly. Feel like a thoughtful colleague keeping the conversation precise, not a teacher correcting a student.
 
 **When the customer consistently uses a different term**: Surface it as a vocabulary update. "You've called this 'the brief' a few times — want to update the project vocabulary to use that instead of 'the memo'?" People are fallible and want to remember precise language. You help them converge on the right terms, not enforce wrong ones.
-
-### When to update CONTEXT.md
-
-- When a new term is used that isn't defined
-- When a new style rule or constraint is agreed — log the decision behind it in DECISIONS.md if it is hard to reverse
-- When the customer consistently uses a different term than what's defined — propose updating the canonical term
-- Never unilaterally — always propose, customer approves
 
 ---
 
