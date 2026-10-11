@@ -158,6 +158,17 @@ Session: S-012 · 2026-10-09
 ## Proposed Updates
 ```
 
+### What each section holds
+
+- **Accomplished** — what was done this session, verified, not assumed.
+- **In Flight** — the exact state of work in progress: which task, the files and locations involved, what is done, what is left, the very next step, and any open questions. Write it so a cold reader could resume mid-task without asking anything.
+- **Blocked** — what is blocked and what would unblock it.
+- **Up Next** — what the customer said they want to do next.
+- **Suggested Start** — where the next session should begin.
+- **Proposed Updates** — changes to propose for OBJECTIVE.md, CONTEXT.md, or DECISIONS.md that the customer has not yet approved.
+
+### Rules
+
 - The `Session:` line identifies the note. IDs are `S-` plus three digits: the newest ID in history/pickup-history.md plus one, or S-001 when there is no history.
 - Leave out any section with nothing in it.
 - Reference tasks and decisions by ID (T-003, D-002) and files by path. Do not duplicate content already in the other Steel Thread files.

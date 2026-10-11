@@ -22,6 +22,7 @@ AGENTS.md, CLAUDE.md       ← instructions for building Steel Thread (this file
 install.sh                 ← installs project/ into a target project
 README.md                  ← user-facing installation and usage docs
 TODO.md                    ← known gaps and open work
+research/prior-art.md      ← what other tools do for project memory, and lessons
 project/                   ← the product: what lands in a user's project
   AGENTS.md                ← Steel Thread block, merged into the user's AGENTS.md
   CLAUDE.md                ← import line, added to the top of the user's CLAUDE.md

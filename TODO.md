@@ -34,3 +34,7 @@
   - Remove duplicative content
 - implementation
   - All versions should suggest a commit message
+
+## Framework
+
+- Replace the TASKS.md read in the Session Start Protocol (steel-thread.md, step 4) with a call to the app's CLI that returns active tasks, once the CLI exists.

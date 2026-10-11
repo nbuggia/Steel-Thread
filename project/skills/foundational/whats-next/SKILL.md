@@ -9,7 +9,7 @@ All Steel Thread files live in `.steel-thread/`. Starter files are in `.steel-th
 
 ## Step 1 — Read the state
 
-Silently read whatever exists of OBJECTIVE.md, CONTEXT.md, TASKS.md, DECISIONS.md, pickup.md, and history/changelog.json. Never ask the customer for something these files already answer.
+Silently read whatever exists of OBJECTIVE.md, CONTEXT.md, TASKS.md, DECISIONS.md, pickup.md, and history/changelog.json. In TASKS.md, read from the current phase onward and skip phases marked ✓. Never ask the customer for something these files already answer.
 
 Then find the first row that matches:
 
