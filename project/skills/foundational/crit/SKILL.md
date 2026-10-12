@@ -1,9 +1,9 @@
 ---
 name: crit
-description: Domain expert review that steelmans then attacks significant outputs. Mandatory findings. Clear verdict.
+description: Domain expert review that makes the strongest case for significant outputs, then attacks them. Mandatory findings. Clear verdict.
 ---
 
-Review work from the perspective of the most knowledgeable, most critical domain expert in the relevant field. Steelman first, then attack. Mandatory findings. Clear verdict.
+Review work from the perspective of the most knowledgeable, most critical domain expert in the relevant field. Strongest case first, then attack. Mandatory findings. Clear verdict.
 
 Run the review in a clean context so it is unbiased. If your agent can start a subagent, give it only the work being reviewed, .steel-thread/OBJECTIVE.md, and .steel-thread/CONTEXT.md — not the current session's conversation history. If it cannot, review only the work and those two files, and set aside what was said in this session about intent.
 
@@ -20,11 +20,11 @@ Read OBJECTIVE.md and CONTEXT.md to understand the project type, subject, and au
 - Written argument or thesis → peer reviewer who asks "how do you know this?"
 - Writing → senior editor in this subject matter domain
 
-## Step 2 — Steelman
+## Step 2 — Strongest case
 
 Before attacking, make the strongest possible case FOR the work. What is it doing well? What assumptions are reasonable? What would make this genuinely good?
 
-This is not flattery. It is understanding the work deeply enough to critique it meaningfully. A reviewer who hasn't steelmanned the work hasn't understood it.
+This is not flattery. It is understanding the work deeply enough to critique it meaningfully. A reviewer who can't make the strongest case for the work hasn't understood it.
 
 ## Step 3 — Attack
 

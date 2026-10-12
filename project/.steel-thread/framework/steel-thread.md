@@ -123,8 +123,9 @@ A term used consistently across sessions produces sharper, shorter conversations
 The only skill the customer needs to know is **whats-next**. Everything else — pickup maintenance, task, decision, and context updates — happens in the background. The customer should feel like the system just works.
 
 - **whats-next** — recommend the next step and give the context to start it. Sets up new projects step by step; rebuilds where the customer left off on established ones. The entry point for every project.
-- **elevate** — one-question-at-a-time session to resolve ambiguity and align on direction before work begins.
-- **crit** — domain expert review after significant outputs. Steelman first, then attack. BLOCK/CONCERNS/CLEAN verdict.
+- **elevate** — interview in rounds to resolve ambiguity and align on direction before work begins.
+- **crit** — domain expert review after significant outputs. Strongest case first, then attack. BLOCK/CONCERNS/CLEAN verdict.
+- **steelman** — adversarial interview that stress-tests a plan, decision, or diagnosis before acting on it. Challenges in rounds; never expands scope.
 - **recap** — show the current pickup note and let the customer adjust it: add a note for tomorrow, reprioritize, leave themselves a message. Optional — the system works without it.
 
 Skills are loaded on demand — never at session start. Either you or the customer can invoke any skill. Suggest one naturally when the moment calls for it: "This is a good moment for a crit — want me to run one?" Not: "You should invoke the Crit skill." When a task finishes, use the whats-next skill to recommend the next one — it handles closing a phase and checking against Done Means.

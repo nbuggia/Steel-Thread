@@ -73,12 +73,13 @@ All-caps files are yours to read and shape; the agent keeps them current with yo
 
 ## Skills
 
-Four skills are included. Your agent suggests them when the moment calls for one, and you can invoke any of them directly (`/name` in Claude Code and Kiro, `$name` in Codex):
+Five skills are included. Your agent suggests them when the moment calls for one, and you can invoke any of them directly (`/name` in Claude Code and Kiro, `$name` in Codex):
 
 - **whats-next** — recommends the single most valuable next step and gives you what you need to start it. On a new project, that's setup: objective, then context, then phases. On an established one, it rebuilds exactly where you left off inside a task. Run this first, and whenever you sit down to work.
 - **recap** — show the current pickup note and optionally adjust it. Optional — the pickup note is kept current without it.
-- **elevate** — one-question-at-a-time interview loop. Resolves ambiguity before any work begins. Used by whats-next during setup.
-- **crit** — domain expert review after significant outputs. Steelmans first, then attacks. BLOCK/CONCERNS/CLEAN verdict.
+- **elevate** — interview loop, asked in rounds. Resolves ambiguity before any work begins. Used by whats-next during setup.
+- **crit** — domain expert review after significant outputs. Makes the strongest case first, then attacks. BLOCK/CONCERNS/CLEAN verdict.
+- **steelman** — stress-tests a plan, decision, or diagnosis before you act on it. States the plan at its strongest, then challenges it in rounds.
 
 ## Contributing skills
 
@@ -92,12 +93,13 @@ Skills follow the `SKILL.md` format shared by Claude Code, Codex CLI, and Kiro C
 
 Skills call other skills by name rather than redefining their logic:
 
-- `use the elevate skill` — one-question-at-a-time interview loop
+- `use the elevate skill` — interview loop, asked in rounds
 - `use the crit skill` — domain expert critique after significant outputs
+- `use the steelman skill` — adversarial interview that stress-tests a plan before acting
 
 ## Attribution
 
-The elevate skill is based on Matt Pocock's [grill-with-docs](https://github.com/mattpocock/skills) pattern.
+The elevate skill is based on Matt Pocock's [grill-with-docs](https://github.com/mattpocock/skills) pattern. The steelman skill is based on his grill-me and grilling skills.
 
 ## License
 

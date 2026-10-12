@@ -10,7 +10,6 @@
   - State level of risk (define each level, tie it to the tech design levels)
   - get adversarial feedback to stress test
   - ask me if I want to create a task
-- adversarial feedback (steelman)
 - feature spec
   - who is the customer, and what is the benefit they will get from this feature?
   - who is not the customer and what else is out of scope?
