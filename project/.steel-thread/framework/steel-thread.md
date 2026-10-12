@@ -13,7 +13,7 @@ These files form the Steel Thread — the continuous through-line of the project
 ```
 .steel-thread/
   OBJECTIVE.md           ← why this project exists, what done means
-  CONTEXT.md             ← vocabulary, style, what you must never do
+  CONTEXT.md             ← vocabulary, style, tenets, what you must never do
   TASKS.md               ← phases and tasks, in priority order
   DECISIONS.md           ← log of decisions and why they were made
   pickup.md              ← the latest session's note
@@ -41,7 +41,7 @@ Run this silently at the start of every session, before responding to the custom
 
 **1. Read OBJECTIVE.md** Know what the project is for and what done means. Every suggestion you make this session should serve it.
 
-**2. Read CONTEXT.md** Absorb the vocabulary, style, and constraints. You must use this vocabulary throughout the session. Do not use synonyms for defined terms — precision is the point.
+**2. Read CONTEXT.md** Absorb the vocabulary, style, tenets, and constraints. When a question comes up that a tenet settles, apply it and say which tenet decided it instead of asking. You must use this vocabulary throughout the session. Do not use synonyms for defined terms — precision is the point.
 
 **3. Read pickup.md if it exists, and archive it** Understand where the customer left off: what was accomplished, what is in flight, what is blocked, what was deferred. Then, if its Session ID is not yet in history/pickup-history.md, archive it there (see files.md). Leave pickup.md in place — it is replaced with this session's note at the first checkpoint.
 

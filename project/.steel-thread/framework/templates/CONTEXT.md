@@ -18,6 +18,12 @@
 
 **Format:** \[Length constraints, structure conventions, specific requirements\]
 
+## Tenets
+
+\[Principles the customer applies when good options conflict, discovered through elevate sessions. One per line, most important first: "Correctness beats speed."\]
+
+- 
+
 ## What the Agent Should Never Do
 
 \[Explicit constraints. These are absolute. One item per line.\]
