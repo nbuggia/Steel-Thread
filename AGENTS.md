@@ -36,10 +36,9 @@ project/                   ← the product: what lands in a user's project
   skills/
     foundational/          ← installed into .claude/skills, .agents/skills, .kiro/skills
       whats-next/SKILL.md  ← step-by-step setup, then resume and recommend the next step
-      elevate/SKILL.md     ← alignment loop before work begins
+      elevate/SKILL.md     ← interview that clarifies intent and stress-tests plans
       crit/SKILL.md        ← domain expert review of outputs
       recap/SKILL.md       ← show and adjust current pickup note
-      steelman/SKILL.md    ← adversarial interview that stress-tests a plan
     coding/                ← not installed yet; still specific to one Tauri project
 ```
 
@@ -47,7 +46,7 @@ project/                   ← the product: what lands in a user's project
 
 ## How skills work
 
-Each skill lives in its own folder with a `SKILL.md` file. Skills are loaded on demand — never at session start. Foundational skills (elevate, crit, steelman) are called by name from other skills rather than redefined: "use the elevate skill", "use the crit skill", "use the steelman skill".
+Each skill lives in its own folder with a `SKILL.md` file. Skills are loaded on demand — never at session start. Foundational skills (elevate, crit) are called by name from other skills rather than redefined: "use the elevate skill", "use the crit skill".
 
 Invocation syntax differs by agent: `/whats-next` in Claude Code and Kiro CLI, `$whats-next` in Codex CLI.
 

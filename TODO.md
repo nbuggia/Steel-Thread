@@ -8,7 +8,7 @@
     - define confidence levels to determine the best course of action — instrument to learn more, or ready to fix.
   - Propose high level appraoch to fix it
   - State level of risk (define each level, tie it to the tech design levels)
-  - get adversarial feedback to stress test
+  - use the elevate skill to stress-test the root cause and fix
   - ask me if I want to create a task
 - feature spec
   - who is the customer, and what is the benefit they will get from this feature?
