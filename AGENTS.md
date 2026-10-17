@@ -34,15 +34,15 @@ project/                   ← the product: what lands in a user's project
                              TASKS, DECISIONS, pickup, history files
     examples/good/, bad/
   skills/
-    foundational/          ← installed into .claude/skills, .agents/skills, .kiro/skills
-      hb-whats-next/SKILL.md  ← step-by-step setup, then resume and recommend the next step
-      hb-elevate/SKILL.md     ← alignment loop before work begins
-      hb-crit/SKILL.md        ← domain expert review of outputs
-      hb-recap/SKILL.md       ← show and adjust current pickup note
-    coding/                ← not installed yet; still specific to one Tauri project
+    hb-whats-next/SKILL.md    ← installed; setup, resume, and recommend the next step
+    hb-elevate/SKILL.md       ← installed; alignment loop before work begins
+    hb-crit/SKILL.md          ← installed; domain expert review of outputs
+    hb-recap/SKILL.md         ← installed; show and adjust the current pickup note
+    hb-create-tech-design/    ← not installed yet; still specific to one Tauri project
+    hb-design-review/         ← not installed yet; still specific to one Tauri project
 ```
 
-`install.sh` copies `project/.hashbang/framework/` into the user's `.hashbang/framework/`, creates the empty state folders, copies each skill in `project/skills/foundational/` into all three agents' skills folders, and merges `project/AGENTS.md` and `project/CLAUDE.md` into the user's files.
+`install.sh` copies `project/.hashbang/framework/` into the user's `.hashbang/framework/`, creates the empty state folders, copies the shipped skills into all three agents' skills folders, and merges `project/AGENTS.md` and `project/CLAUDE.md` into the user's files.
 
 ## How skills work
 
@@ -52,7 +52,7 @@ Invocation syntax differs by agent: `/hb-whats-next` in Claude Code and Kiro CLI
 
 ## Contribution conventions
 
-- New skills go in `project/skills/<category>/<name>/SKILL.md`
+- New skills go in `project/skills/<name>/SKILL.md`
 - Every skill folder and frontmatter name starts with `hb-`
 - Frontmatter uses only `name` and `description`, plus `based-on` when crediting: skills based on existing open source work must credit the original there
 - The skill format follows existing SKILL.md files — read one before writing one

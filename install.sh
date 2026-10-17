@@ -26,6 +26,7 @@ LEGACY_END='<!-- steel-thread:end -->'
 
 # Skill folders read by each supported agent.
 SKILL_DIRS=".claude/skills .agents/skills .kiro/skills"
+SHIPPED_SKILLS="hb-crit hb-elevate hb-recap hb-whats-next"
 
 # Fingerprints of what was last installed, used to tell local edits
 # apart from files that are simply out of date.
@@ -138,8 +139,8 @@ install_item "$SRC/.hashbang/framework/templates" .hashbang/framework/templates
 
 # 2. Skills, one identical copy per agent
 for dir in $SKILL_DIRS; do
-  for skill in "$SRC"/skills/foundational/*/; do
-    install_item "${skill%/}" "$dir/$(basename "$skill")"
+  for name in $SHIPPED_SKILLS; do
+    install_item "$SRC/skills/$name" "$dir/$name"
   done
 done
 
@@ -148,7 +149,7 @@ if [ -f "$MANIFEST" ]; then
   for dir in $SKILL_DIRS; do
     for rel in $(awk -F '\t' -v d="$dir/" 'index($1, d) == 1 { print $1 }' "$MANIFEST"); do
       name=${rel#"$dir/"}
-      [ -d "$SRC/skills/foundational/$name" ] && continue
+      case " $SHIPPED_SKILLS " in *" $name "*) continue ;; esac
       if [ -e "$DEST/$rel" ]; then
         if [ "$(fingerprint "$DEST/$rel")" != "$(recorded "$rel")" ] &&
            ! confirm "$rel is no longer part of Hashbang but has local changes. Delete it?"; then

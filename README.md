@@ -86,7 +86,7 @@ Four skills are included. Your agent suggests them when the moment calls for one
 
 Skills follow the `SKILL.md` format shared by Claude Code, Codex CLI, and Kiro CLI. To contribute:
 
-1. Add a folder under `project/skills/<category>/<name>/` in this repo
+1. Add a folder under `project/skills/<name>/` in this repo
 2. Prefix the folder and frontmatter name with `hb-`
 3. Write `SKILL.md` following the format in existing skills. Frontmatter uses only `name` and `description`, plus `based-on` when crediting.
 4. Skills based on existing open source work must credit the original in the `based-on` frontmatter field
