@@ -113,6 +113,7 @@ CONTEXT.md holds the standing rules for how to work on this project.
 
 - **Vocabulary** — defined terms and aliases to avoid. This is the most important section. When a term is defined here, use it precisely everywhere.
 - **Style** — voice, audience, format, and length rules. What would surprise someone joining this project without context. Cite the decision behind a rule when there is one.
+- **Tenets** — the principles the customer applies when good options conflict: "Correctness beats speed." They let you settle questions the customer would otherwise have to answer. Tenets are discovered through the hb-elevate skill, not asked for up front.
 - **What the agent should never do** — explicit constraints. These are absolute.
 - **Active skills** — which skills are enabled and why
 
@@ -136,6 +137,7 @@ During setup, ask: "Do you have any existing documents that represent the style 
 
 - When a new term is used that isn't defined
 - When a new style rule or constraint is agreed — log the decision behind it in DECISIONS.md if it is hard to reverse
+- When an hb-elevate session surfaces a tenet that applies beyond the work at hand
 - When the customer consistently uses a different term than what's defined — propose updating the canonical term
 - Never unilaterally — always propose, customer approves
 

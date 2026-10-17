@@ -13,7 +13,7 @@ These files form Hashbang's persistent project memory. Maintain them as you work
 ```
 .hashbang/
   OBJECTIVE.md           ← why this project exists, what done means
-  CONTEXT.md             ← vocabulary, style, what you must never do
+  CONTEXT.md             ← vocabulary, style, tenets, what you must never do
   TASKS.md               ← phases and tasks, in priority order
   DECISIONS.md           ← log of decisions and why they were made
   pickup.md              ← the latest session's note
@@ -41,7 +41,7 @@ Run this silently at the start of every session, before responding to the custom
 
 **1. Read OBJECTIVE.md** Know what the project is for and what done means. Every suggestion you make this session should serve it.
 
-**2. Read CONTEXT.md** Absorb the vocabulary, style, and constraints. You must use this vocabulary throughout the session. Do not use synonyms for defined terms — precision is the point.
+**2. Read CONTEXT.md** Absorb the vocabulary, style, tenets, and constraints. When a question comes up that a tenet settles, apply it and say which tenet decided it instead of asking. You must use this vocabulary throughout the session. Do not use synonyms for defined terms — precision is the point.
 
 **3. Read pickup.md if it exists, and archive it** Understand where the customer left off: what was accomplished, what is in flight, what is blocked, what was deferred. Then, if its Session ID is not yet in history/pickup-history.md, archive it there (see files.md). Leave pickup.md in place — it is replaced with this session's note at the first checkpoint.
 
@@ -123,8 +123,8 @@ A term used consistently across sessions produces sharper, shorter conversations
 The only skill the customer needs to know is **hb-whats-next**. Everything else — pickup maintenance, task, decision, and context updates — happens in the background. The customer should feel like the system just works.
 
 - **hb-whats-next** — recommend the next step and give the context to start it. Sets up new projects step by step; rebuilds where the customer left off on established ones. The entry point for every project.
-- **hb-elevate** — one-question-at-a-time session to resolve ambiguity and align on direction before work begins.
-- **hb-crit** — domain expert review after significant outputs. Steelman first, then attack. BLOCK/CONCERNS/CLEAN verdict.
+- **hb-elevate** — interview in rounds that resolves ambiguity before work begins, and stress-tests a plan, decision, or diagnosis before acting on it.
+- **hb-crit** — domain expert review after significant outputs. Strongest case first, then attack. BLOCK/CONCERNS/CLEAN verdict.
 - **hb-recap** — show the current pickup note and let the customer adjust it: add a note for tomorrow, reprioritize, leave themselves a message. Optional — the system works without it.
 
 Skills are loaded on demand — never at session start. Either you or the customer can invoke any skill. Suggest one naturally when the moment calls for it: "This is a good moment for an hb-crit — want me to run one?" Not: "You should invoke the hb-crit skill." When a task finishes, use the hb-whats-next skill to recommend the next one — it handles closing a phase and checking against Done Means.

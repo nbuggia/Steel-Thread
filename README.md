@@ -79,8 +79,8 @@ Four skills are included. Your agent suggests them when the moment calls for one
 
 - **hb-whats-next** — recommends the single most valuable next step and gives you what you need to start it. On a new project, that's setup: objective, then context, then phases. On an established one, it rebuilds exactly where you left off inside a task. Run this first, and whenever you sit down to work.
 - **hb-recap** — show the current pickup note and optionally adjust it. Optional — the pickup note is kept current without it.
-- **hb-elevate** — one-question-at-a-time interview loop. Resolves ambiguity before any work begins. Used by hb-whats-next during setup.
-- **hb-crit** — domain expert review after significant outputs. Steelmans first, then attacks. BLOCK/CONCERNS/CLEAN verdict.
+- **hb-elevate** — interview loop, asked in rounds. Resolves ambiguity before work begins, and stress-tests a plan, decision, or diagnosis before you act on it. Used by hb-whats-next during setup.
+- **hb-crit** — domain expert review after significant outputs. Makes the strongest case first, then attacks. BLOCK/CONCERNS/CLEAN verdict.
 
 ## Contributing skills
 
@@ -95,12 +95,12 @@ Skills follow the `SKILL.md` format shared by Claude Code, Codex CLI, and Kiro C
 
 Skills call other skills by name rather than redefining their logic:
 
-- `use the hb-elevate skill` — one-question-at-a-time interview loop
+- `use the hb-elevate skill` — interview loop that clarifies intent or stress-tests a plan
 - `use the hb-crit skill` — domain expert critique after significant outputs
 
 ## Attribution
 
-The hb-elevate skill is based on Matt Pocock's [grill-with-docs](https://github.com/mattpocock/skills) pattern.
+The hb-elevate skill is based on Matt Pocock's [grill-with-docs, grill-me, and grilling](https://github.com/mattpocock/skills) skills.
 
 ## License
 

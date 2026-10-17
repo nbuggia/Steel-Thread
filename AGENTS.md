@@ -35,7 +35,7 @@ project/                   ← the product: what lands in a user's project
     examples/good/, bad/
   skills/
     hb-whats-next/SKILL.md    ← installed; setup, resume, and recommend the next step
-    hb-elevate/SKILL.md       ← installed; alignment loop before work begins
+    hb-elevate/SKILL.md       ← installed; interview that clarifies intent and stress-tests plans
     hb-crit/SKILL.md          ← installed; domain expert review of outputs
     hb-recap/SKILL.md         ← installed; show and adjust the current pickup note
     hb-create-tech-design/    ← not installed yet; still specific to one Tauri project
