@@ -1,8 +1,8 @@
 ---
-name: create-tech-design
+name: hb-create-tech-design
 description: Multi-LLM design review loop for spec, implementation, and testing plans. Use when starting significant new development work before implementation begins.
 ---
-# Create Tech Design Skill
+# hb-create-tech-design
 
 ## Phase 1: Load Review Knowledge
 

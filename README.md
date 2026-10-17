@@ -1,6 +1,6 @@
-# Steel Thread
+# Hashbang Agent Framework
 
-Steel Thread is a lightweight project memory and task tracker for coding agents. It helps your agent remember decisions, track active work, and start each session with the right context. When the agent carries the operational overhead, you can go deeper into a problem, step back to reprioritize, or make a creative leap you couldn't make while managing details.
+The Hashbang Agent Framework is a lightweight project memory and task tracker for coding agents. It helps your agent remember decisions, track active work, and start each session with the right context. When the agent carries the operational overhead, you can go deeper into a problem, step back to reprioritize, or make a creative leap you couldn't make while managing details.
 
 It works with **Claude Code**, **Codex CLI**, and **Kiro CLI**.
 
@@ -13,7 +13,7 @@ It gives your agent four practical capabilities:
 
 ## Installation
 
-Clone Steel Thread anywhere, then run the installer against your project:
+Clone Hashbang anywhere, then run the installer against your project:
 
 ```sh
 git clone https://github.com/nbuggia/Steel-Thread.git
@@ -24,36 +24,38 @@ Then start your agent in the project and ask what's next:
 
 | Agent | Command |
 | --- | --- |
-| Claude Code | `/whats-next` |
-| Codex CLI | `$whats-next` |
-| Kiro CLI | `/whats-next` |
+| Claude Code | `/hb-whats-next` |
+| Codex CLI | `$hb-whats-next` |
+| Kiro CLI | `/hb-whats-next` |
 
 On a new project, it walks you through setup one step at a time, starting with the objective. After that, it's the command to reach for whenever you sit down to work: it tells you where you left off and what to do next.
 
 The installer has no dependencies beyond a POSIX shell. It:
 
-- Copies the operating manual and templates into `.steel-thread/framework/`
+- Copies the operating manual and templates into `.hashbang/framework/`
 - Copies the skills into each agent's skills folder: `.claude/skills/`, `.agents/skills/`, and `.kiro/skills/`
-- Adds a Steel Thread section to `AGENTS.md`, creating the file if needed. Your existing content is kept.
+- Adds a Hashbang section to `AGENTS.md`, creating the file if needed. Your existing content is kept.
 - Adds `@AGENTS.md` to the top of `CLAUDE.md`, creating the file if needed, so Claude Code reads the same instructions as the other agents
 
-Commit everything it creates, so your whole team gets Steel Thread.
+Commit everything it creates, so your whole team gets Hashbang.
 
 ### Updating
 
-Pull the latest Steel Thread and run the installer again. Files you haven't changed are updated, and skills Steel Thread no longer includes are removed. If you edited one of Steel Thread's files, the installer asks before overwriting it. Without a terminal to ask, it keeps your version. The installer only writes to `.steel-thread/framework/` and the skills folders — your objective, tasks, decisions, and notes are never touched.
+Pull the latest Hashbang and run the installer again. Files you haven't changed are updated, and skills Hashbang no longer includes are removed. If you edited one of Hashbang's files, the installer asks before overwriting it. Without a terminal to ask, it keeps your version. The installer only writes to `.hashbang/framework/` and the skills folders — your objective, tasks, decisions, and notes are never touched.
 
-To customize a skill without being asked on every update, add a new skill under a different name instead of editing a Steel Thread one.
+When updating an older Steel Thread installation, the installer migrates `.steel-thread/` to `.hashbang/`, replaces the managed `AGENTS.md` section, and replaces the old skill names with their `hb-` versions.
+
+To customize a skill without being asked on every update, add a new skill under a different name instead of editing a Hashbang one.
 
 ## File structure
 
-Everything Steel Thread knows about your project lives in one hidden folder, `.steel-thread/`, so it stays out of the way of your own files:
+Everything Hashbang knows about your project lives in one hidden folder, `.hashbang/`, so it stays out of the way of your own files:
 
 ```
 your-project/
-  AGENTS.md                ← your file, plus a short Steel Thread section
+  AGENTS.md                ← your file, plus a short Hashbang section
   CLAUDE.md                ← your file, plus @AGENTS.md for Claude Code
-  .steel-thread/
+  .hashbang/
     OBJECTIVE.md           ← why this project exists, what done means
     CONTEXT.md             ← vocabulary, style, what the agent must never do
     TASKS.md               ← phases and tasks, in priority order
@@ -75,29 +77,30 @@ All-caps files are yours to read and shape; the agent keeps them current with yo
 
 Four skills are included. Your agent suggests them when the moment calls for one, and you can invoke any of them directly (`/name` in Claude Code and Kiro, `$name` in Codex):
 
-- **whats-next** — recommends the single most valuable next step and gives you what you need to start it. On a new project, that's setup: objective, then context, then phases. On an established one, it rebuilds exactly where you left off inside a task. Run this first, and whenever you sit down to work.
-- **recap** — show the current pickup note and optionally adjust it. Optional — the pickup note is kept current without it.
-- **elevate** — one-question-at-a-time interview loop. Resolves ambiguity before any work begins. Used by whats-next during setup.
-- **crit** — domain expert review after significant outputs. Steelmans first, then attacks. BLOCK/CONCERNS/CLEAN verdict.
+- **hb-whats-next** — recommends the single most valuable next step and gives you what you need to start it. On a new project, that's setup: objective, then context, then phases. On an established one, it rebuilds exactly where you left off inside a task. Run this first, and whenever you sit down to work.
+- **hb-recap** — show the current pickup note and optionally adjust it. Optional — the pickup note is kept current without it.
+- **hb-elevate** — one-question-at-a-time interview loop. Resolves ambiguity before any work begins. Used by hb-whats-next during setup.
+- **hb-crit** — domain expert review after significant outputs. Steelmans first, then attacks. BLOCK/CONCERNS/CLEAN verdict.
 
 ## Contributing skills
 
 Skills follow the `SKILL.md` format shared by Claude Code, Codex CLI, and Kiro CLI. To contribute:
 
 1. Add a folder under `project/skills/<category>/<name>/` in this repo
-2. Write `SKILL.md` following the format in existing skills. Frontmatter uses only `name` and `description`, plus `based-on` when crediting.
-3. Skills based on existing open source work must credit the original in the `based-on` frontmatter field
-4. Make sure the skill works in all three agents. Don't rely on features only one agent has.
-5. Open a pull request
+2. Prefix the folder and frontmatter name with `hb-`
+3. Write `SKILL.md` following the format in existing skills. Frontmatter uses only `name` and `description`, plus `based-on` when crediting.
+4. Skills based on existing open source work must credit the original in the `based-on` frontmatter field
+5. Make sure the skill works in all three agents. Don't rely on features only one agent has.
+6. Open a pull request
 
 Skills call other skills by name rather than redefining their logic:
 
-- `use the elevate skill` — one-question-at-a-time interview loop
-- `use the crit skill` — domain expert critique after significant outputs
+- `use the hb-elevate skill` — one-question-at-a-time interview loop
+- `use the hb-crit skill` — domain expert critique after significant outputs
 
 ## Attribution
 
-The elevate skill is based on Matt Pocock's [grill-with-docs](https://github.com/mattpocock/skills) pattern.
+The hb-elevate skill is based on Matt Pocock's [grill-with-docs](https://github.com/mattpocock/skills) pattern.
 
 ## License
 

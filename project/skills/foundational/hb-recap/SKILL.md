@@ -1,15 +1,15 @@
 ---
-name: recap
+name: hb-recap
 description: Show the current pickup note and optionally adjust it
 ---
 
 Show the current pickup note and let the customer adjust it.
 
-This skill is optional — the system keeps pickup.md current automatically at every checkpoint. Use recap when the customer wants to review the note, add a message for tomorrow, or explicitly check what's in flight.
+This skill is optional — the system keeps pickup.md current automatically at every checkpoint. Use hb-recap when the customer wants to review the note, add a message for tomorrow, or explicitly check what's in flight.
 
 ## Steps
 
-**1.** Read .steel-thread/pickup.md
+**1.** Read .hashbang/pickup.md
 
 **2.** Display the current pickup note in full — do not summarize it. The customer may need to read it exactly as it will appear at the next session start.
 
@@ -18,7 +18,7 @@ This skill is optional — the system keeps pickup.md current automatically at e
 - "Is anything blocked right now that I should note?"
 - "Want to change the suggested starting point?"
 
-**4.** If the customer makes edits, write them to .steel-thread/pickup.md immediately.
+**4.** If the customer makes edits, write them to .hashbang/pickup.md immediately.
 
 **5.** Confirm: "Pickup note updated. You're good to close whenever you're ready."
 

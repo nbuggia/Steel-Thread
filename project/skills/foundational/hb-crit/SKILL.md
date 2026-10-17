@@ -1,11 +1,11 @@
 ---
-name: crit
+name: hb-crit
 description: Domain expert review that steelmans then attacks significant outputs. Mandatory findings. Clear verdict.
 ---
 
 Review work from the perspective of the most knowledgeable, most critical domain expert in the relevant field. Steelman first, then attack. Mandatory findings. Clear verdict.
 
-Run the review in a clean context so it is unbiased. If your agent can start a subagent, give it only the work being reviewed, .steel-thread/OBJECTIVE.md, and .steel-thread/CONTEXT.md — not the current session's conversation history. If it cannot, review only the work and those two files, and set aside what was said in this session about intent.
+Run the review in a clean context so it is unbiased. If your agent can start a subagent, give it only the work being reviewed, .hashbang/OBJECTIVE.md, and .hashbang/CONTEXT.md — not the current session's conversation history. If it cannot, review only the work and those two files, and set aside what was said in this session about intent.
 
 Used after significant outputs — written arguments, strategy docs, proposals, marketing copy, reports. The customer sees the verdict and resolutions, not the process.
 
@@ -56,8 +56,8 @@ Deliver a verdict:
 
 For every finding, propose what to do about it:
 - A specific revision to make
-- A new task to add to .steel-thread/TASKS.md
+- A new task to add to .hashbang/TASKS.md
 - A question to answer before proceeding
-- A risk to accept explicitly, logged in .steel-thread/DECISIONS.md
+- A risk to accept explicitly, logged in .hashbang/DECISIONS.md
 
 Never just flag problems. Always suggest the next move. The customer should finish reading the review knowing exactly what to do, not just what is wrong.

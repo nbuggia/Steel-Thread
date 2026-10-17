@@ -1,10 +1,10 @@
 ---
-name: elevate
+name: hb-elevate
 description: One-question-at-a-time session to resolve ambiguity and align on direction before work begins
 based-on: Matt Pocock, grill-with-docs (https://github.com/mattpocock/skills)
 ---
 
-Resolves ambiguity before any work begins. Used by the whats-next skill during setup and by any skill that needs deep understanding of intent before acting.
+Resolves ambiguity before any work begins. Used by the hb-whats-next skill during setup and by any skill that needs deep understanding of intent before acting.
 
 ## The loop
 
@@ -17,12 +17,12 @@ Resolves ambiguity before any work begins. Used by the whats-next skill during s
 
 ## While elevating, maintain vocabulary
 
-As terms are resolved, propose additions to the vocabulary in .steel-thread/CONTEXT.md:
+As terms are resolved, propose additions to the vocabulary in .hashbang/CONTEXT.md:
 "We just defined X as Y — want me to add that to the project context?"
 One-tap approval. Do not wait until the end.
 
 ## Output
 
 Shared understanding recorded in the relevant document.
-New vocabulary proposed for .steel-thread/CONTEXT.md.
-Key decisions proposed as entries in .steel-thread/DECISIONS.md.
+New vocabulary proposed for .hashbang/CONTEXT.md.
+Key decisions proposed as entries in .hashbang/DECISIONS.md.

@@ -1,6 +1,6 @@
-# Steel Thread Files — Formats and Rules
+# Hashbang Files — Formats and Rules
 
-How to write and maintain each Steel Thread file. Read this before you first create or edit one of them in a session. All paths are relative to `.steel-thread/`. Starter files are in `framework/templates/`.
+How to write and maintain each Hashbang file. Read this before you first create or edit one of them in a session. All paths are relative to `.hashbang/`. Starter files are in `framework/templates/`.
 
 ## OBJECTIVE.md
 
@@ -64,7 +64,7 @@ Always ask before adding a task: "I noticed X needs doing — want me to add tha
 
 ### How phases are created
 
-Phases are planned during setup, once the objective exists (see the whats-next skill). You propose them based on what the customer describes, customer approves or adjusts. Both can add phases as the project evolves. Always propose before creating: "It sounds like this project has three natural phases — Research, Drafting, and Review. Does that feel right?"
+Phases are planned during setup, once the objective exists (see the hb-whats-next skill). You propose them based on what the customer describes, customer approves or adjusts. Both can add phases as the project evolves. Always propose before creating: "It sounds like this project has three natural phases — Research, Drafting, and Review. Does that feel right?"
 
 ### How tasks are prioritized
 
@@ -126,7 +126,7 @@ Voice: write "We recommend" not "It is recommended that" Length: each section sh
 
 Longer examples live as files in examples/ and are referenced by path in CONTEXT.md:
 
-Good executive summary: .steel-thread/examples/good/exec-summary.md Avoid this tone: .steel-thread/examples/bad/too-formal.md
+Good executive summary: .hashbang/examples/good/exec-summary.md Avoid this tone: .hashbang/examples/bad/too-formal.md
 
 Load examples on demand — only when the task calls for them. Do not load all examples at session start.
 
@@ -171,7 +171,7 @@ Session: S-012 · 2026-10-09
 
 - The `Session:` line identifies the note. IDs are `S-` plus three digits: the newest ID in history/pickup-history.md plus one, or S-001 when there is no history.
 - Leave out any section with nothing in it.
-- Reference tasks and decisions by ID (T-003, D-002) and files by path. Do not duplicate content already in the other Steel Thread files.
+- Reference tasks and decisions by ID (T-003, D-002) and files by path. Do not duplicate content already in the other Hashbang files.
 
 ---
 
@@ -216,7 +216,7 @@ The record of what changed in the project, so a returning session can see what m
   "changes": [
     {
       "date": "2026-10-06",
-      "file": ".steel-thread/DECISIONS.md",
+      "file": ".hashbang/DECISIONS.md",
       "change": "Added D-002: US 5-digit zip codes only."
     }
   ]

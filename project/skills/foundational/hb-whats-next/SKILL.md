@@ -1,11 +1,11 @@
 ---
-name: whats-next
+name: hb-whats-next
 description: Recommend the single most valuable next step and give the customer what they need to start it. Sets up a new project one step at a time (objective, context, phases), and for an established project rebuilds where they left off and what to do next. Use when starting or resuming work, or when the customer asks what's next.
 ---
 
 One job: recommend the single most valuable next step, and give the customer everything they need to start it right away. One recommendation, not a menu. Offer at most one alternative, and only when it is a real contender.
 
-All Steel Thread files live in `.steel-thread/`. Starter files are in `.steel-thread/framework/templates/`, and the format and rules for each file are in `.steel-thread/framework/files.md` — read it before writing any of them. Never write anything into `.steel-thread/framework/`.
+All Hashbang files live in `.hashbang/`. Starter files are in `.hashbang/framework/templates/`, and the format and rules for each file are in `.hashbang/framework/files.md` — read it before writing any of them. Never write anything into `.hashbang/framework/`.
 
 ## Step 1 — Read the state
 
@@ -27,7 +27,7 @@ Then find the first row that matches:
 
 A new project is set up one step at a time. Each step is a short conversation that produces one file. When a step is done, say what's next and offer to keep going: "The objective is written. Next is the project vocabulary — about five minutes. Keep going, or start working and do it later?"
 
-Use the elevate skill for every interview. Propose what you've captured before writing it: "Here's what I've got — does this look right before I write it?" One-tap approval. Never write placeholder text — if a section has nothing yet, leave it out.
+Use the hb-elevate skill for every interview. Propose what you've captured before writing it: "Here's what I've got — does this look right before I write it?" One-tap approval. Never write placeholder text — if a section has nothing yet, leave it out.
 
 ### Create the objective
 
@@ -40,7 +40,7 @@ Interview, in order:
 3. **Not doing** — what is explicitly out of scope? Get at least two items. If the customer can't name any, the project isn't scoped yet — say so.
 4. **Constraints** — deadlines, budget, platforms, anything that cannot change.
 
-Write .steel-thread/OBJECTIVE.md from the template. At the same time, create whichever of these don't exist yet, from the templates: DECISIONS.md, pickup.md, history/pickup-history.md, history/changelog.json, examples/good/, examples/bad/. Never overwrite a file that exists.
+Write .hashbang/OBJECTIVE.md from the template. At the same time, create whichever of these don't exist yet, from the templates: DECISIONS.md, pickup.md, history/pickup-history.md, history/changelog.json, examples/good/, examples/bad/. Never overwrite a file that exists.
 
 Log any hard-to-reverse choice the interview surfaced in DECISIONS.md, with approval.
 
@@ -49,9 +49,9 @@ Log any hard-to-reverse choice the interview surfaced in DECISIONS.md, with appr
 1. **Vocabulary** — what terms are defined in this domain? What would someone get wrong without context? What aliases or synonyms should be avoided?
 2. **Style** (if writing project) — what is the voice? Who is the audience? What are the hard rules about format or length? What tone is off-limits?
 3. **Never do** — what should the agent never do on this project? What would be a serious mistake?
-4. **Examples** — "Do you have any existing documents that represent the style or quality you're going for?" If yes, save them to .steel-thread/examples/good/ and reference them in CONTEXT.md.
+4. **Examples** — "Do you have any existing documents that represent the style or quality you're going for?" If yes, save them to .hashbang/examples/good/ and reference them in CONTEXT.md.
 
-Write .steel-thread/CONTEXT.md from the template. For a small project, the customer may skip this — then write CONTEXT.md with just a Vocabulary heading, so this step isn't offered again, and fill it in as terms come up.
+Write .hashbang/CONTEXT.md from the template. For a small project, the customer may skip this — then write CONTEXT.md with just a Vocabulary heading, so this step isn't offered again, and fill it in as terms come up.
 
 ### Plan phases and first tasks
 
@@ -62,7 +62,7 @@ Propose phases based on the objective:
 
 "Based on the objective, I'd suggest three phases — [names]. Does that feel right, or should we adjust?"
 
-Then propose the first few tasks for the first phase only. Later phases get tasks when they start. Write only what the customer approves to .steel-thread/TASKS.md.
+Then propose the first few tasks for the first phase only. Later phases get tasks when they start. Write only what the customer approves to .hashbang/TASKS.md.
 
 When setup is complete, go straight to Resume and recommend the first task.
 
@@ -115,12 +115,12 @@ The next step must be concrete and small enough to start immediately — a speci
 Every task in the current phase is done.
 
 - Summarize what the phase produced, in two or three lines
-- If the phase produced a significant output, suggest a crit before moving on
+- If the phase produced a significant output, suggest an hb-crit before moving on
 - Propose marking the phase complete, then propose the first few tasks for the next phase
 
 ## Check against Done Means
 
-Every phase is done. Go through each Done Means criterion in OBJECTIVE.md and say whether the work meets it, with evidence. Then recommend one of: a final crit, a new phase for what is missing, or calling the project done.
+Every phase is done. Go through each Done Means criterion in OBJECTIVE.md and say whether the work meets it, with evidence. Then recommend one of: a final hb-crit, a new phase for what is missing, or calling the project done.
 
 ## After the recommendation
 

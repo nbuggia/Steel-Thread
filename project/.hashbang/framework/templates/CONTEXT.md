@@ -30,7 +30,7 @@
 
 ## Examples
 
-\[Short examples live inline. Longer examples live in .steel-thread/examples/ and are referenced here.\]
+\[Short examples live inline. Longer examples live in .hashbang/examples/ and are referenced here.\]
 
 **Good:**
 
@@ -42,5 +42,5 @@
 
 Longer examples:
 
-- Good: `.steel-thread/examples/good/[filename]`
-- Avoid: `.steel-thread/examples/bad/[filename]`
+- Good: `.hashbang/examples/good/[filename]`
+- Avoid: `.hashbang/examples/bad/[filename]`

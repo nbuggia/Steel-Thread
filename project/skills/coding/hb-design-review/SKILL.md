@@ -1,9 +1,9 @@
 ---
-name: design-review
+name: hb-design-review
 description: Multi-LLM design review loop for spec, implementation, and testing plans. Use when starting significant new development work before implementation begins.
 ---
 
-# Design Review Skill
+# hb-design-review
 
 ## Phase 0: Load Review Knowledge
 

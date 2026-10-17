@@ -37,4 +37,4 @@
 
 ## Framework
 
-- Replace the TASKS.md read in the Session Start Protocol (steel-thread.md, step 4) with a call to the app's CLI that returns active tasks, once the CLI exists.
+- Replace the TASKS.md read in the Session Start Protocol (hashbang.md, step 4) with a call to the app's CLI that returns active tasks, once the CLI exists.

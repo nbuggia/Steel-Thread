@@ -1,6 +1,6 @@
-# Building Steel Thread
+# Building Hashbang
 
-This repo builds Steel Thread, a framework that gives coding agents persistent project memory and structured task management. These instructions are for working on Steel Thread itself.
+This repo builds the Hashbang Agent Framework, which gives coding agents persistent project memory and structured task management. These instructions are for working on Hashbang itself.
 
 ## The project/ folder is the product, not your instructions
 
@@ -17,42 +17,43 @@ Claude Code, Codex CLI, and Kiro CLI. Every change under `project/` must work in
 ## Repo layout
 
 ```
-AGENTS.md, CLAUDE.md       ← instructions for building Steel Thread (this file)
+AGENTS.md, CLAUDE.md       ← instructions for building Hashbang (this file)
 .claude/settings.json      ← keeps Claude Code from loading project/ instructions
 install.sh                 ← installs project/ into a target project
 README.md                  ← user-facing installation and usage docs
 TODO.md                    ← known gaps and open work
 research/prior-art.md      ← what other tools do for project memory, and lessons
 project/                   ← the product: what lands in a user's project
-  AGENTS.md                ← Steel Thread block, merged into the user's AGENTS.md
+  AGENTS.md                ← Hashbang block, merged into the user's AGENTS.md
   CLAUDE.md                ← import line, added to the top of the user's CLAUDE.md
-  .steel-thread/
+  .hashbang/
     framework/
-      steel-thread.md      ← framework operating manual (the core product), read every session
+      hashbang.md          ← framework operating manual (the core product), read every session
       files.md             ← format and maintenance rules per file, read before editing them
       templates/           ← starter files used during setup: OBJECTIVE, CONTEXT,
                              TASKS, DECISIONS, pickup, history files
     examples/good/, bad/
   skills/
     foundational/          ← installed into .claude/skills, .agents/skills, .kiro/skills
-      whats-next/SKILL.md  ← step-by-step setup, then resume and recommend the next step
-      elevate/SKILL.md     ← alignment loop before work begins
-      crit/SKILL.md        ← domain expert review of outputs
-      recap/SKILL.md       ← show and adjust current pickup note
+      hb-whats-next/SKILL.md  ← step-by-step setup, then resume and recommend the next step
+      hb-elevate/SKILL.md     ← alignment loop before work begins
+      hb-crit/SKILL.md        ← domain expert review of outputs
+      hb-recap/SKILL.md       ← show and adjust current pickup note
     coding/                ← not installed yet; still specific to one Tauri project
 ```
 
-`install.sh` copies `project/.steel-thread/framework/` into the user's `.steel-thread/framework/`, creates the empty state folders, copies each skill in `project/skills/foundational/` into all three agents' skills folders, and merges `project/AGENTS.md` and `project/CLAUDE.md` into the user's files.
+`install.sh` copies `project/.hashbang/framework/` into the user's `.hashbang/framework/`, creates the empty state folders, copies each skill in `project/skills/foundational/` into all three agents' skills folders, and merges `project/AGENTS.md` and `project/CLAUDE.md` into the user's files.
 
 ## How skills work
 
-Each skill lives in its own folder with a `SKILL.md` file. Skills are loaded on demand — never at session start. Foundational skills (elevate, crit) are called by name from other skills rather than redefined: "use the elevate skill", "use the crit skill".
+Each skill lives in its own folder with a `SKILL.md` file. Skills are loaded on demand — never at session start. Foundational skills (hb-elevate, hb-crit) are called by name from other skills rather than redefined: "use the hb-elevate skill", "use the hb-crit skill".
 
-Invocation syntax differs by agent: `/whats-next` in Claude Code and Kiro CLI, `$whats-next` in Codex CLI.
+Invocation syntax differs by agent: `/hb-whats-next` in Claude Code and Kiro CLI, `$hb-whats-next` in Codex CLI.
 
 ## Contribution conventions
 
 - New skills go in `project/skills/<category>/<name>/SKILL.md`
+- Every skill folder and frontmatter name starts with `hb-`
 - Frontmatter uses only `name` and `description`, plus `based-on` when crediting: skills based on existing open source work must credit the original there
 - The skill format follows existing SKILL.md files — read one before writing one
 - Skills are copied, not symlinked, into each agent's folder: Windows checks symlinks out as text files, and not every agent is confirmed to follow them
