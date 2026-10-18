@@ -4,7 +4,7 @@ design doc: [link]
 design doc version/commit: [commit/version]
 date created: YYYY-MM-DD
 last updated: YYYY-MM-DD
-status: Planning / In Progress / Complete
+status: Draft / Approved / Implementing / Done
 ---
 
 # Slicing Plan: Feature

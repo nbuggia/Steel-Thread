@@ -4,7 +4,7 @@ bug: short title
 rigor: Simple
 deciding tenet: [revertible and test-settled; demonstrable in one slice]
 date created: YYYY-MM-DD
-status: Planning / Ready / Complete / Escalated
+status: Draft / In Review / Approved / Implementing / Done / Escalated / Superseded
 review iteration: 0
 ---
 

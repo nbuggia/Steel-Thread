@@ -5,7 +5,7 @@ rigor: Complex
 deciding tenet: [what escapes, or what no test can settle]
 date: YYYY-MM-DD
 review iteration: N
-status: In Progress / Ready for Review / Ready for Implementation / Complete
+status: Draft / In Review / Approved / Implementing / Done / Superseded
 ---
 
 # Tech Design: Bug or Feature Name

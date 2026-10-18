@@ -30,6 +30,8 @@ project/                   ← the product: what lands in a user's project
     framework/
       hashbang.md          ← framework operating manual (the core product), read every session
       files.md             ← format and maintenance rules per file, read before editing them
+      development.md       ← software process (spec → prototype → design → slices → tests),
+                             file structure, and how the skills connect
       templates/           ← starter files used during setup: OBJECTIVE, CONTEXT,
                              TASKS, DECISIONS, pickup, history files
     examples/good/, bad/
@@ -38,6 +40,7 @@ project/                   ← the product: what lands in a user's project
     hb-elevate/SKILL.md       ← installed; interview that clarifies intent and stress-tests plans
     hb-crit/SKILL.md          ← installed; domain expert review of outputs
     hb-recap/SKILL.md         ← installed; show and adjust the current pickup note
+    hb-spec/                  ← installed; feature spec, process in SKILL.md, format in spec-template.md
     hb-create-tech-design/    ← not installed yet; still specific to one Tauri project
     hb-design-review/         ← not installed yet; still specific to one Tauri project
 ```

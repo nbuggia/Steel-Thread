@@ -91,7 +91,7 @@ The design is **not** ready for implementation if any of these are true:
 - Something driving most of the design's complexity has no recorded decision behind it.
 - A required user confirmation (from §4) hasn't happened yet.
 
-Once approved: set the status to `Ready for Implementation`, make any provisional failure-mode/review-pattern edits final, and append this review's feedback to `{{tech_docs}}DESIGN-REVIEW-LOG.md`.
+Once approved: set the status to `Approved`, make any provisional failure-mode/review-pattern edits final, and append this review's feedback to `{{tech_docs}}DESIGN-REVIEW-LOG.md`.
 
 When you finish, report: the rigor level and which selection criteria decided it, the files touched, how many review passes ran, the slice count, any knowledge-base changes, open questions, the output file's line count, whether history was preserved or anything removed, and either "ready" or the exact thing still blocking it.
 

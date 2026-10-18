@@ -26,12 +26,15 @@ These files form Hashbang's persistent project memory. Maintain them as you work
   framework/             ← owned by the installer — never edit
     hashbang.md         ← your operating manual (this file)
     files.md             ← formats and rules for each file above
+    development.md       ← the software development process, from spec to tests
     templates/           ← starter files used during setup
 ```
 
 All-caps files are the customer's: they read them and shape them, and you maintain them with their approval. Lowercase files are working files you maintain on your own.
 
 **Before you first create or edit any Hashbang file in a session, read** `framework/files.md`**.** It has the exact format and maintenance rules for each one. You do not need it to read the files.
+
+**In a software project, before you start a feature or a bug fix, read** `framework/development.md`**.** It has the process from spec to tests, where each document goes, and which skill runs each step.
 
 Never edit anything in `.hashbang/framework/`. It is replaced when Hashbang is updated, and edits there are lost or trigger overwrite prompts.
 
@@ -125,6 +128,7 @@ The only skill the customer needs to know is **hb-whats-next**. Everything else 
 - **hb-whats-next** — recommend the next step and give the context to start it. Sets up new projects step by step; rebuilds where the customer left off on established ones. The entry point for every project.
 - **hb-elevate** — interview in rounds that resolves ambiguity before work begins, and stress-tests a plan, decision, or diagnosis before acting on it.
 - **hb-crit** — domain expert review after significant outputs. Strongest case first, then attack. BLOCK/CONCERNS/CLEAN verdict.
+- **hb-spec** — write or update a feature spec: what the product does and why, as numbered rules that designs and tests cite. The first step of `framework/development.md`.
 - **hb-recap** — show the current pickup note and let the customer adjust it: add a note for tomorrow, reprioritize, leave themselves a message. Optional — the system works without it.
 
 Skills are loaded on demand — never at session start. Either you or the customer can invoke any skill. Suggest one naturally when the moment calls for it: "This is a good moment for an hb-crit — want me to run one?" Not: "You should invoke the hb-crit skill." When a task finishes, use the hb-whats-next skill to recommend the next one — it handles closing a phase and checking against Done Means.

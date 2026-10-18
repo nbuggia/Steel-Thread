@@ -1,6 +1,6 @@
 # Design Red Flags
 
-Screen the proposed design (§6) and every alternative (§11) against this list before marking a design `Ready for Review`. A red flag is a reason to revise the shape — not an automatic rejection. Some are justified; if one survives, record why in the design's rationale rather than silently dropping it.
+Screen the proposed design (§6) and every alternative (§11) against this list before marking a design `In Review`. A red flag is a reason to revise the shape — not an automatic rejection. Some are justified; if one survives, record why in the design's rationale rather than silently dropping it.
 
 ## Shallow module
 

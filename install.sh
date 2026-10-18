@@ -26,7 +26,7 @@ LEGACY_END='<!-- steel-thread:end -->'
 
 # Skill folders read by each supported agent.
 SKILL_DIRS=".claude/skills .agents/skills .kiro/skills"
-SHIPPED_SKILLS="hb-crit hb-elevate hb-recap hb-whats-next"
+SHIPPED_SKILLS="hb-crit hb-elevate hb-recap hb-spec hb-whats-next"
 
 # Fingerprints of what was last installed, used to tell local edits
 # apart from files that are simply out of date.
@@ -135,6 +135,7 @@ mkdir -p "$DEST/.hashbang/framework" "$DEST/.hashbang/history" \
   "$DEST/.hashbang/examples/good" "$DEST/.hashbang/examples/bad"
 install_item "$SRC/.hashbang/framework/hashbang.md" .hashbang/framework/hashbang.md
 install_item "$SRC/.hashbang/framework/files.md" .hashbang/framework/files.md
+install_item "$SRC/.hashbang/framework/development.md" .hashbang/framework/development.md
 install_item "$SRC/.hashbang/framework/templates" .hashbang/framework/templates
 
 # 2. Skills, one identical copy per agent
