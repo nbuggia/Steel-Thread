@@ -23,60 +23,13 @@ OBJECTIVE.md says why the project exists and what done means. It is short enough
 
 ## TASKS.md
 
-### Format
-
-```markdown
-# Tasks
-
-## Phase 1 — Data ✓ 2026-10-03
-- [x] T-001 Import frost date table · high · done 2026-10-03
-
-## Phase 2 — CLI
-- [ ] T-002 Write planting window calculator · high
-      Signature is in src/window.py; logic not started.
-- [ ] T-003 Add --zip flag · medium
-      Blocked: waiting on decision about non-US postal codes.
-```
-
-- Each phase is a `##` heading: `## Phase N — Name`. A completed phase gets ` ✓ YYYY-MM-DD` appended.
-- Each task is one checkbox line: `- [ ] T-NNN Title · priority`. A completed task becomes `- [x]` with ` · done YYYY-MM-DD` appended.
-- Detail goes on indented lines under the task.
-- IDs are `T-` plus three digits. A new task takes the highest existing ID plus one. IDs are never reused or changed, so other files can refer to a task by ID even after its title changes.
-
-### Rules
-
-- Phases are complete or incomplete. Sequence in the file is the sequence they appear. The current phase is the first incomplete phase.
-- Tasks are complete or incomplete. Sequence within a phase is the sequence they appear. The current task is the first incomplete task in the current phase.
-- Priority is high, medium, or low — a category, not an order. Order within priority is determined by position in the file.
-- Tasks belong to exactly one phase.
-- Tasks and phases are never deleted or moved — only marked complete with a date. The full history stays in the file.
-- Blocked tasks stay incomplete. The blocked reason goes on an indented line starting `Blocked:`.
-- The customer can read and edit the file directly; respect their edits.
-
-### How tasks are created
-
-- When you notice something that needs doing while working
-- When the customer mentions something they want to do
-- When a document review surfaces a gap
-- When a blocker is resolved and a new task becomes available
-
-Always ask before adding a task: "I noticed X needs doing — want me to add that to your task list?"
-
-### How phases are created
-
-Phases are planned during setup, once the objective exists (see the hb-whats-next skill). You propose them based on what the customer describes, customer approves or adjusts. Both can add phases as the project evolves. Always propose before creating: "It sounds like this project has three natural phases — Research, Drafting, and Review. Does that feel right?"
-
-### How tasks are prioritized
-
-Priority tier (high/medium/low) is set when the task is created. Order within a tier is position in the file. The customer can reorder by asking, or by editing the file.
-
-When in doubt about priority, ask. The customer's judgment is the final word.
+Change TASKS.md only through the hb-tasks skill, which holds its format and rules.
 
 ---
 
 ## DECISIONS.md
 
-DECISIONS.md is the log of choices that are hard to reverse or likely to be argued again, and the reasoning behind them. It answers "why is it like this?" so the customer never has to reconstruct it, and so no session re-litigates a settled question by accident.
+DECISIONS.md is the log of why: the reasoning behind choices that all future work has to follow, and what was rejected. It answers "why is it like this?" so the customer never has to reconstruct it, and so no session re-litigates a settled question by accident.
 
 ### Format
 
@@ -92,16 +45,16 @@ Rejected: Any postal code with a fallback lookup — needs a second data source.
 Affects: T-003, OBJECTIVE.md
 ```
 
-- IDs are `D-` plus three digits, assigned the same way as task IDs.
+- IDs are `D-` plus three digits. A new decision takes the highest existing ID plus one; IDs are never reused.
 - Status is `Active` or `Superseded by D-NNN`.
 - `Rejected` and `Affects` can be omitted when there is nothing to say.
 
 ### Rules
 
 - Entries are never edited or deleted. When a decision changes, add a new entry and change only the old entry's Status line to `Superseded by D-NNN`.
-- Record decisions that constrain future work, would surprise someone joining the project, or are likely to be suggested again. Routine choices do not belong here.
+- Record a decision only if future work has to follow it, and it is also expensive to undo or likely to be proposed the other way later. A choice that shapes only the current task stays in the document where it was made: its spec, design, or slicing plan.
 - Never record unilaterally — always propose: "We just decided X — want me to log that as a decision?"
-- Other files state the current rule and cite the decision for the reason: "Voice: first person (D-004)."
+- DECISIONS.md never states the current rule. The rule lives where it applies — CONTEXT.md, or in a software project the documents in `framework/development.md`'s "Where information lives" — and cites the decision for the reason: "Voice: first person (D-004)."
 
 ---
 
@@ -113,7 +66,7 @@ CONTEXT.md holds the standing rules for how to work on this project.
 
 - **Vocabulary** — defined terms and aliases to avoid. This is the most important section. When a term is defined here, use it precisely everywhere.
 - **Style** — voice, audience, format, and length rules. What would surprise someone joining this project without context. Cite the decision behind a rule when there is one.
-- **Tenets** — the principles the customer applies when good options conflict: "Correctness beats speed." They let you settle questions the customer would otherwise have to answer. Tenets are discovered through the hb-elevate skill, not asked for up front.
+- **Tenets** — the principles the customer applies when good options conflict: "Correctness beats speed." They let you settle questions the customer would otherwise have to answer. Tenets are discovered through the hb-elevate skill, not asked for up front. A tenet is a principle for settling future choices; one specific choice is a decision, and goes in DECISIONS.md.
 - **What the agent should never do** — explicit constraints. These are absolute.
 - **Active skills** — which skills are enabled and why
 
@@ -240,3 +193,30 @@ The record of what changed in the project, so a returning session can see what m
 - Log at the same checkpoint where you update pickup.md, not after every keystroke-level edit.
 - One entry per file per checkpoint. Several edits to one file for the same reason are one entry.
 - Newest entries go last. Entries are never edited or deleted.
+
+---
+
+## customizations.md
+
+The record of what this project changed in Hashbang's framework files and skills, and why. The hb-update skill reads it to tell a deliberate change from an outdated one when it merges a new Hashbang version. You maintain it on your own — it needs no approval.
+
+### Format
+
+```markdown
+# Customizations
+
+## .claude/skills/hb-design/templates/complex-tech-design-template.md · 2026-10-18
+
+Renamed Interface Contract to Tauri Commands & Events, and added a Capabilities row for each new command. Every feature here crosses the Rust/WebView boundary (hb-dev-setup).
+
+## .hashbang/framework/development.md · 2026-10-12
+
+Added a manual accessibility check to step 5. VoiceOver regressions shipped twice (D-007).
+```
+
+### Rules
+
+- One entry per file per change, newest first, headed with the file's path from the project root and the date.
+- Say what changed and why, in one to three lines. The why is what lets a later merge keep the change; cite the decision or the skill behind it.
+- Log every change to a framework file or skill, including ones made by hb-dev-setup and hb-update.
+- When a later change undoes an earlier one, add a new entry saying so; never edit or delete old entries.

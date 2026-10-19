@@ -5,7 +5,7 @@ description: Recommend the single most valuable next step and give the customer 
 
 One job: recommend the single most valuable next step, and give the customer everything they need to start it right away. One recommendation, not a menu. Offer at most one alternative, and only when it is a real contender.
 
-All Hashbang files live in `.hashbang/`. Starter files are in `.hashbang/framework/templates/`, and the format and rules for each file are in `.hashbang/framework/files.md` — read it before writing any of them. Never write anything into `.hashbang/framework/`.
+All Hashbang files live in `.hashbang/`. Starter files are in `.hashbang/framework/templates/`, and the format and rules for each file are in `.hashbang/framework/files.md` — read it before writing any of them.
 
 ## Step 1 — Read the state
 
@@ -17,6 +17,7 @@ Then find the first row that matches:
 | --- | --- |
 | No OBJECTIVE.md | Setup: create the objective |
 | No CONTEXT.md | Setup: capture context |
+| A software project with no `docs/engineering/ARCHITECTURE.md` | Setup: tailor development |
 | TASKS.md has no phases | Setup: plan phases and first tasks |
 | The customer says the direction has changed | Reframe |
 | Open tasks in the current phase | Resume |
@@ -26,6 +27,8 @@ Then find the first row that matches:
 ## Setup steps
 
 A new project is set up one step at a time. Each step is a short conversation that produces one file. When a step is done, say what's next and offer to keep going: "The objective is written. Next is the project vocabulary — about five minutes. Keep going, or start working and do it later?"
+
+In an existing project, read before you ask: the README, the docs, the code's structure, and recent version-control history. Draft each file from what they show, and interview only for what they can't answer — usually the outcome, done means, and not doing.
 
 Use the hb-elevate skill for every interview. Propose what you've captured before writing it: "Here's what I've got — does this look right before I write it?" One-tap approval. Never write placeholder text — if a section has nothing yet, leave it out.
 
@@ -40,7 +43,7 @@ Interview, in order:
 3. **Not doing** — what is explicitly out of scope? Get at least two items. If the customer can't name any, the project isn't scoped yet — say so.
 4. **Constraints** — deadlines, budget, platforms, anything that cannot change.
 
-Write .hashbang/OBJECTIVE.md from the template. At the same time, create whichever of these don't exist yet, from the templates: DECISIONS.md, pickup.md, history/pickup-history.md, history/changelog.json, examples/good/, examples/bad/. Never overwrite a file that exists.
+Write .hashbang/OBJECTIVE.md from the template. At the same time, create whichever of these don't exist yet, from the templates: DECISIONS.md, pickup.md, customizations.md, history/pickup-history.md, history/changelog.json, examples/good/, examples/bad/. Never overwrite a file that exists.
 
 Log any hard-to-reverse choice the interview surfaced in DECISIONS.md, with approval.
 
@@ -53,16 +56,21 @@ Log any hard-to-reverse choice the interview surfaced in DECISIONS.md, with appr
 
 Write .hashbang/CONTEXT.md from the template. For a small project, the customer may skip this — then write CONTEXT.md with just a Vocabulary heading, so this step isn't offered again, and fill it in as terms come up.
 
+### Tailor development
+
+A software project is one whose objective is software, or whose folder holds code. Use the hb-dev-setup skill. It learns the stack from the code, or from the objective's constraints for a new project, writes the engineering docs, and adapts the development process to the stack. Say why before starting: "This is a Tauri app, so I'll fit the design and test process to Rust, the WebView, and your targets. About ten minutes, mostly reading code."
+
 ### Plan phases and first tasks
 
 Propose phases based on the objective:
 
 - Writing project: typically Research → Drafting → Review → Polish
+- Software project: typically one phase per release of the product, each ending in something users can run. The first tasks are usually specs for the first release (see `.hashbang/framework/development.md`)
 - Other: propose based on what the objective and Done Means require
 
 "Based on the objective, I'd suggest three phases — [names]. Does that feel right, or should we adjust?"
 
-Then propose the first few tasks for the first phase only. Later phases get tasks when they start. Write only what the customer approves to .hashbang/TASKS.md.
+Then propose the first few tasks for the first phase only. Later phases get tasks when they start. Write what the customer approves with the hb-tasks skill.
 
 When setup is complete, go straight to Resume and recommend the first task.
 
@@ -73,7 +81,7 @@ When the customer says the direction, scope, or definition of done has changed:
 - Run the objective interview again, focused on what changed — not what you already know
 - Propose edits to OBJECTIVE.md rather than rewriting it
 - Log the change in DECISIONS.md, superseding earlier decisions it overturns
-- Do not reset TASKS.md. Propose new phases or tasks the new direction needs, and flag open tasks that no longer serve the objective
+- Do not reset TASKS.md. Propose new phases or tasks the new direction needs, through the hb-tasks skill, and flag open tasks that no longer serve the objective
 - Then continue with Resume
 
 ## Resume
@@ -116,7 +124,7 @@ Every task in the current phase is done.
 
 - Summarize what the phase produced, in two or three lines
 - If the phase produced a significant output, suggest an hb-crit before moving on
-- Propose marking the phase complete, then propose the first few tasks for the next phase
+- Mark the phase complete and propose the first few tasks for the next phase, with the hb-tasks skill
 
 ## Check against Done Means
 

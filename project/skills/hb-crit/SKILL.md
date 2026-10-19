@@ -56,8 +56,8 @@ Deliver a verdict:
 
 For every finding, propose what to do about it:
 - A specific revision to make
-- A new task to add to .hashbang/TASKS.md
+- A new task, added with the hb-tasks skill
 - A question to answer before proceeding
-- A risk to accept explicitly, logged in .hashbang/DECISIONS.md
+- A risk to accept explicitly. Log it in .hashbang/DECISIONS.md if it affects future work, along with any finding rejected on principle, so later reviews don't raise it again
 
 Never just flag problems. Always suggest the next move. The customer should finish reading the review knowing exactly what to do, not just what is wrong.

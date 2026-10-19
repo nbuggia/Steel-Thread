@@ -36,4 +36,5 @@
 
 ## Framework
 
+- After 1.0.0: add agent-facing release notes (what changed in each version, and why) to `project/.hashbang/framework/`, and have hb-update read them so it can carry Hashbang's intent into heavily customized files.
 - Replace the TASKS.md read in the Session Start Protocol (hashbang.md, step 4) with a call to the app's CLI that returns active tasks, once the CLI exists.

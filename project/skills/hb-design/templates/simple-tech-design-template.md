@@ -1,16 +1,17 @@
 ---
 name: fix plan
 bug: short title
+task: T-NNN
 rigor: Simple
 deciding tenet: [revertible and test-settled; demonstrable in one slice]
 date created: YYYY-MM-DD
-status: Draft / In Review / Approved / Implementing / Done / Escalated / Superseded
+status: Draft / Approved / Done / Blocked / Superseded
 review iteration: 0
 ---
 
 # Tech Design: Bug or Feature Name
 
-\[Keep this plan under \~200 lines. Growing past that is a sign the change has outgrown Simple rigor — re-run §1 of `hb-tech-design` rather than padding this plan out.\]
+\[Keep this plan under \~200 lines. Growing past that is a sign the change has outgrown Simple rigor — re-run §1 of `hb-design` rather than padding this plan out.\]
 
 ## 1. Summary
 
@@ -18,9 +19,9 @@ review iteration: 0
 
 ## 2. Rigor Gate
 
-[Which selection criteria decided Simple, per §1 of `hb-tech-design` — also recorded in `deciding tenet` above.]
+[Which selection criteria decided Simple, per §1 of `hb-design` — also recorded in `deciding tenet` above.]
 
-- Escalation trigger, if any:
+- Blocking trigger, if any:
 
 ## 3. Proof
 
@@ -34,8 +35,8 @@ review iteration: 0
 | Concern | Source evidence | Current behavior / gap | Claim change? |
 | ------- | --------------- | ---------------------- | ------------- |
 
-| Operation | Entry/caller | IPC/serialization | State/consumer | Restore/cleanup | Test | Evidence |
-| --------- | ------------ | ----------------- | -------------- | --------------- | ---- | -------- |
+| Operation | Entry/caller | Boundary/serialization | State/consumer | Restore/cleanup | Test | Evidence |
+| --------- | ------------ | ---------------------- | -------------- | --------------- | ---- | -------- |
 
 | Failure mode | Applicable / Not applicable / Checked—no issue / Accepted risk | Evidence |
 | ------------ | -------------------------------------------------------------- | -------- |

@@ -12,31 +12,33 @@ These files form Hashbang's persistent project memory. Maintain them as you work
 
 ```
 .hashbang/
-  OBJECTIVE.md           ← why this project exists, what done means
+  OBJECTIVE.md           ← why this project exists, desired outcome
   CONTEXT.md             ← vocabulary, style, tenets, what you must never do
   TASKS.md               ← phases and tasks, in priority order
   DECISIONS.md           ← log of decisions and why they were made
   pickup.md              ← the latest session's note
+  customizations.md      ← what this project changed in Hashbang, and why
   history/
     pickup-history.md    ← log of all past sessions, newest first
     changelog.json       ← what changed in the project
   examples/
     good/                ← reference examples, write like these
     bad/                 ← anti-patterns, avoid these
-  framework/             ← owned by the installer — never edit
-    hashbang.md         ← your operating manual (this file)
+  framework/             ← Hashbang itself; customize it for this project
+    hashbang.md          ← your operating manual (this file)
     files.md             ← formats and rules for each file above
     development.md       ← the software development process, from spec to tests
     templates/           ← starter files used during setup
+  upstream/              ← owned by the installer — never edit
 ```
 
 All-caps files are the customer's: they read them and shape them, and you maintain them with their approval. Lowercase files are working files you maintain on your own.
 
-**Before you first create or edit any Hashbang file in a session, read** `framework/files.md`**.** It has the exact format and maintenance rules for each one. You do not need it to read the files.
+**Change TASKS.md only through the hb-tasks skill.** **Before you first create or edit any other Hashbang file in a session, read** `framework/files.md`**.** Together they have the exact format and maintenance rules for each file. You need neither to read the files.
 
 **In a software project, before you start a feature or a bug fix, read** `framework/development.md`**.** It has the process from spec to tests, where each document goes, and which skill runs each step.
 
-Never edit anything in `.hashbang/framework/`. It is replaced when Hashbang is updated, and edits there are lost or trigger overwrite prompts.
+**Customizing Hashbang.** The framework files and the skills are this project's to adapt. Change them when the customer asks, or when the hb-dev-setup skill tailors them to the stack; if you notice a change that would help, propose it. Keep the formats other files read: file names and locations, IDs such as T-NNN and D-NNN, headings a skill looks for, frontmatter fields, and status values. To change one, search the framework, the skills, and their scripts for everything that reads it, and change them together. Log every change in customizations.md. Updates never overwrite a customized file — the installer leaves it for the hb-update skill to merge. Never edit anything in `.hashbang/upstream/`; the installer and hb-update keep it.
 
 ## Session Start Protocol
 
@@ -86,7 +88,7 @@ The first checkpoint of a session replaces the previous note (already archived a
 
 ## Keeping the Customer's Files
 
-The customer's files — OBJECTIVE.md, CONTEXT.md, TASKS.md, DECISIONS.md — change only with their approval. The detailed rules are in files.md.
+The customer's files — OBJECTIVE.md, CONTEXT.md, TASKS.md, DECISIONS.md — change only with their approval, except for marking progress on tasks. The detailed rules are in the hb-tasks skill for TASKS.md, and in files.md for the others.
 
 - **Propose as things happen, not as a wrap-up ritual.** One-tap approval: "We just decided X — want me to log that so it's remembered next session?" "I noticed X needs doing — want me to add that to your task list?" They don't need to review the change.
 - **Respect their edits.** They can edit any of these files directly. Treat what they wrote as current.
@@ -128,8 +130,14 @@ The only skill the customer needs to know is **hb-whats-next**. Everything else 
 - **hb-whats-next** — recommend the next step and give the context to start it. Sets up new projects step by step; rebuilds where the customer left off on established ones. The entry point for every project.
 - **hb-elevate** — interview in rounds that resolves ambiguity before work begins, and stress-tests a plan, decision, or diagnosis before acting on it.
 - **hb-crit** — domain expert review after significant outputs. Strongest case first, then attack. BLOCK/CONCERNS/CLEAN verdict.
+- **hb-dev-setup** — tailor the development process to a software project's stack: engineering docs, design templates, review checks, and test commands. Runs during setup, and again when the stack changes.
 - **hb-spec** — write or update a feature spec: what the product does and why, as numbered rules that designs and tests cite. The first step of `framework/development.md`.
-- **hb-recap** — show the current pickup note and let the customer adjust it: add a note for tomorrow, reprioritize, leave themselves a message. Optional — the system works without it.
+- **hb-design** — write the tech design for a task at a rigor level fitted to its risk, and review it in a fresh context. Step 3 of `framework/development.md`.
+- **hb-slice** — split a Complex design into thin vertical slices, each proven by a test or demo. Step 4.
+- **hb-retro** — roll up design-review data to show how well the design process is working.
+- **hb-update** — merge a new Hashbang version into the files this project has customized.
+- **hb-tasks** — every change to TASKS.md: adding, finishing, blocking, and reordering tasks, and planning phases. Other skills hand their tasks to it.
+- **hb-recap** — show the current pickup note and let the customer adjust it: add a note for tomorrow, change the suggested start, leave themselves a message. Optional — the system works without it.
 
 Skills are loaded on demand — never at session start. Either you or the customer can invoke any skill. Suggest one naturally when the moment calls for it: "This is a good moment for an hb-crit — want me to run one?" Not: "You should invoke the hb-crit skill." When a task finishes, use the hb-whats-next skill to recommend the next one — it handles closing a phase and checking against Done Means.
 

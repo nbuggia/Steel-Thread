@@ -1,0 +1,55 @@
+---
+name: hb-dev-setup
+description: Tailor Hashbang's development process to a software project's languages, frameworks, and platforms. Reads the codebase, writes the engineering reference docs, and adapts the development skills and templates to the stack. Use during setup of a software project, when the stack changes, or when the customer asks to fit Hashbang to their stack.
+---
+
+Hashbang's development process — `.hashbang/framework/development.md` and the hb-spec, hb-design, hb-slice, and hb-retro skills — is written for any stack. This skill makes this project's copy specific: it learns the stack, writes it down, and edits the process so that every later design and review asks the questions this stack needs. Run it again when the stack changes, such as a new platform or a new process boundary; a re-run updates what is there rather than starting over.
+
+The skills live in this agent's skills folder (`.claude/skills/`, `.agents/skills/`, or `.kiro/skills/`; `.hashbang/upstream/agent` names the agent).
+
+## Step 1 — Learn the stack
+
+Learn it from the repository, not the customer. Read:
+
+- Manifests and build files, such as `package.json`, `Cargo.toml`, `Package.swift`, `*.xcodeproj`, `pyproject.toml`, `go.mod`, or `build.gradle`: the languages, frameworks, and key dependencies.
+- The structure of the code: its components, and the boundaries between them that a change can cross, such as processes, languages, network calls, app extensions, or plugins. Note who owns state and where data is persisted.
+- The platforms and targets it ships to, and the minimum versions.
+- How it is tested: test frameworks, where tests live, and the commands that run them. Run the commands when it is fast and safe to, and note any you could not confirm.
+- CI, lint, and formatting configuration.
+- Existing docs: README, contributing guides, architecture notes, decision records, and AGENTS.md.
+
+For a new project with no code yet, take the stack from OBJECTIVE.md's constraints and DECISIONS.md. A stack choice that is still open is critical input: collect every open one and settle them together in one hb-elevate session. Record the result in ARCHITECTURE.md; propose a DECISIONS.md entry only for a choice where a real alternative was rejected and is likely to be proposed again.
+
+## Step 2 — Write the engineering docs
+
+Create or update these in `docs/engineering/`. What belongs in each is defined in "Where information lives" in `.hashbang/framework/development.md`; follow it. Describe what the code does now, citing example files; where the code is inconsistent, record it as an open question, not a rule. If the project already documents something elsewhere, link to it instead of copying it.
+
+- **ARCHITECTURE.md** — start from `architecture-template.md` in this skill's folder. Fill it from the manifests and the code's structure.
+- **CONVENTIONS.md** — start from `conventions-template.md` in this skill's folder. Fill it from the patterns the code keeps consistently. A boundary appears twice: ARCHITECTURE.md says it exists ("all file access is in the Rust core"), and CONVENTIONS.md says how a change respects it ("UI code never touches the filesystem; add a command").
+- **TESTING.md** — each kind of test, its tools, where it lives, and the exact command that runs it; what cannot be tested automatically, and how it is checked instead.
+- **COMMON-FAILURE-MODES.md** — if it does not exist, create it from hb-design's `templates/common-failure-modes-template.md`. Add the traps this stack is known for, each with `Last Seen:` left blank until one is observed here.
+
+Propose stack terms that need a precise meaning to CONTEXT.md's vocabulary.
+
+## Step 3 — Adapt the process
+
+Edit the development skills and templates so they fit this stack. Typical changes:
+
+- **hb-design's templates:** name the stack's real boundaries in the Interface Contract (for example, Tauri commands and events, or Swift protocols and XPC services); fill Capabilities & Security with what this platform requires (for example, Tauri capabilities, or iOS entitlements and the privacy manifest); list the real targets in Cross-Platform, or remove it for a single-platform product; name the persistence mechanism and how its migrations work.
+- **hb-design's** `design-red-flags.md`**:** add red flags specific to this stack, with examples from this codebase.
+- **hb-design's review prompt:** make the reviewer an expert in this stack, such as a principal iOS engineer.
+- **hb-slice's template and** `development.md`**'s test table:** the real test tools and commands.
+
+Rules:
+
+- Add what this stack needs, remove what cannot apply, and use the stack's own terms instead of the generic ones.
+- Keep the formats other files read (see Customizing Hashbang in `.hashbang/framework/hashbang.md`).
+- Prefer examples from this codebase over generic ones.
+- Keep it small. Add a check only for a problem this stack is known for or this project has already hit, never one that only might happen.
+- Log each file you change in `.hashbang/customizations.md`: what changed and why.
+
+## Step 4 — Report
+
+Tell the customer in a few lines: the stack you found, the docs you wrote, what you adapted in the process, and anything you could not confirm. Ask only what is blocking; everything else goes in the docs as an open question.
+
+If the customer chooses to skip this skill, write `docs/engineering/ARCHITECTURE.md` with a single line naming the stack, so setup does not offer it again.

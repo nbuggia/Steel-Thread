@@ -1,10 +1,11 @@
 ---
 name: feature name slicing plan
+task: T-NNN
 design doc: [link]
 design doc version/commit: [commit/version]
 date created: YYYY-MM-DD
 last updated: YYYY-MM-DD
-status: Draft / Approved / Implementing / Done
+status: Draft / Approved / Done / Blocked
 ---
 
 # Slicing Plan: Feature
@@ -27,14 +28,14 @@ it enables.
 
 | Field               | Value                                                                        |
 | ------------------- | ---------------------------------------------------------------------------- |
-| Status              | Pending / In Progress / Done / Blocked                                       |
+| Status              | Pending / Done / Blocked                                                     |
 | Scope               | End-to-end outcome.                                                          |
 | Demo criterion      | Runnable proof, or enabled later slice.                                      |
 | Dependencies        | Concrete predecessor outputs consumed.                                       |
 | Explicitly deferred | Adjacent excluded work.                                                      |
 | Invalidation risk   | Assumptions, ceilings, and falsifying evidence.                              |
 | Size justification  | Why this is one cohesive outcome.                                            |
-| Test gate           | Rust/Zustand: failing tests first, user approval, then implement. Else: N/A. |
+| Test gate           | Failing tests first at the design's test points, then implement. N/A only with the reason. |
 
 ## 3. Active Review Findings
 

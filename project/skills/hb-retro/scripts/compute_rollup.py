@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic rollup for hb-retro. Reads existing hb-tech-design output —
+"""Deterministic rollup for hb-retro. Reads existing hb-design output —
 does not modify anything. Prints plain-text numbers; the skill narrates them
 into templates/retro-report-template.md.
 
@@ -116,46 +116,47 @@ def parse_failure_modes(path):
     return results
 
 
-def scan_rigor_frontmatter(*dirs):
+def scan_rigor_frontmatter(files, base):
     rigor_counts = Counter()
     total_files = 0
     files_with_rigor = 0
-    realized_escalations = []  # status: Escalated -> this plan actually escalated
-    prospective_escalation_notes = 0  # "Escalation trigger, if any" filled in — a risk note, not an outcome
-    for d in dirs:
-        if not d.exists():
-            continue
-        for f in sorted(d.glob("*.md")):
-            total_files += 1
-            text = f.read_text(encoding="utf-8", errors="replace")
-            fm_match = re.match(r"^---\n(.*?)\n---", text, re.S)
-            frontmatter = fm_match.group(1) if fm_match else ""
-            rigor_m = re.search(r"^rigor:\s*(\S+)", frontmatter, re.M)
-            if rigor_m:
-                files_with_rigor += 1
-                rigor_counts[rigor_m.group(1)] += 1
-            status_m = re.search(r"^status:\s*Escalated\s*$", frontmatter, re.M)
-            if status_m:
-                realized_escalations.append(f.name)
-            esc_m = re.search(r"Escalation trigger, if any:\s*(\S.*)", text)
-            if esc_m and esc_m.group(1).strip():
-                prospective_escalation_notes += 1
+    blocked_designs = []
+    prospective_blocking_notes = 0
+    for f in files:
+        total_files += 1
+        text = f.read_text(encoding="utf-8", errors="replace")
+        fm_match = re.match(r"^---\n(.*?)\n---", text, re.S)
+        frontmatter = fm_match.group(1) if fm_match else ""
+        rigor_m = re.search(r"^rigor:\s*(\S+)", frontmatter, re.M)
+        if rigor_m:
+            files_with_rigor += 1
+            rigor_counts[rigor_m.group(1)] += 1
+        # Count the former Escalated state as Blocked for older designs.
+        status_m = re.search(r"^status:\s*(?:Blocked|Escalated)\s*$", frontmatter, re.M)
+        if status_m:
+            blocked_designs.append(str(f.relative_to(base)))
+        trigger_m = re.search(r"(?:Blocking|Escalation) trigger, if any:\s*(\S.*)", text)
+        if trigger_m and trigger_m.group(1).strip():
+            prospective_blocking_notes += 1
     return {
         "total_files": total_files,
         "files_with_rigor": files_with_rigor,
         "rigor_counts": rigor_counts,
-        "realized_escalations": realized_escalations,
-        "prospective_escalation_notes": prospective_escalation_notes,
+        "blocked_designs": blocked_designs,
+        "prospective_blocking_notes": prospective_blocking_notes,
     }
 
 
 def main():
     root = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
-    tech_docs = root / "docs" / "Tech Designs"
+    tech_docs = root / "docs" / "engineering"
+    work = root / "docs" / "work"
 
     log = parse_review_log(tech_docs / "DESIGN-REVIEW-LOG.md")
-    fms = parse_failure_modes(tech_docs / "Common-Failure-Modes.md")
-    rigor = scan_rigor_frontmatter(tech_docs / "designs", tech_docs / "simple plans")
+    fms = parse_failure_modes(tech_docs / "COMMON-FAILURE-MODES.md")
+    # A design is either a task's single file, T-NNN-<name>.md, or design.md in its folder.
+    designs = sorted(work.glob("T-*.md")) + sorted(work.glob("T-*/design.md"))
+    rigor = scan_rigor_frontmatter(designs, work)
 
     print("=== REVIEW LOG ===")
     print(f"Entries: {log['total_entries']} ({log['first_date']} to {log['last_date']})")
@@ -187,15 +188,15 @@ def main():
     print(" ids — those are reinforcements/re-confirmations, not new introductions.)")
 
     print()
-    print("=== RIGOR LEVEL (designs/ + simple plans/ frontmatter) ===")
+    print("=== RIGOR LEVEL (docs/work/ design frontmatter) ===")
     print(f"Files scanned: {rigor['total_files']}")
     print(f"Files with a rigor: field: {rigor['files_with_rigor']}")
     for k, v in rigor["rigor_counts"].most_common():
         print(f"  {k}: {v}")
-    print(f"Realized escalations (status: Escalated): {len(rigor['realized_escalations'])}")
-    for fname in rigor["realized_escalations"]:
+    print(f"Blocked designs (status: Blocked; legacy Escalated included): {len(rigor['blocked_designs'])}")
+    for fname in rigor["blocked_designs"]:
         print(f"  {fname}")
-    print(f"Prospective 'Escalation trigger, if any' notes filled in (risk notes, not outcomes): {rigor['prospective_escalation_notes']}")
+    print(f"Prospective 'Blocking trigger, if any' notes filled in (risk notes, not outcomes): {rigor['prospective_blocking_notes']}")
 
 
 if __name__ == "__main__":

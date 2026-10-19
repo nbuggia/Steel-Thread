@@ -1,18 +1,38 @@
 #!/bin/sh
 # Install or update the Hashbang Agent Framework in a project.
 #
-#   path/to/hashbang/install.sh [project-dir]
+#   path/to/hashbang/install.sh [--agent claude|codex|kiro] [project-dir]
 #
-# Safe to re-run. Framework files (the manual, templates, and skills) are
-# updated. If you edited one since it was installed, you are asked before it
-# is overwritten. Only .hashbang/framework/ and the skill folders are
-# written; your project state elsewhere in .hashbang/ is never touched.
+# Safe to re-run. Hashbang installs for one agent per project; without
+# --agent it uses the one recorded at the last install, or detects it, or
+# asks. On update, files you haven't changed are updated. Files you have
+# customized are never overwritten: the new Hashbang version is saved in
+# .hashbang/upstream/incoming/ for the hb-update skill to merge in. Your
+# project state elsewhere in .hashbang/ is never touched.
 
 set -eu
 
+usage() {
+  echo "Usage: install.sh [--agent claude|codex|kiro] [project-dir]" >&2
+  exit 1
+}
+
+AGENT=
+DEST_ARG=.
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --agent) [ $# -ge 2 ] || usage; AGENT=$2; shift 2 ;;
+    --agent=*) AGENT=${1#--agent=}; shift ;;
+    -*) usage ;;
+    *) DEST_ARG=$1; shift ;;
+  esac
+done
+
 # Everything under project/ is what gets installed into your project.
-SRC=$(cd "$(dirname "$0")/project" && pwd)
-DEST=$(cd "${1:-.}" && pwd)
+ROOT=$(cd "$(dirname "$0")" && pwd)
+SRC="$ROOT/project"
+DEST=$(cd "$DEST_ARG" && pwd)
+VERSION=$(cat "$SRC/VERSION")
 
 if [ "$DEST" = "$SRC" ]; then
   echo "Refusing to install into Hashbang's own project/ folder." >&2
@@ -24,12 +44,16 @@ END='<!-- hashbang:end -->'
 LEGACY_BEGIN='<!-- steel-thread:start -->'
 LEGACY_END='<!-- steel-thread:end -->'
 
-# Skill folders read by each supported agent.
-SKILL_DIRS=".claude/skills .agents/skills .kiro/skills"
-SHIPPED_SKILLS="hb-crit hb-elevate hb-recap hb-spec hb-whats-next"
+# The skills folder each supported agent reads.
+skills_dir_for() {
+  case "$1" in
+    claude) echo .claude/skills ;;
+    codex) echo .agents/skills ;;
+    kiro) echo .kiro/skills ;;
+    *) return 1 ;;
+  esac
+}
 
-# Fingerprints of what was last installed, used to tell local edits
-# apart from files that are simply out of date.
 migrated_legacy=false
 if [ -e "$DEST/.steel-thread" ] && [ -e "$DEST/.hashbang" ]; then
   echo "Cannot migrate .steel-thread because .hashbang already exists." >&2
@@ -41,6 +65,14 @@ elif [ -e "$DEST/.steel-thread" ]; then
   echo "  migrated .steel-thread to .hashbang"
 fi
 
+# The pristine Hashbang files each local file is based on. A local file
+# that matches its base has not been customized and is safe to update.
+UP="$DEST/.hashbang/upstream"
+INSTALLED="$UP/installed"
+INCOMING="$UP/incoming"
+
+# Older installs kept fingerprints here instead, and copied the
+# skills into every agent's folder.
 MANIFEST="$DEST/.hashbang/framework/install-manifest"
 if [ "$migrated_legacy" = true ] && [ -f "$MANIFEST" ]; then
   tmp=$(mktemp)
@@ -49,7 +81,7 @@ if [ "$migrated_legacy" = true ] && [ -f "$MANIFEST" ]; then
   mv "$tmp" "$MANIFEST"
 fi
 
-# Fingerprint a file or folder: names and contents of every file in it.
+# Fingerprint a file or folder the way the old manifest did.
 fingerprint() {
   if [ -d "$1" ]; then
     (cd "$1" && find . -type f ! -name .DS_Store | LC_ALL=C sort | while IFS= read -r f; do
@@ -60,111 +92,195 @@ fingerprint() {
   fi
 }
 
-recorded() {
-  [ -f "$MANIFEST" ] && awk -F '\t' -v k="$1" '$1 == k { print $2 }' "$MANIFEST"
-  return 0
-}
-
-record() {
-  tmp=$(mktemp)
-  { [ -f "$MANIFEST" ] && awk -F '\t' -v k="$1" '$1 != k' "$MANIFEST"
-    printf '%s\t%s\n' "$1" "$2"; } > "$tmp"
-  mv "$tmp" "$MANIFEST"
-}
-
-unrecord() {
-  [ -f "$MANIFEST" ] || return 0
-  tmp=$(mktemp)
-  awk -F '\t' -v k="$1" '$1 != k' "$MANIFEST" > "$tmp"
-  mv "$tmp" "$MANIFEST"
-}
-
-# Ask a yes/no question on the terminal. No terminal means no.
-confirm() {
+# Ask a question on the terminal and print the answer. No terminal, no answer.
+ask() {
+  answer=
   if [ -t 0 ]; then
-    printf '%s [y/N] ' "$1"; read -r answer || answer=
+    printf '%s ' "$1" >&2; read -r answer || answer=
   elif { : < /dev/tty; } 2>/dev/null; then
-    printf '%s [y/N] ' "$1" > /dev/tty; read -r answer < /dev/tty || answer=
+    printf '%s ' "$1" > /dev/tty; read -r answer < /dev/tty || answer=
+  fi
+  printf '%s' "$answer"
+}
+
+same() { cmp -s "$1" "$2"; }
+
+echo "Installing Hashbang $VERSION into $DEST"
+
+# 0. Choose the agent: --agent, else the one recorded, else detect, else ask.
+saved_agent=
+[ -f "$UP/agent" ] && saved_agent=$(cat "$UP/agent")
+if [ -z "$AGENT" ]; then
+  AGENT=$saved_agent
+fi
+if [ -z "$AGENT" ]; then
+  found=
+  if [ -e "$DEST/.claude" ] || [ -e "$DEST/CLAUDE.md" ]; then found="$found claude"; fi
+  if [ -e "$DEST/.codex" ] || [ -e "$DEST/.agents" ]; then found="$found codex"; fi
+  if [ -e "$DEST/.kiro" ]; then found="$found kiro"; fi
+  set -- $found
+  if [ $# -eq 1 ]; then
+    AGENT=$1
+    echo "  detected $AGENT"
   else
-    answer=
+    AGENT=$(ask "Which agent will you use in this project? [claude/codex/kiro]")
   fi
-  case "$answer" in y|Y|yes|YES) return 0 ;; *) return 1 ;; esac
+fi
+if ! SKILLS_DIR=$(skills_dir_for "$AGENT"); then
+  if [ -z "$AGENT" ]; then
+    echo "Could not tell which agent this project uses. Run again with --agent claude, codex, or kiro." >&2
+  else
+    echo "Unknown agent '$AGENT'. Use claude, codex, or kiro." >&2
+  fi
+  exit 1
+fi
+
+# Switching agents moves the installed skills to the new agent's folder.
+if [ -n "$saved_agent" ] && [ "$saved_agent" != "$AGENT" ]; then
+  old_dir=$(skills_dir_for "$saved_agent")
+  mkdir -p "$DEST/$SKILLS_DIR"
+  for dir in "$DEST/$old_dir"/hb-*; do
+    [ -d "$dir" ] || continue
+    name=$(basename "$dir")
+    if [ -e "$DEST/$SKILLS_DIR/$name" ]; then
+      echo "  kept $old_dir/$name: $SKILLS_DIR/$name already exists"
+    else
+      mv "$dir" "$DEST/$SKILLS_DIR/$name"
+      echo "  moved $old_dir/$name to $SKILLS_DIR/$name"
+    fi
+  done
+  rmdir "$DEST/$old_dir" "$(dirname "$DEST/$old_dir")" 2>/dev/null || true
+fi
+
+# Where a file from project/ lands in the user's project.
+dest_of() {
+  case "$1" in
+    skills/*) printf '%s/%s' "$SKILLS_DIR" "${1#skills/}" ;;
+    *) printf '%s' "$1" ;;
+  esac
 }
 
-# Install one framework file or folder, asking before replacing local edits.
-install_item() {
-  src=$1 rel=$2 dest="$DEST/$2"
-  new=$(fingerprint "$src")
-  if [ -e "$dest" ]; then
-    cur=$(fingerprint "$dest")
-    if [ "$cur" = "$new" ]; then
-      record "$rel" "$new"; return
+# 1. Turn an old fingerprint manifest into base files. An item that still
+#    matches its fingerprint was never customized, so it is its own base.
+#    Copies in other agents' folders are removed unless they were edited.
+if [ -f "$MANIFEST" ] && [ ! -d "$INSTALLED" ]; then
+  mkdir -p "$INSTALLED"
+  awk -F '\t' '{ print $1 "\t" $2 }' "$MANIFEST" | while IFS="$(printf '\t')" read -r rel sum; do
+    clean=false
+    if [ -e "$DEST/$rel" ] && [ "$(fingerprint "$DEST/$rel")" = "$sum" ]; then clean=true; fi
+    case "$rel" in
+      .hashbang/framework/*) base=$rel ;;
+      "$SKILLS_DIR"/*) base="skills/${rel#"$SKILLS_DIR"/}" ;;
+      .claude/skills/*|.agents/skills/*|.kiro/skills/*)
+        if [ "$clean" = true ]; then
+          rm -rf "$DEST/$rel"
+          echo "  removed $rel: Hashbang now installs for one agent, $AGENT"
+        elif [ -e "$DEST/$rel" ]; then
+          echo "  kept $rel: it has local changes. Delete it once you no longer need it."
+        fi
+        continue ;;
+      *) continue ;;
+    esac
+    if [ "$clean" = true ]; then
+      mkdir -p "$(dirname "$INSTALLED/$base")"
+      cp -R "$DEST/$rel" "$INSTALLED/$base"
     fi
-    if [ "$cur" != "$(recorded "$rel")" ]; then
-      if ! confirm "$rel has local changes. Overwrite with the Hashbang version?"; then
-        echo "  kept $rel"; return
-      fi
-    fi
-    rm -rf "$dest"
-  fi
-  mkdir -p "$(dirname "$dest")"
-  cp -R "$src" "$dest"
-  record "$rel" "$new"
-  echo "  installed $rel"
-}
-
-echo "Installing Hashbang into $DEST"
+  done
+  for dir in .claude .agents .kiro; do
+    rmdir "$DEST/$dir/skills" "$DEST/$dir" 2>/dev/null || true
+  done
+  rm -f "$MANIFEST"
+fi
 
 # Remove the retired manual after a legacy install is migrated.
 if [ "$migrated_legacy" = true ]; then
   legacy_manual=.hashbang/framework/steel-thread.md
   if [ -e "$DEST/$legacy_manual" ]; then
-    if [ "$(fingerprint "$DEST/$legacy_manual")" != "$(recorded "$legacy_manual")" ] &&
-       ! confirm "$legacy_manual has local changes. Delete the retired file?"; then
-      echo "  kept $legacy_manual"
-    else
-      rm -f "$DEST/$legacy_manual"
-      echo "  removed $legacy_manual"
-    fi
-    unrecord "$legacy_manual"
+    rm -f "$DEST/$legacy_manual"
+    echo "  removed $legacy_manual"
   fi
 fi
 
-# 1. Framework files
-mkdir -p "$DEST/.hashbang/framework" "$DEST/.hashbang/history" \
-  "$DEST/.hashbang/examples/good" "$DEST/.hashbang/examples/bad"
-install_item "$SRC/.hashbang/framework/hashbang.md" .hashbang/framework/hashbang.md
-install_item "$SRC/.hashbang/framework/files.md" .hashbang/framework/files.md
-install_item "$SRC/.hashbang/framework/development.md" .hashbang/framework/development.md
-install_item "$SRC/.hashbang/framework/templates" .hashbang/framework/templates
+mkdir -p "$DEST/.hashbang/history" "$DEST/.hashbang/examples/good" \
+  "$DEST/.hashbang/examples/bad" "$INSTALLED"
 
-# 2. Skills, one identical copy per agent
-for dir in $SKILL_DIRS; do
-  for name in $SHIPPED_SKILLS; do
-    install_item "$SRC/skills/$name" "$dir/$name"
-  done
+# 2. Framework files and skills, one file at a time.
+PENDING=$(mktemp)
+LIST=$(mktemp)
+trap 'rm -f "$PENDING" "$LIST"' EXIT
+
+flag() { printf '%s\t%s\t%s\n' "$1" "$2" "$3" >> "$PENDING"; }
+
+set_base() {
+  mkdir -p "$(dirname "$INSTALLED/$1")"
+  cp -p "$SRC/$1" "$INSTALLED/$1"
+}
+
+(cd "$SRC" && find .hashbang/framework skills -type f ! -name .DS_Store \
+  ! -path '*/__pycache__/*' | LC_ALL=C sort) > "$LIST"
+
+while IFS= read -r s; do
+  d=$(dest_of "$s")
+  src="$SRC/$s" dst="$DEST/$d" base="$INSTALLED/$s"
+  if [ ! -e "$dst" ]; then
+    if [ -e "$base" ]; then
+      # Deleted on purpose. Only worth a look if Hashbang changed it since.
+      same "$src" "$base" || flag deleted "$s" "$d"
+    else
+      mkdir -p "$(dirname "$dst")"
+      cp -p "$src" "$dst"
+      set_base "$s"
+      echo "  installed $d"
+    fi
+  elif same "$dst" "$src"; then
+    set_base "$s"
+  elif [ -e "$base" ] && same "$dst" "$base"; then
+    cp -p "$src" "$dst"
+    set_base "$s"
+    echo "  updated $d"
+  elif [ -e "$base" ] && same "$src" "$base"; then
+    : # Customized, and Hashbang's version hasn't changed. Nothing to do.
+  else
+    flag modified "$s" "$d"
+  fi
+done < "$LIST"
+
+# Files Hashbang no longer ships: delete them unless they were customized.
+(cd "$INSTALLED" && find . -type f | sed 's|^\./||' | LC_ALL=C sort) > "$LIST"
+while IFS= read -r s; do
+  [ -e "$SRC/$s" ] && continue
+  d=$(dest_of "$s")
+  if [ ! -e "$DEST/$d" ] || same "$DEST/$d" "$INSTALLED/$s"; then
+    rm -f "$DEST/$d" "$INSTALLED/$s"
+    echo "  removed $d"
+  else
+    flag removed "$s" "$d"
+  fi
+done < "$LIST"
+for dir in "$DEST/.hashbang/framework" "$DEST/$SKILLS_DIR" "$INSTALLED"; do
+  [ -d "$dir" ] && find "$dir" -mindepth 1 -depth -type d -empty -delete
 done
 
-# 2b. Remove skills that Hashbang no longer ships, asking first if edited
-if [ -f "$MANIFEST" ]; then
-  for dir in $SKILL_DIRS; do
-    for rel in $(awk -F '\t' -v d="$dir/" 'index($1, d) == 1 { print $1 }' "$MANIFEST"); do
-      name=${rel#"$dir/"}
-      case " $SHIPPED_SKILLS " in *" $name "*) continue ;; esac
-      if [ -e "$DEST/$rel" ]; then
-        if [ "$(fingerprint "$DEST/$rel")" != "$(recorded "$rel")" ] &&
-           ! confirm "$rel is no longer part of Hashbang but has local changes. Delete it?"; then
-          echo "  kept $rel"; unrecord "$rel"; continue
-        fi
-        rm -rf "$DEST/$rel"
-        echo "  removed $rel"
-      fi
-      unrecord "$rel"
-    done
-  done
+# 3. Hand customized files to hb-update: the new version of each, and a
+#    list of what needs merging. Their base stays in installed/ until then.
+from=$(cat "$UP/version" 2>/dev/null || echo unknown)
+if [ -f "$INCOMING/PENDING" ]; then
+  from=$(awk -F '\t' '$1 == "from" { print $2 }' "$INCOMING/PENDING")
 fi
+rm -rf "$INCOMING"
+if [ -s "$PENDING" ]; then
+  while IFS="$(printf '\t')" read -r kind s d; do
+    if [ -e "$SRC/$s" ]; then
+      mkdir -p "$(dirname "$INCOMING/$s")"
+      cp -p "$SRC/$s" "$INCOMING/$s"
+    fi
+  done < "$PENDING"
+  { printf 'from\t%s\nto\t%s\n' "$from" "$VERSION"; cat "$PENDING"; } > "$INCOMING/PENDING"
+fi
+printf '%s\n' "$VERSION" > "$UP/version"
+printf '%s\n' "$AGENT" > "$UP/agent"
 
-# 3. AGENTS.md — the entry point every agent reads. The Hashbang block
+# 4. AGENTS.md — the entry point every agent reads. The Hashbang block
 #    from project/AGENTS.md is added or replaced; the rest is left alone.
 BLOCK=$(cat "$SRC/AGENTS.md")
 
@@ -223,17 +339,28 @@ else
   fi
 fi
 
-# 4. CLAUDE.md — Claude Code reads CLAUDE.md, not AGENTS.md, so the import
+# 5. CLAUDE.md — Claude Code reads CLAUDE.md, not AGENTS.md, so the import
 #    line from project/CLAUDE.md goes at the top to pull AGENTS.md in.
-IMPORT=$(cat "$SRC/CLAUDE.md")
-CLAUDE="$DEST/CLAUDE.md"
-if [ ! -f "$CLAUDE" ]; then
-  printf '%s\n' "$IMPORT" > "$CLAUDE"
-elif ! grep -qxF "$IMPORT" "$CLAUDE"; then
-  tmp=$(mktemp)
-  { printf '%s\n\n' "$IMPORT"; cat "$CLAUDE"; } > "$tmp"
-  mv "$tmp" "$CLAUDE"
+if [ "$AGENT" = claude ]; then
+  IMPORT=$(cat "$SRC/CLAUDE.md")
+  CLAUDE="$DEST/CLAUDE.md"
+  if [ ! -f "$CLAUDE" ]; then
+    printf '%s\n' "$IMPORT" > "$CLAUDE"
+  elif ! grep -qxF "$IMPORT" "$CLAUDE"; then
+    tmp=$(mktemp)
+    { printf '%s\n\n' "$IMPORT"; cat "$CLAUDE"; } > "$tmp"
+    mv "$tmp" "$CLAUDE"
+  fi
 fi
 
-echo "Done. Start your agent and ask what's next:"
-echo "  Claude Code: /hb-whats-next    Codex CLI: \$hb-whats-next    Kiro CLI: /hb-whats-next"
+case "$AGENT" in
+  codex) run='$hb-' ;;
+  *) run='/hb-' ;;
+esac
+if [ -f "$INCOMING/PENDING" ]; then
+  n=$(awk -F '\t' 'NR > 2' "$INCOMING/PENDING" | wc -l | tr -d ' ')
+  echo "Done. $n customized file(s) need the new version merged in."
+  echo "  Start your agent and run ${run}update."
+else
+  echo "Done. Start your agent and ask what's next: ${run}whats-next"
+fi

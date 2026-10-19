@@ -12,7 +12,7 @@ Everything under `project/` is what gets installed into someone else's project. 
 
 ## Supported agents
 
-Claude Code, Codex CLI, and Kiro CLI. Every change under `project/` must work in all three. Use only what they share: `AGENTS.md` for instructions, and `SKILL.md` files with `name` and `description` frontmatter. Do not rely on features only one agent has (`@file` imports, subagents, hooks, plugins) without a fallback.
+Claude Code, Codex CLI, and Kiro CLI. A project uses one of them, and the installer installs skills only into that agent's folder, but every change under `project/` must work in all three. Use only what they share: `AGENTS.md` for instructions, and `SKILL.md` files with `name` and `description` frontmatter. Do not rely on features only one agent has (`@file` imports, subagents, hooks, plugins) without a fallback.
 
 ## Repo layout
 
@@ -24,6 +24,7 @@ README.md                  ← user-facing installation and usage docs
 TODO.md                    ← known gaps and open work
 research/prior-art.md      ← what other tools do for project memory, and lessons
 project/                   ← the product: what lands in a user's project
+  VERSION                  ← the release version, semver
   AGENTS.md                ← Hashbang block, merged into the user's AGENTS.md
   CLAUDE.md                ← import line, added to the top of the user's CLAUDE.md
   .hashbang/
@@ -33,19 +34,30 @@ project/                   ← the product: what lands in a user's project
       development.md       ← software process (spec → prototype → design → slices → tests),
                              file structure, and how the skills connect
       templates/           ← starter files used during setup: OBJECTIVE, CONTEXT,
-                             TASKS, DECISIONS, pickup, history files
+                             TASKS, DECISIONS, pickup, customizations, history files
     examples/good/, bad/
   skills/
     hb-whats-next/SKILL.md    ← installed; setup, resume, and recommend the next step
     hb-elevate/SKILL.md       ← installed; interview that clarifies intent and stress-tests plans
     hb-crit/SKILL.md          ← installed; domain expert review of outputs
     hb-recap/SKILL.md         ← installed; show and adjust the current pickup note
+    hb-tasks/SKILL.md         ← installed; owns TASKS.md: its format and every change to it
+    hb-dev-setup/SKILL.md     ← installed; tailors the development process to a project's stack
+    hb-update/SKILL.md        ← installed; merges a new version into customized files
     hb-spec/                  ← installed; feature spec, process in SKILL.md, format in spec-template.md
-    hb-create-tech-design/    ← not installed yet; still specific to one Tauri project
-    hb-design-review/         ← not installed yet; still specific to one Tauri project
+    hb-design/                ← installed; tech design at a rigor level fitted to the change, with review passes
+    hb-slice/                 ← installed; splits a Complex design into thin vertical slices
+    hb-retro/                 ← installed; rolls up design-review data to audit the process
 ```
 
-`install.sh` copies `project/.hashbang/framework/` into the user's `.hashbang/framework/`, creates the empty state folders, copies the shipped skills into all three agents' skills folders, and merges `project/AGENTS.md` and `project/CLAUDE.md` into the user's files.
+`install.sh` copies `project/.hashbang/framework/` into the user's `.hashbang/framework/`, creates the empty state folders, copies every skill in `project/skills/` into the chosen agent's skills folder, and merges `project/AGENTS.md` (and, for Claude Code, `project/CLAUDE.md`) into the user's files.
+
+Users customize their copies; that is the extensibility model. The installer keeps the Hashbang version each installed file is based on in `.hashbang/upstream/installed/`. On update it replaces only files that still match their base, and leaves customized ones, with the new version and a `PENDING` list in `.hashbang/upstream/incoming/`, for the hb-update skill to merge.
+
+## Releasing a change
+
+- Bump `project/VERSION` (semver) for each change users would update to. The installer records it, and hb-update reports which versions it merged between.
+- When you change a format another file reads, such as a heading, an ID, or a frontmatter field, change every file that reads it in the same commit, including hb-retro's script.
 
 ## How skills work
 

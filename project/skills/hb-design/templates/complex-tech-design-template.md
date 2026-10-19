@@ -1,11 +1,12 @@
 ---
 name: feature tech design
 description: feature description
+task: T-NNN
 rigor: Complex
 deciding tenet: [what escapes, or what no test can settle]
 date: YYYY-MM-DD
 review iteration: N
-status: Draft / In Review / Approved / Implementing / Done / Superseded
+status: Draft / Approved / Done / Blocked / Superseded
 ---
 
 # Tech Design: Bug or Feature Name
@@ -45,13 +46,13 @@ Verify from source; include applicable entry points, state owners, IPC/event wir
 
 ## 6. Proposed Design
 
-\[Rust, frontend, IPC, state ownership, and one end-to-end success/failure flow. Add a diagram when &gt;3 components participate.\]
+\[Each component or layer the change touches, the boundaries between them, state ownership, and one end-to-end success/failure flow. Add a diagram when &gt;3 components participate.\]
 
 | New state | Owner | Lifetime | Persist? | Why |
 | --------- | ----- | -------- | -------- | --- |
 
-| Operation | Triggers | Caller | IPC | Handler/event | Registration | Consumer/state | Restore/cleanup | Test | Evidence |
-| --------- | -------- | ------ | --- | ------------- | ------------ | -------------- | --------------- | ---- | -------- |
+| Operation | Triggers | Caller | Boundary | Handler/event | Registration | Consumer/state | Restore/cleanup | Test | Evidence |
+| --------- | -------- | ------ | -------- | ------------- | ------------ | -------------- | --------------- | ---- | -------- |
 
 | Guarantee | Mechanism | Owner | Linearization point | Failure behavior | Proof |
 | --------- | --------- | ----- | ------------------- | ---------------- | ----- |
@@ -72,12 +73,14 @@ Screen the design above — and every alternative in §11 — against `../design
 | Temporal decomposition |          |                            |
 | Pass-through method    |          |                            |
 
-## 7. Command & Event Contract
+## 7. Interface Contract
 
-| Command | Args | Return | Errors | Async? |
-| ------- | ---- | ------ | ------ | ------ |
+\[Every API, command, or message the change adds or changes, across any process, network, or language boundary.\]
 
-\[For events: name, payload, emitter, listeners, ordering/delivery. State whether Rust/TS types are generated or mirrored.\]
+| Interface | Inputs | Output | Errors | Async? |
+| --------- | ------ | ------ | ------ | ------ |
+
+\[For events: name, payload, emitter, listeners, ordering/delivery. State whether the types on each side of a boundary are generated or kept in sync by hand.\]
 
 ## 8. Data Model & Persistence
 
@@ -85,16 +88,14 @@ Screen the design above — and every alternative in §11 — against `../design
 
 ## 9. Capabilities & Security
 
-\[Minimum Tauri permissions/scopes, CSP, trust boundaries, attack surface.\]
+\[Minimum permissions and scopes, trust boundaries, input validation, attack surface.\]
 
 ## 10. Cross-Platform
 
-Baseline is macOS (WebKit). For Windows and Linux, name what's different and how it's verified — "None" is a complete answer, a missing row is not.
+Name the baseline platform, then one row for every other platform, browser, or runtime the product supports: what's different and how it's verified. "None" is a complete answer, a missing row is not. If the product runs in one environment only, say so and skip the table.
 
-| Platform | Engine    | Difference from macOS | Verified how |
-| -------- | --------- | --------------------- | ------------ |
-| Windows  | WebView2  |                       |              |
-| Linux    | WebKitGTK |                       |              |
+| Platform | Difference from baseline | Verified how |
+| -------- | ------------------------ | ------------ |
 
 ## 11. Alternatives / Reuse / Proportionality
 
@@ -104,7 +105,7 @@ Baseline is macOS (WebKit). For Windows and Linux, name what's different and how
 | Rare case | Cost to support | Requirement change that deletes it | Recommend |
 | --------- | --------------- | ---------------------------------- | --------- |
 
-\[At least two real alternatives — see §3 (Draft) of `hb-tech-design` for the reuse/proportionality bar. Break ties on interface depth (`../design-red-flags.md`) — prefer hiding more behind a smaller surface, not a shorter call chain.\]
+\[At least two real alternatives — see §3 (Draft) of `hb-design` for the reuse/proportionality bar. Break ties on interface depth (`../design-red-flags.md`) — prefer hiding more behind a smaller surface, not a shorter call chain.\]
 
 ## 12. Implementation Slicing Strategy
 

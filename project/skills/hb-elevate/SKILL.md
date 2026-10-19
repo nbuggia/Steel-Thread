@@ -95,6 +95,6 @@ Ask the customer to confirm this is the shared understanding. Do not act on it u
 Then propose, one at a time:
 - Tenets for .hashbang/CONTEXT.md, only those that apply beyond the work at hand
 - Decisions worth logging in .hashbang/DECISIONS.md, including accepted risks
-- Tasks for .hashbang/TASKS.md: experiments, open questions, and the work itself
+- Tasks, added with the hb-tasks skill: experiments, open questions, and the work itself
 
 When hb-elevate was called by another skill, return the confirmed understanding and tenets to that skill instead of proposing tasks for the work itself.

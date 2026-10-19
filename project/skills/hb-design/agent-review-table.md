@@ -10,7 +10,7 @@ This is the one place that defines the review table: its columns, and what each 
 What each decision means:
 
 - **ACCEPT** — apply the finding to the design or plan.
-- **REJECT** — don't apply it, but write down why. If the finding was a blocker, you need the user's OK before rejecting it.
+- **REJECT** — don't apply it, but write down why. Rejecting a blocker is a high-judgment decision; escalate it to the user.
 - **DEFER** — don't resolve it now; write it down as an open question or follow-up instead.
 - **SUPERSEDED BY #N** (or by a named spec change) — a later finding or requirement change made this one obsolete. The row moves, unchanged apart from this decision, to the design's sibling `<design>-review-history.md` (SKILL.md §4).
 - **CLEAN** — if a review pass finds nothing wrong, that's still worth a row: just name the pass. A clean pass is a good result, not a missing one.
