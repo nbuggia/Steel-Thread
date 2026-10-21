@@ -113,10 +113,10 @@ Name the baseline platform, then one row for every other platform, browser, or r
 
 ## 13. Testing Strategy
 
-Every declared error and lifecycle/concurrency failure needs automated or manual proof. Cover applicable partial success, stale dialog state, missing wiring, cleanup, reload between decision/action, and concurrent entry points.
+Every declared error and lifecycle/concurrency failure needs automated or manual proof. Cover applicable partial success, stale dialog state, missing wiring, cleanup, reload between decision/action, and concurrent entry points. Every boundary an operation crosses needs an integration test through the real boundary, or a manual check with the reason.
 
-| Test | Regression prevented |
-| ---- | -------------------- |
+| Test | Kind (unit / integration / UI / manual) | Regression prevented |
+| ---- | --------------------------------------- | -------------------- |
 
 ## 14. Rollout
 

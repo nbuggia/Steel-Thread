@@ -67,8 +67,8 @@ Dependency check: valid predecessor, concrete consumption, truthful deferrals.
 
 ## 7. Verification and Risk
 
-| Test/check | Invariant/regression proved |
-| ---------- | --------------------------- |
+| Test/check | Kind (unit / integration / UI / manual) | Invariant/regression proved |
+| ---------- | --------------------------------------- | --------------------------- |
 
 - Data/platform risk:
 - Code rollback:

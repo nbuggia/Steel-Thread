@@ -16,7 +16,6 @@ OBJECTIVE.md says why the project exists and what done means. It is short enough
 ### When to update it
 
 - When the customer changes direction, scope, or what done means
-- Never unilaterally — always propose, customer approves
 - Every change to OBJECTIVE.md also gets a DECISIONS.md entry recording what changed and why
 
 ---
@@ -53,7 +52,6 @@ Affects: T-003, OBJECTIVE.md
 
 - Entries are never edited or deleted. When a decision changes, add a new entry and change only the old entry's Status line to `Superseded by D-NNN`.
 - Record a decision only if future work has to follow it, and it is also expensive to undo or likely to be proposed the other way later. A choice that shapes only the current task stays in the document where it was made: its spec, design, or slicing plan.
-- Never record unilaterally — always propose: "We just decided X — want me to log that as a decision?"
 - DECISIONS.md never states the current rule. The rule lives where it applies — CONTEXT.md, or in a software project the documents in `framework/development.md`'s "Where information lives" — and cites the decision for the reason: "Voice: first person (D-004)."
 
 ---
@@ -84,15 +82,11 @@ Good executive summary: .hashbang/examples/good/exec-summary.md Avoid this tone:
 
 Load examples on demand — only when the task calls for them. Do not load all examples at session start.
 
-During setup, ask: "Do you have any existing documents that represent the style you're going for?" If yes, save them to examples/good/ and reference them in CONTEXT.md. This is the lowest-friction way to build the example library.
-
 ### When to update it
 
 - When a new term is used that isn't defined
 - When a new style rule or constraint is agreed — log the decision behind it in DECISIONS.md if it is hard to reverse
 - When an hb-elevate session surfaces a tenet that applies beyond the work at hand
-- When the customer consistently uses a different term than what's defined — propose updating the canonical term
-- Never unilaterally — always propose, customer approves
 
 ---
 
@@ -132,7 +126,7 @@ Session: S-012 · 2026-10-09
 
 ## history/pickup-history.md
 
-The log of past sessions, newest first. You maintain it on your own — it needs no approval.
+The log of past sessions, newest first.
 
 ### Format
 
@@ -162,7 +156,7 @@ Add the crop lookup table to src/window.py.
 
 ## history/changelog.json
 
-The record of what changed in the project, so a returning session can see what moved since it last looked. You maintain it on your own — it needs no approval.
+The record of what changed in the project, so a returning session can see what moved since it last looked.
 
 ### Format
 
@@ -190,7 +184,6 @@ The record of what changed in the project, so a returning session can see what m
 
 ### Rules
 
-- Log at the same checkpoint where you update pickup.md, not after every keystroke-level edit.
 - One entry per file per checkpoint. Several edits to one file for the same reason are one entry.
 - Newest entries go last. Entries are never edited or deleted.
 
@@ -198,7 +191,7 @@ The record of what changed in the project, so a returning session can see what m
 
 ## customizations.md
 
-The record of what this project changed in Hashbang's framework files and skills, and why. The hb-update skill reads it to tell a deliberate change from an outdated one when it merges a new Hashbang version. You maintain it on your own — it needs no approval.
+The record of what this project changed in Hashbang's framework files and skills, and why. The hb-update skill reads it to tell a deliberate change from an outdated one when it merges a new Hashbang version.
 
 ### Format
 
@@ -218,5 +211,4 @@ Added a manual accessibility check to step 5. VoiceOver regressions shipped twic
 
 - One entry per file per change, newest first, headed with the file's path from the project root and the date.
 - Say what changed and why, in one to three lines. The why is what lets a later merge keep the change; cite the decision or the skill behind it.
-- Log every change to a framework file or skill, including ones made by hb-dev-setup and hb-update.
 - When a later change undoes an earlier one, add a new entry saying so; never edit or delete old entries.
