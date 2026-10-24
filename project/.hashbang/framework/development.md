@@ -27,12 +27,13 @@ A step is skipped only when the rules below say so. When you skip one, say which
 docs/
   specs/                        ← how the product behaves today, by product area
     <area>/<feature>.md
-  work/                         ← one entry per task: the change being made
-    T-014-first-save-filename/  ← a folder when the work has more than one document
+  work/                         ← one folder per task: the change being made
+    T-014-first-save-filename/
       prototype/
       design.md
       slices.md
-    T-015-export-spaces.md      ← a single file for a Simple design
+    T-015-export-spaces/        ← a folder even when it holds one document
+      design.md
   engineering/                  ← project-wide technical reference
     ARCHITECTURE.md             ← what is there
     CONVENTIONS.md              ← how to make a change here
@@ -51,7 +52,7 @@ Specs and work entries are kept apart because they live on different time scales
 Rules:
 
 - A work entry is named after its task in TASKS.md: `T-NNN-<short-name>`. Task IDs never change, so the name never goes stale. Every work entry has a task; propose one with the hb-tasks skill if it doesn't.
-- Start a work entry as a single file. Turn it into a folder only when the work needs a second document.
+- A work entry is always a folder, even when it holds a single document, so adding a second one never moves the first.
 - Never put the source of truth for product behavior in `work/`. When a task changes behavior, the spec in `specs/` is updated as part of that task.
 - Finished work entries stay where they are. TASKS.md records that the task is done; moving the files would break the links to them.
 - A spec links to nothing in `work/`. A work entry links to the specs it changes.
@@ -131,7 +132,7 @@ A prototype answers a question, and it is thrown away. Its `README.md` starts wi
 
 ## Step 3 — Tech Design
 
-**Produces:** `docs/work/T-NNN-<name>/design.md`, or `docs/work/T-NNN-<name>.md` for a Simple design. **Skip when:** the change is Trivial: one obvious edit whose mistakes are visible on sight, such as a copy fix, a style value, or a default.
+**Produces:** `docs/work/T-NNN-<name>/design.md`. **Skip when:** the change is Trivial: one obvious edit whose mistakes are visible on sight, such as a copy fix, a style value, or a default.
 
 Use the hb-design skill. It picks a rigor level (Trivial, Simple, or Complex), fills in the matching template, and runs the review passes. Whatever the rigor level, a design must:
 

@@ -154,7 +154,7 @@ def main():
 
     log = parse_review_log(tech_docs / "DESIGN-REVIEW-LOG.md")
     fms = parse_failure_modes(tech_docs / "COMMON-FAILURE-MODES.md")
-    # A design is either a task's single file, T-NNN-<name>.md, or design.md in its folder.
+    # A design is design.md in its task's folder. Older projects kept Simple designs as T-NNN-<name>.md.
     designs = sorted(work.glob("T-*.md")) + sorted(work.glob("T-*/design.md"))
     rigor = scan_rigor_frontmatter(designs, work)
 
