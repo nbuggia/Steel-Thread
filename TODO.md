@@ -29,6 +29,7 @@
 
 ## Framework
 
+- Friction log, after Warp's `suggestion-box` (archived in `library/warp-common-skills/`). When Hashbang's process gets in an agent's way, such as an unclear or conflicting rule, a step that cost effort with no value, or context it had to rebuild, the agent appends one short entry to a file in `.hashbang/history/` without interrupting the work: category, what happened, the impact, and a suggested change. Keep Warp's limits: only friction actually seen, only causes that would recur, at most three entries a session, and no secrets or user content. hb-retro reads the log and proposes framework changes.
 - Switching agents moves only `hb-*` skills to the new agent's folder (install.sh), so a project's convention skills stay behind in the old folder. Move the skills CONVENTIONS.md lists too, or tell the customer which ones to move.
 - After 1.0.0: add agent-facing release notes (what changed in each version, and why) to `project/.hashbang/framework/`, and have hb-update read them so it can carry Hashbang's intent into heavily customized files.
 - Replace the TASKS.md read in the Session Start Protocol (hashbang.md, step 4) with a call to the app's CLI that returns active tasks, once the CLI exists.
