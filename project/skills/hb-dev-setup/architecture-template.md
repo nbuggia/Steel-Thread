@@ -24,11 +24,11 @@
 
 ## External Interfaces
 
-\[Contracts other systems or users' files rely on: file formats, URL schemes, public APIs, sync protocols. For each: the component that implements it, how it is versioned, and a link to the spec that defines it.\]
+\[Which component implements each contract in CONTRACTS.md. The promise itself is defined there; this says where it lives in the code.\]
 
-| Interface | Implemented by | Versioning | Defined in |
-| --- | --- | --- | --- |
-|  |  |  |  |
+| Contract | Implemented by |
+| --- | --- |
+|  |  |
 
 ## Open Questions
 

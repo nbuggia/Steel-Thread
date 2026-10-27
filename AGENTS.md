@@ -31,10 +31,10 @@ project/                   ← the product: what lands in a user's project
     framework/
       hashbang.md          ← framework operating manual (the core product), read every session
       files.md             ← format and maintenance rules per file, read before editing them
-      development.md       ← software process (spec → prototype → design → slices → tests),
-                             file structure, and how the skills connect
+      development.md       ← software process (spec → prototype → design → slices → tests → close),
+                             planning docs as scaffolding, file structure, and how the skills connect
       templates/           ← starter files used during setup: OBJECTIVE, CONTEXT,
-                             TASKS, DECISIONS, pickup, customizations, history files
+                             TASKS, BACKLOG, DECISIONS, pickup, customizations, history files
     examples/good/, bad/
   skills/
     hb-whats-next/SKILL.md    ← installed; setup, resume, and recommend the next step
@@ -44,13 +44,13 @@ project/                   ← the product: what lands in a user's project
     hb-tasks/SKILL.md         ← installed; owns TASKS.md: its format and every change to it
     hb-dev-setup/SKILL.md     ← installed; tailors the development process to a project's stack
     hb-update/SKILL.md        ← installed; merges a new version into customized files
-    hb-spec/                  ← installed; feature spec, process in SKILL.md, format in spec-template.md
+    hb-spec/                  ← installed; a task's behavior delta, process in SKILL.md, format in spec-template.md
     hb-design/                ← installed; tech design at a rigor level fitted to the change, with review passes
     hb-slice/                 ← installed; splits a Complex design into thin vertical slices
     hb-retro/                 ← installed; rolls up design-review data to audit the process
 ```
 
-`install.sh` copies `project/.hashbang/framework/` into the user's `.hashbang/framework/`, creates the empty state folders, copies every skill in `project/skills/` into the chosen agent's skills folder, and merges `project/AGENTS.md` (and, for Claude Code, `project/CLAUDE.md`) into the user's files.
+`install.sh` copies `project/.hashbang/framework/` into the user's `.hashbang/framework/`, creates the empty state folders, copies every skill in `project/skills/` into the chosen agent's skills folder, merges `project/AGENTS.md` (and, for Claude Code, `project/CLAUDE.md`) into the user's files, and adds `docs/work-archive/` to the user's `.ignore`. The customer's Hashbang files (objective, CONTEXT, TASKS, BACKLOG, DECISIONS) live in the user's `docs/`; Hashbang's working files live in `.hashbang/`.
 
 Users customize their copies; that is the extensibility model. The installer keeps the Hashbang version each installed file is based on in `.hashbang/upstream/installed/`. On update it replaces only files that still match their base, and leaves customized ones, with the new version and a `PENDING` list in `.hashbang/upstream/incoming/`, for the hb-update skill to merge.
 

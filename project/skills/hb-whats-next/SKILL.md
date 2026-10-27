@@ -5,21 +5,27 @@ description: Recommend the single most valuable next step and give the customer 
 
 One job: recommend the single most valuable next step, and give the customer everything they need to start it right away. One recommendation, not a menu. Offer at most one alternative, and only when it is a real contender.
 
-All Hashbang files live in `.hashbang/`. Starter files are in `.hashbang/framework/templates/`, and the format and rules for each file are in `.hashbang/framework/files.md` — read it before writing any of them.
+The customer's files live in `docs/`: OBJECTIVE.md or PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, and DECISIONS.md. Hashbang's working files live in `.hashbang/`. Starter files are in `.hashbang/framework/templates/`, and the format and rules for each file are in `.hashbang/framework/files.md` — read it before writing any of them.
 
 ## Step 1 — Read the state
 
-Silently read whatever exists of OBJECTIVE.md, CONTEXT.md, TASKS.md, DECISIONS.md, pickup.md, and history/changelog.json. In TASKS.md, read from the current phase onward and skip phases marked ✓. Never ask the customer for something these files already answer.
+Silently read whatever exists of the objective (`docs/PRD.md`'s sections above its first feature, or else `docs/OBJECTIVE.md`), `docs/CONTEXT.md`, `docs/TASKS.md`, `docs/DECISIONS.md`, `.hashbang/pickup.md`, and `.hashbang/history/changelog.json`, following any pointer to another file. In TASKS.md, read from the current phase onward and skip phases marked ✓. Never ask the customer for something these files already answer.
 
-Then find the first row that matches:
+If there is no objective or no CONTEXT.md, first look for one the project already has, as files.md describes, and point to it.
+
+In a software project, also list `docs/work/`. A task marked done whose folder is still there, or a done task's archived folder with no `close.md`, was never closed.
+
+Then find the first row that matches. A skipped OBJECTIVE.md counts as done, unless the customer asked for an objective:
 
 | State | Next step |
 | --- | --- |
-| No OBJECTIVE.md | Setup: create the objective |
+| No objective | Setup: create the objective |
 | No CONTEXT.md | Setup: capture context |
 | A software project with no `docs/engineering/ARCHITECTURE.md` | Setup: tailor development |
 | TASKS.md has no phases | Setup: plan phases and first tasks |
 | The customer says the direction has changed | Reframe |
+| A task was marked done without being closed | Close the task |
+| The current task's code is finished, and it has a work entry | Close the task |
 | Open tasks in the current phase | Resume |
 | Every task in the current phase is done | Close the phase |
 | Every phase is done | Check against Done Means |
@@ -34,7 +40,7 @@ Use the hb-elevate skill for every interview. Propose what you've captured befor
 
 ### Create the objective
 
-Say: "Let's set this project up. First: what is it for? I'll ask a few questions."
+Say: "Let's set this project up. First: what is it for? I'll ask a few questions." If the customer would rather not, write the skipped form (see files.md) and move to the next step.
 
 Interview, in order:
 
@@ -43,7 +49,9 @@ Interview, in order:
 3. **Not doing** — what is explicitly out of scope? Get at least two items. If the customer can't name any, the project isn't scoped yet — say so.
 4. **Constraints** — deadlines, budget, platforms, anything that cannot change.
 
-Write .hashbang/OBJECTIVE.md from the template. At the same time, create whichever of these don't exist yet, from the templates: DECISIONS.md, pickup.md, customizations.md, history/pickup-history.md, history/changelog.json, examples/good/, examples/bad/. Never overwrite a file that exists.
+Write `docs/OBJECTIVE.md` from the template. At the same time, create whichever of these don't exist yet, from the templates: `docs/DECISIONS.md`, and in `.hashbang/`, pickup.md, customizations.md, history/pickup-history.md, history/changelog.json, examples/good/, examples/bad/. Never overwrite a file that exists.
+
+In a software project, the objective later grows into `docs/PRD.md`, the first time a task adds a feature to it (see files.md).
 
 Log any hard-to-reverse choice the interview surfaced in DECISIONS.md, with approval.
 
@@ -54,7 +62,7 @@ Log any hard-to-reverse choice the interview surfaced in DECISIONS.md, with appr
 3. **Never do** — what should the agent never do on this project? What would be a serious mistake?
 4. **Examples** — "Do you have any existing documents that represent the style or quality you're going for?" If yes, save them to .hashbang/examples/good/ and reference them in CONTEXT.md.
 
-Write .hashbang/CONTEXT.md from the template. For a small project, the customer may skip this — then write CONTEXT.md with just a Vocabulary heading, so this step isn't offered again, and fill it in as terms come up.
+Write `docs/CONTEXT.md` from the template. For a small project, the customer may skip this — then write CONTEXT.md with just a Vocabulary heading, so this step isn't offered again, and fill it in as terms come up.
 
 ### Tailor development
 
@@ -65,7 +73,7 @@ A software project is one whose objective is software, or whose folder holds cod
 Propose phases based on the objective:
 
 - Writing project: typically Research → Drafting → Review → Polish
-- Software project: typically one phase per release of the product, each ending in something users can run. The first tasks are usually specs for the first release (see `.hashbang/framework/development.md`)
+- Software project: typically one phase per release of the product, each ending in something users can run. The first tasks are usually the first release's features, each starting with a spec (see `.hashbang/framework/development.md`)
 - Other: propose based on what the objective and Done Means require
 
 "Based on the objective, I'd suggest three phases — [names]. Does that feel right, or should we adjust?"
@@ -79,7 +87,7 @@ When setup is complete, go straight to Resume and recommend the first task.
 When the customer says the direction, scope, or definition of done has changed:
 
 - Run the objective interview again, focused on what changed — not what you already know
-- Propose edits to OBJECTIVE.md rather than rewriting it
+- Propose edits to the objective rather than rewriting it
 - Log the change in DECISIONS.md, superseding earlier decisions it overturns
 - Do not reset TASKS.md. Propose new phases or tasks the new direction needs, through the hb-tasks skill, and flag open tasks that no longer serve the objective
 - Then continue with Resume
@@ -118,17 +126,22 @@ Want to start there?"
 
 The next step must be concrete and small enough to start immediately — a specific file, function, section, or question. Not "continue working on T-002."
 
+## Close the task
+
+A software task's code is finished, or a task was marked done without being closed. Say so in one line, "T-014's code is done, so the next step is closing it — moving what lasts into the tests and docs," and follow step 6 of `.hashbang/framework/development.md`. Then come back to Choose the next step.
+
 ## Close the phase
 
 Every task in the current phase is done.
 
 - Summarize what the phase produced, in two or three lines
 - If the phase produced a significant output, suggest an hb-crit before moving on
-- Mark the phase complete and propose the first few tasks for the next phase, with the hb-tasks skill
+- Mark the phase complete with the hb-tasks skill
+- Propose the next phase. In a software project with `docs/BACKLOG.md`, offer to plan the next release from its Next rows, with the hb-spec skill. Otherwise propose the first few tasks for the next phase, with the hb-tasks skill
 
 ## Check against Done Means
 
-Every phase is done. Go through each Done Means criterion in OBJECTIVE.md and say whether the work meets it, with evidence. Then recommend one of: a final hb-crit, a new phase for what is missing, or calling the project done.
+Every phase is done. Go through each Done Means criterion in the objective, or the success criteria of the file it points to, and say whether the work meets it, with evidence. If there are no criteria, summarize what the project produced instead. Then recommend one of: a final hb-crit, a new phase for what is missing, or calling the project done.
 
 ## After the recommendation
 

@@ -1,10 +1,12 @@
 # Hashbang Files — Formats and Rules
 
-How to write and maintain each Hashbang file. Read this before you first create or edit one of them in a session. All paths are relative to `.hashbang/`. Starter files are in `framework/templates/`.
+How to write and maintain each Hashbang file. Read this before you first create or edit one of them in a session. The customer's files live in `docs/`, and Hashbang's working files in `.hashbang/`; paths are from the project root. Starter files are in `.hashbang/framework/templates/`.
 
-## OBJECTIVE.md
+## docs/OBJECTIVE.md
 
 OBJECTIVE.md says why the project exists and what done means. It is short enough to read at every session start, and it changes rarely.
+
+It is optional. When `docs/PRD.md` exists, the PRD is the project's objective and there is no OBJECTIVE.md: wherever the manual or a skill says to read the objective, read the PRD's sections above its first feature.
 
 ### What belongs in it
 
@@ -18,17 +20,111 @@ OBJECTIVE.md says why the project exists and what done means. It is short enough
 - When the customer changes direction, scope, or what done means
 - Every change to OBJECTIVE.md also gets a DECISIONS.md entry recording what changed and why
 
+### When the objective already exists elsewhere
+
+Before offering to write an objective, look for one the project already has, and use the first that exists: `PRD.md`, `.claude/PRD.md`, `.kiro/steering/product.md`, then `OBJECTIVE.md` at the project root. Match file names in any case.
+
+If you find one, write OBJECTIVE.md as a pointer to it, and tell the customer in one line: "Using PRD.md as this project's objective." Don't interview to fill in sections it lacks.
+
+```markdown
+# Objective
+
+This project's objective lives in `PRD.md`. Read that instead.
+```
+
+### When the customer skips it
+
+If no objective exists and the customer declines to write one, or doesn't take up the offer in the session it was made, write OBJECTIVE.md in the skipped form. Then never offer it again; the customer can ask for it.
+
+```markdown
+# Objective
+
+Not set. The customer chose not to write one (YYYY-MM-DD). Don't offer it again.
+```
+
+When they later ask for one, replace the skipped form with a full objective. Pointer and skipped forms need no DECISIONS.md entry.
+
 ---
 
-## TASKS.md
+## docs/PRD.md
+
+The PRD holds the product's intent: why it exists, what done means, and for each feature area, who it is for and why it matters. It exists only in software projects, and it replaces OBJECTIVE.md.
+
+### Format
+
+```markdown
+# Product: Markymark
+
+## Outcome
+## Done Means
+## Not Doing
+## Constraints
+
+## Feature: Sync
+
+**For:** writers who edit the same vault on two machines.
+**Why it matters:** they never merge two versions of a note by hand.
+
+### Not Doing
+- Real-time co-editing — one writer per vault.
+
+### Done Means
+- A note edited offline appears on the other machine within a minute of reconnecting.
+
+### Flows
+- Spans Search: a synced note is searchable as soon as it lands.
+```
+
+- The sections above the first feature are the objective. They follow OBJECTIVE.md's rules, above: read at every session start, and every change gets a DECISIONS.md entry.
+- One `## Feature:` section per product area, named the way the product names it. Feature sections are read on demand, when work touches the area.
+- **Flows** lists behavior that spans features, and names the other feature. Leave out any subsection with nothing in it.
+- The PRD holds intent, not behavior rules. Rules live in tests, manual tests, and CONTRACTS.md (see `.hashbang/framework/development.md`).
+
+### Creating and changing it
+
+The close (step 6 of `.hashbang/framework/development.md`) creates the PRD the first time a task adds a feature section. If `docs/OBJECTIVE.md` exists, the PRD starts with its sections, and OBJECTIVE.md is deleted in the same approved change. If OBJECTIVE.md points to an existing PRD, that file is the PRD; add feature sections there instead.
+
+Feature sections change when a task closes, approved with the rest of that task's changes to the customer's files. They need a DECISIONS.md entry only when the change meets DECISIONS.md's bar.
+
+---
+
+## docs/TASKS.md
 
 Change TASKS.md only through the hb-tasks skill, which holds its format and rules.
 
 ---
 
-## DECISIONS.md
+## docs/BACKLOG.md
 
-DECISIONS.md is the log of why: the reasoning behind choices that all future work has to follow, and what was rejected. It answers "why is it like this?" so the customer never has to reconstruct it, and so no session re-litigates a settled question by accident.
+BACKLOG.md holds the features the product may get later: deferred use cases, follow-up ideas, and requests that aren't committed work yet. Committed work is in TASKS.md. It is not read at session start, only when planning a release or closing a phase.
+
+### Format
+
+```markdown
+# Backlog
+
+| Feature | Release | Why | Source |
+| --- | --- | --- | --- |
+| Search inside closed files | Next | Search stops at open files today | T-031 |
+| Vault-wide replace | Next | Most-requested after search | customer |
+| Export to PDF | Later | Beta users share drafts as PDF | customer |
+```
+
+- **Release** is `Next` or `Later`. Next rows come first; Later rows are in no order.
+- **Source** is the task that deferred the feature, or `customer`. It keeps a deferred requirement from quietly disappearing.
+
+### Rules
+
+- It is the customer's file: change it only with their approval. New rows go in as Later unless the customer says Next.
+- "Maybe later" belongs here; "never" belongs in the PRD's or the objective's Not Doing.
+- When a feature becomes tasks in TASKS.md, delete its row. Rows are never marked done in place.
+- Create it from `.hashbang/framework/templates/BACKLOG.md` the first time a row is added.
+
+---
+
+## docs/DECISIONS.md
+
+DECISIONS.md is the log of why: the reasoning behind choices that all future work has to follow, and what was rejected. It answers "why is it like this?" so the customer never has to reconstruct it, and so no session re-litigates a settled question by accident. It is the project's ADR log; don't keep architecture decision records anywhere else.
 
 ### Format
 
@@ -52,11 +148,13 @@ Affects: T-003, OBJECTIVE.md
 
 - Entries are never edited or deleted. When a decision changes, add a new entry and change only the old entry's Status line to `Superseded by D-NNN`.
 - Record a decision only if future work has to follow it, and it is also expensive to undo or likely to be proposed the other way later. A choice that shapes only the current task stays in the document where it was made: its spec, design, or slicing plan.
-- DECISIONS.md never states the current rule. The rule lives where it applies — CONTEXT.md, or in a software project the documents in `framework/development.md`'s "Where information lives" — and cites the decision for the reason: "Voice: first person (D-004)."
+- Planning docs are archived when their task closes, so DECISIONS.md is the only lasting home for a rejected alternative. The close asks of each one: "Will someone propose this again?" and proposes all of a task's entries in one approval.
+- Code comments, lasting documents, and done tasks cite decisions by ID: "(D-003)".
+- DECISIONS.md never states the current rule. The rule lives where it applies — CONTEXT.md, or in a software project the documents in `.hashbang/framework/development.md`'s "Where information lives" — and cites the decision for the reason: "Voice: first person (D-004)."
 
 ---
 
-## CONTEXT.md
+## docs/CONTEXT.md
 
 CONTEXT.md holds the standing rules for how to work on this project.
 
@@ -68,7 +166,11 @@ CONTEXT.md holds the standing rules for how to work on this project.
 - **What the agent should never do** — explicit constraints. These are absolute.
 - **Active skills** — which skills are enabled and why
 
-What the project is for belongs in OBJECTIVE.md. Why a rule exists belongs in DECISIONS.md.
+What the project is for belongs in the objective. Why a rule exists belongs in DECISIONS.md.
+
+### When context already exists elsewhere
+
+If the project root has a `CONTEXT.md`, write CONTEXT.md as a pointer to it, the same way as OBJECTIVE.md, instead of capturing context again.
 
 ### Examples
 
@@ -90,7 +192,7 @@ Load examples on demand — only when the task calls for them. Do not load all e
 
 ---
 
-## pickup.md
+## .hashbang/pickup.md
 
 ### Format
 
@@ -114,17 +216,17 @@ Session: S-012 · 2026-10-09
 - **Blocked** — what is blocked and what would unblock it.
 - **Up Next** — what the customer said they want to do next.
 - **Suggested Start** — where the next session should begin.
-- **Proposed Updates** — changes to propose for OBJECTIVE.md, CONTEXT.md, or DECISIONS.md that the customer has not yet approved.
+- **Proposed Updates** — changes to propose for the customer's files that the customer has not yet approved.
 
 ### Rules
 
-- The `Session:` line identifies the note. IDs are `S-` plus three digits: the newest ID in history/pickup-history.md plus one, or S-001 when there is no history.
+- The `Session:` line identifies the note. IDs are `S-` plus three digits: the newest ID in `.hashbang/history/pickup-history.md` plus one, or S-001 when there is no history.
 - Leave out any section with nothing in it.
 - Reference tasks and decisions by ID (T-003, D-002) and files by path. Do not duplicate content already in the other Hashbang files.
 
 ---
 
-## history/pickup-history.md
+## .hashbang/history/pickup-history.md
 
 The log of past sessions, newest first.
 
@@ -154,7 +256,7 @@ Add the crop lookup table to src/window.py.
 
 ---
 
-## history/changelog.json
+## .hashbang/history/changelog.json
 
 The record of what changed in the project, so a returning session can see what moved since it last looked.
 
@@ -165,7 +267,7 @@ The record of what changed in the project, so a returning session can see what m
   "changes": [
     {
       "date": "2026-10-06",
-      "file": ".hashbang/DECISIONS.md",
+      "file": "docs/DECISIONS.md",
       "change": "Added D-002: US 5-digit zip codes only."
     }
   ]
@@ -178,7 +280,7 @@ The record of what changed in the project, so a returning session can see what m
 
 ### What to log
 
-- Every edit to OBJECTIVE.md, CONTEXT.md, TASKS.md, and DECISIONS.md.
+- Every edit to the customer's Hashbang files: OBJECTIVE.md, PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, and DECISIONS.md.
 - Edits to the customer's own files only when the project is not under version control. When it is, version control already records those changes — read its log instead of duplicating it here.
 - Never pickup.md or the history files. They change every session and would bury the real changes.
 
@@ -189,7 +291,7 @@ The record of what changed in the project, so a returning session can see what m
 
 ---
 
-## customizations.md
+## .hashbang/customizations.md
 
 The record of what this project changed in Hashbang's framework files and skills, and why. The hb-update skill reads it to tell a deliberate change from an outdated one when it merges a new Hashbang version.
 

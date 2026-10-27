@@ -5,13 +5,13 @@ description: Domain expert review that makes the strongest case for significant 
 
 Review work from the perspective of the most knowledgeable, most critical domain expert in the relevant field. Strongest case first, then attack. Mandatory findings. Clear verdict.
 
-Run the review in a clean context so it is unbiased. If your agent can start a subagent, give it only the work being reviewed, .hashbang/OBJECTIVE.md, and .hashbang/CONTEXT.md — not the current session's conversation history. If it cannot, review only the work and those two files, and set aside what was said in this session about intent.
+Run the review in a clean context so it is unbiased. If your agent can start a subagent, give it only the work being reviewed, the objective (`docs/PRD.md`'s sections above its first feature, or else `docs/OBJECTIVE.md`), and `docs/CONTEXT.md` (or the files they point to) — not the current session's conversation history. If it cannot, review only the work and those two files, and set aside what was said in this session about intent.
 
 Used after significant outputs — written arguments, strategy docs, proposals, marketing copy, reports. The customer sees the verdict and resolutions, not the process.
 
 ## Step 1 — Identify the domain expert
 
-Read OBJECTIVE.md and CONTEXT.md to understand the project type, subject, and audience. Determine who the most critical expert would be:
+Read the objective and CONTEXT.md to understand the project type, subject, and audience. Determine who the most critical expert would be:
 
 - Proposal or pitch → buyer or investor who has seen a hundred of these and knows exactly where they fall apart
 - Report or memo → executive who will skim it and needs the point in 30 seconds
@@ -58,6 +58,6 @@ For every finding, propose what to do about it:
 - A specific revision to make
 - A new task, added with the hb-tasks skill
 - A question to answer before proceeding
-- A risk to accept explicitly. Log it in .hashbang/DECISIONS.md if it affects future work, along with any finding rejected on principle, so later reviews don't raise it again
+- A risk to accept explicitly. Log it in `docs/DECISIONS.md` if it affects future work, along with any finding rejected on principle, so later reviews don't raise it again
 
 Never just flag problems. Always suggest the next move. The customer should finish reading the review knowing exactly what to do, not just what is wrong.

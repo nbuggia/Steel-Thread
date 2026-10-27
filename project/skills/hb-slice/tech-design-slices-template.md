@@ -5,7 +5,7 @@ design doc: [link]
 design doc version/commit: [commit/version]
 date created: YYYY-MM-DD
 last updated: YYYY-MM-DD
-status: Draft / Approved / Done / Blocked
+status: Draft / Approved / Blocked
 ---
 
 # Slicing Plan: Feature
@@ -37,21 +37,13 @@ it enables.
 | Size justification  | Why this is one cohesive outcome.                                            |
 | Test gate           | Failing tests first at the design's test points, then implement. N/A only with the reason. |
 
-## 3. Active Review Findings
+## 3. Review Findings
+
+Keep rejected and deferred findings so a later pass doesn't raise them again. Delete findings a later change made obsolete.
 
 | #   | Finding | Category                     | Severity                                                | Decision                | Slices | Rationale | Next step |
 | --- | ------- | ---------------------------- | ------------------------------------------------------- | ----------------------- | ------ | --------- | --------- |
 | 1   |         | SLICING / DESIGN / EXPANSION | PLAN BLOCKER / SLICE BLOCKER / MAJOR / MINOR / QUESTION | ACCEPT / REJECT / DEFER |        |           |           |
-
-<details>
-<summary>Settled review history</summary>
-
-Append settled rows here without deleting or renumbering them.
-
-| #   | Finding | Category | Severity | Decision | Slices | Rationale | Next step |
-| --- | ------- | -------- | -------- | -------- | ------ | --------- | --------- |
-
-</details>
 
 ## 4. Dependency Graph
 
@@ -59,11 +51,11 @@ Append settled rows here without deleting or renumbering them.
 
 ## 5. Checkpoint Log
 
-Required after every completed slice — a Done slice with no entry here means this was skipped, not that there was nothing to report.
+Required after every completed slice — a Done slice with no entry here means this was skipped, not that there was nothing to report. The evidence itself goes in the commit message.
 
 ### After Slice N
 
-- Evidence:
+- Commit:
 - Affected remaining slices reviewed:
 - Changed:
 - Unchanged and why:

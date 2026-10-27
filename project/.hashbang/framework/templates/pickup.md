@@ -24,4 +24,4 @@ Session: S-NNN · YYYY-MM-DD
 
 ## Proposed Updates
 
-[Objective changes, vocabulary, or decisions from this session worth proposing for OBJECTIVE.md, CONTEXT.md, or DECISIONS.md]
+[Objective changes, vocabulary, or decisions from this session worth proposing for the objective, CONTEXT.md, or DECISIONS.md]

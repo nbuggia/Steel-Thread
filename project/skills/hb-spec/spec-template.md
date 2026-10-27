@@ -1,17 +1,17 @@
 ---
 name: [feature name]
-status: Draft / Approved / Retired
-tasks: [T-NNN, … — every task that has changed this spec]
+task: T-NNN
+status: Draft / Approved / Blocked
 last updated: YYYY-MM-DD
 ---
 
 # Spec: \[Feature Name\]
 
-\[Status meanings: Draft — being written or changed. Approved — it passed review with no open decisions; the next step can start. Retired — the feature was removed. Each release records when it was completed.\]
+\[Status meanings: Draft — being written or changed. Approved — it passed review with no open decisions; the next step can start. Blocked — waiting on the customer; say why on a `Blocked:` line under the status. This spec is scaffolding for one task: when the task closes, the close step moves its rules into tests and its intent into the PRD, then archives it.\]
 
 ## 1. Summary
 
-\[Two or three sentences: what the feature does, who it is for, and what they get from it. A reader who stops here should know what this feature is and why it exists.\]
+\[Two or three sentences: what this task changes, who it is for, and what they get from it. A reader who stops here should know what changes and why. Becomes the feature's PRD section at close.\]
 
 ## 2. Users
 
@@ -21,92 +21,87 @@ last updated: YYYY-MM-DD
 
 ## 3. Not Doing
 
-\[Every item needs a reason. Rejected ideas without one get suggested again.\]
+\[Every item needs a reason. Rejected ideas without one get suggested again. Something that may come later goes in Deferred instead.\]
 
 - \[Excluded capability\] — \[why it is excluded\]
 
-## 4. UI
+## 4. Current Behavior
 
-\[Optional. The visible decisions: layout, states, sizes, and wording that the rules refer to. If a prototype settled them, copy the decisions here. Prototypes are thrown away, so never link to one. A screenshot saved next to this spec is fine.\]
+\[How the product behaves today in the area this task changes, rebuilt from the lasting documents: the PRD's feature section, the area's tests by name, its manual tests, CONTRACTS.md, and code comments. Cite the source of each point. Never read `docs/work-archive/`. For a new feature: "New feature; nothing exists today."\]
 
-## 5. Releases
+- \[behavior\] — \[source: test name, file and heading, or D-NNN\]
 
-\[One table per release. Each release has a short name that states its purpose. At most one release has no completion date; if present, that is the current release. Its use cases are implemented together. Preserve use-case numbers when moving rows.\]
+## 5. UI
 
-### R1 — \[Short purpose\]
+\[Optional. The visible decisions: layout, states, sizes, and wording that the rules refer to. If a prototype settled them, copy the decisions here.\]
 
-**Completion date:** \[YYYY-MM-DD or —\]
+## 6. Use Cases
 
-#### Use Cases
-
-| Use case number | Area / theme | Use case title | Journey | How to verify | Rules |
-| --- | --- | --- | --- | --- | --- |
-| UC-001 | \[area\] | \[short title\] | \[journey in one or two sentences\] | \[test or demo\] | \[6.1–6.4, E.2\] |
-
-## 6. Backlog
-
-\[Unprioritized holding area. Do not group or sequence it. Rows may remain rough and use `—` for details that will be settled only if the use case enters a release. Backlog gaps do not block approval.\]
-
-| Use case number | Area / theme | Use case title | Journey | How to verify | Rules |
-| --- | --- | --- | --- | --- | --- |
-| UC-002 | \[area\] | \[short title\] | \[one or two sentences, or —\] | \[test, demo, or —\] | \[rule numbers, or —\] |
+| Use case | Journey | How to verify |
+| --- | --- | --- |
+| UC-1 \[short title\] | \[journey in one or two sentences\] | \[test or demo\] |
 
 ## 7. Behavior
 
-\[Numbered rules, grouped by topic. Designs and tests cite rules by number, so never renumber them.
+\[The delta. Number rules within this spec so the design and the close can refer to them; the numbers are never cited outside this task. Each rule should read as a test name.
 
 - A rule with a trigger: `WHEN <condition> THE SYSTEM SHALL <behavior>`.
-- Behavior that must not change: `THE SYSTEM SHALL CONTINUE TO <behavior>`.
 - When the outcome depends on state, use a table instead of a list of rules.
 - When rules are checked in order, say so.
-- Under any rule whose reason is not obvious, add a `Why:` line. A rule that settled an open question always gets one.
-- A removed rule keeps its number: `6.3 Removed — T-NNN.`
-- A group of rules that belongs only to the current release carries its number, such as `(R1)`, on its heading. Remove the tag when that release is completed. Never tag a single rule.\]
+- Under any rule whose reason is not obvious, add a `Why:` line. A rule that settled an open question always gets one. At close, a reason that isn't obvious from the code becomes a code comment.\]
 
-### \[Topic\]
+### New
 
-6.1 WHEN \[condition\] THE SYSTEM SHALL \[behavior\].
+B.1 WHEN \[condition\] THE SYSTEM SHALL \[behavior\].
 
-6.2 WHEN \[condition\] THE SYSTEM SHALL \[behavior\]. Why: \[the reason, if a future change could break it without knowing\]
+### Changed
 
-| State | Behavior |
-| --- | --- |
-|  |  |
+B.2 WHEN \[condition\] THE SYSTEM SHALL \[new behavior\]. Was: \[old behavior, and its source\]. Why: \[the reason\]
+
+### Unchanged
+
+\[What this task must not break. Name the existing test or manual test that already covers each one.\]
+
+B.3 THE SYSTEM SHALL CONTINUE TO \[behavior\]. Covered by: \[test name\]
+
+### Removed
+
+\[Optional. Behavior this task takes away, with its source and why.\]
 
 ## 8. Limits
 
-\[Numbers, sizes, timings, and invariants: what must always or never be true. Each one is checkable.\]
+\[Numbers, sizes, timings, and invariants: what must always or never be true. Each one is checkable, and becomes a named constant and a test at its edge.\]
 
 - \[Name\]: \[value or invariant\]
 
 ## 9. Edge Cases and Errors
 
-\[Empty, failure, and boundary states, written as rules and numbered like Behavior.\]
+\[Empty, failure, and boundary states, written as rules.\]
 
 E.1 WHEN \[condition\] THE SYSTEM SHALL \[behavior\].
 
-## 10. Success Criteria
+## 10. Contracts
 
-\[Optional. Measurable results that do not depend on the technology, such as "a first-time user finishes setup in under two minutes."\]
+\[Optional. External contracts this task adds or changes: file formats, filenames other systems read, URL schemes, public APIs, update feeds. Each goes in CONTRACTS.md at close.\]
 
-## 11. Assumptions
+- \[Contract\]: \[the promise, and who relies on it\]
+
+## 11. Success Criteria
+
+\[Optional. Measurable results that do not depend on the technology, such as "a first-time user finishes setup in under two minutes." Becomes the PRD feature section's Done Means.\]
+
+## 12. Deferred
+
+\[Use cases and ideas that wait. Each becomes a BACKLOG.md row at close, with this task as its Source. Rows may stay rough.\]
+
+- \[feature\] — \[why it waits\]
+
+## 13. Assumptions
 
 \[Optional. Defaults chosen where the customer didn't say, so they can be challenged. Include what the spec assumes in place of a prototype the customer declined.\]
 
-## 12. Related Specs
+## 14. Open Questions
 
-\[Optional. Specs that own nearby behavior. Link to them; never restate their rules.\]
-
-- \[path\] — \[what it owns\]
-
-## 13. Open Questions
-
-\[Only unanswered questions in the current release. Mark each one inline where it applies as `[NEEDS DECISION: …]` and list it here, with what will answer it: the customer, or a prototype. When one is answered, move the answer into the rules with a `Why:` line, and delete it from this list. Use `—`, not an open question, for unsettled backlog details.\]
+\[Only unanswered questions. Mark each one inline where it applies as `[NEEDS DECISION: …]` and list it here, with what will answer it: the customer, or a prototype. When one is answered, move the answer into the rules with a `Why:` line, and delete it from this list.\]
 
 - \[question\] — \[rule or section it blocks\] — \[who or what answers it\]
-
-## 14. Change History
-
-\[Newest first. One line per task that changed this spec, and one for any drift corrected to match the product.\]
-
-- YYYY-MM-DD · T-NNN · \[what changed\]

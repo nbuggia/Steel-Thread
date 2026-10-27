@@ -38,13 +38,14 @@ The installer has no dependencies beyond a POSIX shell. It:
 - Copies the skills into your agent's skills folder: `.claude/skills/`, `.agents/skills/` for Codex, or `.kiro/skills/`
 - Keeps a pristine copy of what it installed in `.hashbang/upstream/`, so updates can tell your changes from Hashbang's
 - Adds a Hashbang section to `AGENTS.md`, creating the file if needed. Your existing content is kept.
+- Adds `docs/work-archive/` to `.ignore`, creating the file if needed, so search tools skip closed planning docs
 - For Claude Code, adds `@AGENTS.md` to the top of `CLAUDE.md`, creating the file if needed, so Claude Code reads the same instructions
 
 Commit everything it creates, so your whole team gets Hashbang.
 
 ### Updating
 
-Pull the latest Hashbang and run the installer again. Files you haven't changed are updated, and files Hashbang no longer includes are removed. Files you or your agent customized are never overwritten: the installer saves the new version beside them and asks you to run `hb-update`, which merges Hashbang's changes into yours and tells you what it adopted and skipped. The installer only writes to `.hashbang/framework/`, `.hashbang/upstream/`, and your agent's skills folder — your objective, tasks, decisions, and notes are never touched.
+Pull the latest Hashbang and run the installer again. Files you haven't changed are updated, and files Hashbang no longer includes are removed. Files you or your agent customized are never overwritten: the installer saves the new version beside them and asks you to run `hb-update`, which merges Hashbang's changes into yours and tells you what it adopted and skipped. The installer only writes to `.hashbang/framework/`, `.hashbang/upstream/`, your agent's skills folder, and `.ignore` — your objective, tasks, decisions, and notes in `docs/` are never touched.
 
 ### Customizing
 
@@ -54,17 +55,23 @@ When updating an older installation, the installer migrates `.steel-thread/` to 
 
 ## File structure
 
-Everything Hashbang knows about your project lives in one hidden folder, `.hashbang/`, so it stays out of the way of your own files:
+The files you read and approve live in `docs/`. Hashbang's own working files live in one hidden folder, `.hashbang/`, so they stay out of your way:
 
 ```
 your-project/
   AGENTS.md                ← your file, plus a short Hashbang section
   CLAUDE.md                ← your file, plus @AGENTS.md for Claude Code
-  .hashbang/
+  docs/
     OBJECTIVE.md           ← why this project exists, what done means
+    PRD.md                 ← software projects: replaces OBJECTIVE.md, with intent per feature
     CONTEXT.md             ← vocabulary, style, what the agent must never do
     TASKS.md               ← phases and tasks, in priority order
+    BACKLOG.md             ← features for later
     DECISIONS.md           ← decisions and the reasoning behind them
+    work/                  ← software projects: planning docs for tasks in progress
+    work-archive/          ← planning docs for closed tasks, kept but never read
+    engineering/           ← software projects: architecture, conventions, contracts, testing
+  .hashbang/
     pickup.md              ← where you left off
     customizations.md      ← what you changed in Hashbang, and why
     history/               ← session log and changelog
@@ -78,6 +85,8 @@ your-project/
 
 All-caps files are yours to read and shape; the agent keeps them current with your approval. Lowercase files are its working notes.
 
+In a software project, a task's spec, design, and plans are scaffolding. When the task is done, the agent moves what lasts into tests, the PRD, and the engineering docs, records where each piece went, and archives the rest. The product's behavior lives in its tests, not in documents that go stale.
+
 ## Skills
 
 Eleven skills are included. Your agent suggests them when the moment calls for one, and you can invoke any of them directly (`/name` in Claude Code and Kiro, `$name` in Codex):
@@ -88,7 +97,7 @@ Eleven skills are included. Your agent suggests them when the moment calls for o
 - **hb-elevate** — interview loop, asked in rounds. Resolves ambiguity before work begins, and stress-tests a plan, decision, or diagnosis before you act on it. Used by hb-whats-next during setup.
 - **hb-crit** — domain expert review after significant outputs. Makes the strongest case first, then attacks. BLOCK/CONCERNS/CLEAN verdict.
 - **hb-dev-setup** — tailors the development process to your project's stack: engineering docs, design templates, review checks, and test commands. Runs during setup of a software project.
-- **hb-spec** — shapes an idea into a feature spec: what the product does for its users and why, never how.
+- **hb-spec** — shapes an idea into a spec for one task: what changes for the product's users and why, never how. Plans releases from the backlog.
 - **hb-design** — writes the tech design for a task, with rigor fitted to the change's risk, and reviews it in a fresh context.
 - **hb-slice** — splits a Complex design into thin vertical slices, each proven by a test or demo.
 - **hb-retro** — rolls up design-review data to show how well the design process is working.

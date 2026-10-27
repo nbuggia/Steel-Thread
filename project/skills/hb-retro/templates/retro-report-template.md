@@ -12,15 +12,16 @@ covers: [earliest review-log date] to [latest review-log date]
 
 | Rigor   | Count |
 | ------- | ----- |
-| Trivial |       |
 | Simple  |       |
 | Complex |       |
 
-Blocked designs (`status: Blocked`): [count] — [name each file and, if visible in its own history, why].
+Trivial changes have no design, so they never appear here.
 
-Prospective blocking notes (`Blocking trigger, if any` filled in): [count]. These are risk notes, not evidence a block happened.
+Average review passes: [per rigor level].
 
-**Coverage note:** [state plainly whether any of this data exists yet under the current Trivial/Simple/Complex naming, or whether it's all still under the prior Bounded/Consequential terminology, and since when the current template has been in use.]
+Blocked designs (`Outcome: Blocked`): [count] — [name each entry and, if its findings show it, why].
+
+**Coverage note:** [state plainly how many log entries record a rigor level, outcome, and pass count, and whether any use the prior Bounded/Consequential terminology.]
 
 ## 2. Failure-mode KB trend
 

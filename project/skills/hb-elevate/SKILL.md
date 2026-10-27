@@ -14,7 +14,7 @@ The goal is not to ask every question. It is to learn enough about what the cust
 
 ## Step 1 — Ground yourself
 
-Read .hashbang/OBJECTIVE.md, .hashbang/CONTEXT.md (including its tenets, which settle questions before you ask them), and any active entries in .hashbang/DECISIONS.md that touch the subject, if they exist.
+Read the objective (`docs/PRD.md`'s sections above its first feature, or else `docs/OBJECTIVE.md`), `docs/CONTEXT.md` (including its tenets, which settle questions before you ask them), and any active entries in `docs/DECISIONS.md` that touch the subject, if they exist.
 
 If there is a plan — a proposed fix, a design, an approach, a call the customer is about to make — state it back in its strongest form: what it does, why it is a good idea, and the assumptions it rests on. Ask the customer to confirm this is the plan. Do not challenge a plan you have not stated correctly.
 
@@ -27,7 +27,7 @@ From what's left, pick the questions with the most leverage: the ones whose answ
 When challenging a plan, focus on the assumptions it rests on — the ones that would waste significant effort if wrong. A challenge is a specific way the plan could fail:
 - An assumption that may be wrong
 - A failure mode the plan does not handle
-- A conflict with OBJECTIVE.md, CONTEXT.md, or DECISIONS.md
+- A conflict with the objective, CONTEXT.md, or DECISIONS.md
 - A simpler plan that gets the same result
 - A part that does not serve the objective and could be cut
 
@@ -77,7 +77,7 @@ Never answer a decision for the customer that their answers and tenets don't set
 
 ## Maintain vocabulary as you go
 
-As terms are resolved, propose additions to the vocabulary in .hashbang/CONTEXT.md:
+As terms are resolved, propose additions to the vocabulary in `docs/CONTEXT.md`:
 "We just defined X as Y — want me to add that to the project context?"
 One-tap approval. Do not wait until the end.
 
@@ -93,8 +93,8 @@ The session is done when you can answer every remaining question in the tree you
 Ask the customer to confirm this is the shared understanding. Do not act on it until they do.
 
 Then propose, one at a time:
-- Tenets for .hashbang/CONTEXT.md, only those that apply beyond the work at hand
-- Decisions worth logging in .hashbang/DECISIONS.md, including accepted risks
+- Tenets for `docs/CONTEXT.md`, only those that apply beyond the work at hand
+- Decisions worth logging in `docs/DECISIONS.md`, including accepted risks
 - Tasks, added with the hb-tasks skill: experiments, open questions, and the work itself
 
 When hb-elevate was called by another skill, return the confirmed understanding and tenets to that skill instead of proposing tasks for the work itself.

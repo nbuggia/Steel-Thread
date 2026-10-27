@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Deterministic rollup for hb-retro. Reads existing hb-design output —
-does not modify anything. Prints plain-text numbers; the skill narrates them
-into templates/retro-report-template.md.
+"""Deterministic rollup for hb-retro. Reads the design review log and the
+failure-mode KB — does not modify anything. Prints plain-text numbers; the
+skill narrates them into templates/retro-report-template.md.
 
 Usage: python3 compute_rollup.py <repo_root>
 """
@@ -25,6 +25,9 @@ FM_PRODUCED_RE = re.compile(
 )
 FM_MENTION_RE = re.compile(r"FM-\d+")
 DATE_IN_LINE_RE = re.compile(r"(\d{4}-\d{2}-\d{2})")
+RIGOR_RE = re.compile(r"^Rigor:\s*(\S+)", re.M)
+OUTCOME_RE = re.compile(r"^Outcome:\s*(\S+)", re.M)
+PASSES_RE = re.compile(r"^Review passes:\s*(\d+)", re.M)
 
 
 def classify_decision(cell_text):
@@ -54,9 +57,27 @@ def parse_review_log(path):
     current_format_entries = 0
     legacy_format_entries = 0
     fm_timeline = []  # (date, [fm ids])
+    rigor_counts = Counter()
+    entries_with_rigor = 0
+    blocked = []
+    pass_counts = Counter()  # rigor -> total passes
+    entries_with_passes = Counter()  # rigor -> entries that recorded passes
 
     for e in entries:
         body = e["body"]
+        rigor_m = RIGOR_RE.search(body)
+        rigor = rigor_m.group(1) if rigor_m else None
+        if rigor:
+            entries_with_rigor += 1
+            rigor_counts[rigor] += 1
+        outcome_m = OUTCOME_RE.search(body)
+        if outcome_m and outcome_m.group(1) == "Blocked":
+            blocked.append(f"{e['title']} — {e['date']}")
+        passes_m = PASSES_RE.search(body)
+        if passes_m:
+            key = rigor or "unknown"
+            pass_counts[key] += int(passes_m.group(1))
+            entries_with_passes[key] += 1
         table_rows = [ln for ln in body.splitlines() if ln.strip().startswith("|")]
         has_severity_col = any(
             "Severity" in row for row in table_rows[:2]
@@ -90,6 +111,11 @@ def parse_review_log(path):
         "decision_counts": decision_counts,
         "severity_counts": severity_counts,
         "fm_timeline": fm_timeline,
+        "rigor_counts": rigor_counts,
+        "entries_with_rigor": entries_with_rigor,
+        "blocked": blocked,
+        "pass_counts": pass_counts,
+        "entries_with_passes": entries_with_passes,
         "first_date": entries[0]["date"] if entries else None,
         "last_date": entries[-1]["date"] if entries else None,
     }
@@ -116,47 +142,10 @@ def parse_failure_modes(path):
     return results
 
 
-def scan_rigor_frontmatter(files, base):
-    rigor_counts = Counter()
-    total_files = 0
-    files_with_rigor = 0
-    blocked_designs = []
-    prospective_blocking_notes = 0
-    for f in files:
-        total_files += 1
-        text = f.read_text(encoding="utf-8", errors="replace")
-        fm_match = re.match(r"^---\n(.*?)\n---", text, re.S)
-        frontmatter = fm_match.group(1) if fm_match else ""
-        rigor_m = re.search(r"^rigor:\s*(\S+)", frontmatter, re.M)
-        if rigor_m:
-            files_with_rigor += 1
-            rigor_counts[rigor_m.group(1)] += 1
-        # Count the former Escalated state as Blocked for older designs.
-        status_m = re.search(r"^status:\s*(?:Blocked|Escalated)\s*$", frontmatter, re.M)
-        if status_m:
-            blocked_designs.append(str(f.relative_to(base)))
-        trigger_m = re.search(r"(?:Blocking|Escalation) trigger, if any:\s*(\S.*)", text)
-        if trigger_m and trigger_m.group(1).strip():
-            prospective_blocking_notes += 1
-    return {
-        "total_files": total_files,
-        "files_with_rigor": files_with_rigor,
-        "rigor_counts": rigor_counts,
-        "blocked_designs": blocked_designs,
-        "prospective_blocking_notes": prospective_blocking_notes,
-    }
-
-
 def main():
     root = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
-    tech_docs = root / "docs" / "engineering"
-    work = root / "docs" / "work"
-
-    log = parse_review_log(tech_docs / "DESIGN-REVIEW-LOG.md")
-    fms = parse_failure_modes(tech_docs / "COMMON-FAILURE-MODES.md")
-    # A design is design.md in its task's folder. Older projects kept Simple designs as T-NNN-<name>.md.
-    designs = sorted(work.glob("T-*.md")) + sorted(work.glob("T-*/design.md"))
-    rigor = scan_rigor_frontmatter(designs, work)
+    log = parse_review_log(root / ".hashbang" / "history" / "design-review-log.md")
+    fms = parse_failure_modes(root / "docs" / "engineering" / "COMMON-FAILURE-MODES.md")
 
     print("=== REVIEW LOG ===")
     print(f"Entries: {log['total_entries']} ({log['first_date']} to {log['last_date']})")
@@ -188,15 +177,16 @@ def main():
     print(" ids — those are reinforcements/re-confirmations, not new introductions.)")
 
     print()
-    print("=== RIGOR LEVEL (docs/work/ design frontmatter) ===")
-    print(f"Files scanned: {rigor['total_files']}")
-    print(f"Files with a rigor: field: {rigor['files_with_rigor']}")
-    for k, v in rigor["rigor_counts"].most_common():
+    print("=== RIGOR LEVEL (review log entries) ===")
+    print(f"Entries with a Rigor: line: {log['entries_with_rigor']} of {log['total_entries']}")
+    for k, v in log["rigor_counts"].most_common():
         print(f"  {k}: {v}")
-    print(f"Blocked designs (status: Blocked; legacy Escalated included): {len(rigor['blocked_designs'])}")
-    for fname in rigor["blocked_designs"]:
-        print(f"  {fname}")
-    print(f"Prospective 'Blocking trigger, if any' notes filled in (risk notes, not outcomes): {rigor['prospective_blocking_notes']}")
+    print("Review passes per entry, by rigor (entries that recorded them):")
+    for k, n in log["entries_with_passes"].most_common():
+        print(f"  {k}: {log['pass_counts'][k] / n:.1f} average over {n}")
+    print(f"Blocked designs (Outcome: Blocked): {len(log['blocked'])}")
+    for title in log["blocked"]:
+        print(f"  {title}")
 
 
 if __name__ == "__main__":

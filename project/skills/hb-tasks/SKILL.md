@@ -1,9 +1,9 @@
 ---
 name: hb-tasks
-description: Add, finish, block, reorder, and plan tasks and phases in .hashbang/TASKS.md, keeping its format. Use whenever TASKS.md changes — another skill or the conversation produced work to track, a task finished or got blocked, a phase starts or ends — or when the customer asks to see, add, or reprioritize tasks.
+description: Add, finish, block, reorder, and plan tasks and phases in docs/TASKS.md, keeping its format. Use whenever TASKS.md changes — another skill or the conversation produced work to track, a task finished or got blocked, a phase starts or ends — or when the customer asks to see, add, or reprioritize tasks.
 ---
 
-TASKS.md is the project's plan: phases in order, and tasks in priority order within them. Every change to it goes through this skill, so the format stays exact for the session start and the other skills that read it. If TASKS.md does not exist, create it from `.hashbang/framework/templates/TASKS.md`.
+TASKS.md is the project's plan: phases in order, and tasks in priority order within them. It lives at `docs/TASKS.md`. Every change to it goes through this skill, so the format stays exact for the session start and the other skills that read it. If it does not exist, create it from `.hashbang/framework/templates/TASKS.md`.
 
 ## Format
 
@@ -31,10 +31,12 @@ Adding tasks and phases needs the customer's approval; ask in one line as the wo
 
 - **Add a task:** put it in the phase it serves, in priority order: after the open tasks of the same or higher priority, before lower ones. A task belongs to exactly one phase. Before adding, check that no open task already covers it.
 - **Start a task:** add or update its detail line with what is in progress.
-- **Finish a task:** `- [x]`, with ` · done YYYY-MM-DD` appended. Replace a detail line that described work in progress with nothing, or with where the result lives.
+- **Finish a task:** `- [x]`, with ` · done YYYY-MM-DD` appended. Replace a detail line that described work in progress with nothing, or with what the task produced: the closing commit, if the project uses version control, and any D- and FM- IDs it added. Never a path into `docs/work/` or `docs/work-archive/`; those folders are scaffolding.
+  - A task that has a work entry (`docs/work/T-NNN-*/` in a software project) is finished only once it is closed: the entry has moved to `docs/work-archive/` and holds a `close.md`. If it hasn't, close it first, following step 6 of `.hashbang/framework/development.md`; the close comes back here to finish the task.
+  - A task with no work entry, such as a Trivial change or a task in a project that isn't software, is finished when its work is.
 - **Block a task:** it stays incomplete; add the `Blocked:` line saying what would unblock it. **Unblock:** remove that line, and say which decision or event cleared it.
 - **Reprioritize:** change the priority tag or move the line within its phase. The customer can also reorder by editing the file; treat what they wrote as current.
-- **Add a phase:** propose it from the objective or the work ahead, with a one-line purpose: "It sounds like the next phase is Review — does that fit?" Give it tasks only when it starts.
+- **Add a phase:** propose it from the objective or the work ahead, with a one-line purpose: "It sounds like the next phase is Review — does that fit?" Give it tasks only when it starts. In a software project, a phase is usually a product release, planned from `docs/BACKLOG.md` (see the hb-spec skill); when a backlog row becomes a task, delete the row in the same change.
 - **Finish a phase:** when every task in it is done, append ` ✓ YYYY-MM-DD` to its heading.
 
 Never delete or move a task or phase between phases; the file is the full history. A task that no longer matters is marked done with a detail line saying it was dropped and why.

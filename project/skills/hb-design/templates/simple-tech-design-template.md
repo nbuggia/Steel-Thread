@@ -5,7 +5,7 @@ task: T-NNN
 rigor: Simple
 deciding tenet: [revertible and test-settled; demonstrable in one slice]
 date created: YYYY-MM-DD
-status: Draft / Approved / Done / Blocked / Superseded
+status: Draft / Approved / Blocked
 review iteration: 0
 ---
 
@@ -82,10 +82,16 @@ Table shape and decision legend: `../agent-review-table.md`.
 | \#  | Finding | Severity | Cost to accept | Decision | Rationale | Next step | Arch? | Source |
 | --- | ------- | -------- | -------------- | -------- | --------- | --------- | ----- | ------ |
 
-## 9. Readiness
+## 9. Lasting Changes
+
+\[What this fix adds to the lasting documents. The close step applies these when the task closes; anything not listed here is lost then. Write "None." when the fix adds nothing.\]
+
+| Change | Goes to |
+| ------ | ------- |
+|        | ARCHITECTURE.md / CONVENTIONS.md / CONTRACTS.md / COMMON-FAILURE-MODES.md / DECISIONS.md |
+
+## 10. Readiness
 
 - Ready / full design required / blockers / deferred risks:
 
-## 10. Outcome
-
-- Commit / tests / manual evidence / drift / follow-up:
+\[Implementation evidence — the commit, tests, manual checks, drift — goes in commit messages, not here.\]

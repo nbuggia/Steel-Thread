@@ -18,7 +18,7 @@ Learn it from the repository, not the customer. Read:
 - CI, lint, and formatting configuration.
 - Existing docs: README, contributing guides, architecture notes, decision records, and AGENTS.md.
 
-For a new project with no code yet, take the stack from OBJECTIVE.md's constraints and DECISIONS.md. A stack choice that is still open is critical input: collect every open one and settle them together in one hb-elevate session. Record the result in ARCHITECTURE.md; propose a DECISIONS.md entry only for a choice where a real alternative was rejected and is likely to be proposed again.
+For a new project with no code yet, take the stack from the objective's constraints and DECISIONS.md. A stack choice that is still open is critical input: collect every open one and settle them together in one hb-elevate session. Record the result in ARCHITECTURE.md; propose a DECISIONS.md entry only for a choice where a real alternative was rejected and is likely to be proposed again.
 
 ## Step 2 — Write the engineering docs
 
@@ -26,7 +26,8 @@ Create or update these in `docs/engineering/`. What belongs in each is defined i
 
 - **ARCHITECTURE.md** — start from `architecture-template.md` in this skill's folder. Fill it from the manifests and the code's structure.
 - **CONVENTIONS.md** — start from `conventions-template.md` in this skill's folder. Fill it from the patterns the code keeps consistently. A boundary appears twice: ARCHITECTURE.md says it exists ("all file access is in the Rust core"), and CONVENTIONS.md says how a change respects it ("UI code never touches the filesystem; add a command").
-- **TESTING.md** — each kind of test, its tools, where it lives, and the exact command that runs it; what cannot be tested automatically, and how it is checked instead.
+- **TESTING.md** — each kind of test, its tools, where it lives, and the exact command that runs it. State the naming rule: a test's name states the behavior it proves, in users' terms, and suites are grouped by product area, because tests are where the product's behavior lasts (see "Planning Docs Are Scaffolding" in development.md). Name the product areas automation can't reach well, such as a device, a rich-text editor, or an OS dialog; their behavior lives in manual tests in `docs/manual-tests/<area>.md`, from `manual-test-template.md` in this skill's folder, created when the first one is needed.
+- **CONTRACTS.md** — start from `contracts-template.md` in this skill's folder, if the code already has contracts other systems or users' files rely on: file formats, filenames other software reads, URL schemes, public APIs, update feeds. Otherwise leave it for the first task that adds one.
 - **COMMON-FAILURE-MODES.md** — if it does not exist, create it from hb-design's `templates/common-failure-modes-template.md`. Add the traps this stack is known for, each with `Last Seen:` left blank until one is observed here.
 
 Propose stack terms that need a precise meaning to CONTEXT.md's vocabulary.

@@ -6,7 +6,7 @@ rigor: Complex
 deciding tenet: [what escapes, or what no test can settle]
 date: YYYY-MM-DD
 review iteration: N
-status: Draft / Approved / Done / Blocked / Superseded
+status: Draft / Approved / Blocked
 ---
 
 # Tech Design: Bug or Feature Name
@@ -25,14 +25,14 @@ status: Draft / Approved / Done / Blocked / Superseded
 
 ## 4. Requirements
 
-\[Links to relevant specs.\]
+\[The task's spec, and the lasting documents that already promise behavior in this area.\]
 
 ### Spec Review
 
-Quote relevant claims verbatim. Include Architecture and every touched spec; list reviewed specs with no relevant claims.
+Quote relevant claims verbatim: the spec's rules, and existing promises in CONTRACTS.md, ARCHITECTURE.md, the PRD's feature section, and the area's tests and manual tests. List sources reviewed with no relevant claims.
 
-| Spec | Direct claim | Changes it? |
-| ---- | ------------ | ----------- |
+| Source | Direct claim | Changes it? |
+| ------ | ------------ | ----------- |
 
 ## 5. Current System Audit
 
@@ -129,19 +129,10 @@ Table shape and decision legend: `../agent-review-table.md`.
 | \#  | Finding | Severity | Cost to accept | Decision | Rationale | Next step | Arch? | Source |
 | --- | ------- | -------- | -------------- | -------- | --------- | --------- | ----- | ------ |
 
-## 16. Implementation Outcome
+## 16. Lasting Changes
 
-Append only after implementation; omit this section and the next until then.
+\[What this design adds to the lasting documents: structure, contracts, practices, traps, and rejected alternatives likely to be proposed again. The close step applies these once the code is built, so they describe what was actually built; anything not listed here is lost when the task closes. Implementation evidence — test results, build checks, drift — goes in commit messages, not this design. If implementation proves the design wrong, revise it in place and review what changed, recording those findings in §15.\]
 
-\[What landed, dated. Executed evidence — concrete pass/fail counts per test suite, build/lint checks. Release-blocking commands, if any, with exact invocations and platform caveats; name anything that is not substitute evidence for them.\]
-
-## 17. Post-Implementation Drift Review
-
-Append only if implementation surfaced drift from this design.
-
-\[Why another review happened. State plainly whether this section or an earlier one is now the current readiness authority — never delete the superseded one, mark it historical instead. If drift recurs again later, repeat this pattern as a new dated Implementation Outcome / Drift Review pair rather than overwriting the last one.\]
-
-Table shape and decision legend: `../agent-review-table.md`.
-
-| \#  | Finding | Severity | Cost to accept | Decision | Rationale | Next step | Arch? | Source |
-| --- | ------- | -------- | -------------- | -------- | --------- | --------- | ----- | ------ |
+| Change | Goes to |
+| ------ | ------- |
+|        | ARCHITECTURE.md / CONVENTIONS.md / CONTRACTS.md / COMMON-FAILURE-MODES.md / DECISIONS.md |

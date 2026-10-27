@@ -8,7 +8,7 @@
 # asks. On update, files you haven't changed are updated. Files you have
 # customized are never overwritten: the new Hashbang version is saved in
 # .hashbang/upstream/incoming/ for the hb-update skill to merge in. Your
-# project state elsewhere in .hashbang/ is never touched.
+# project state in docs/ and elsewhere in .hashbang/ is never touched.
 
 set -eu
 
@@ -339,7 +339,21 @@ else
   fi
 fi
 
-# 5. CLAUDE.md — Claude Code reads CLAUDE.md, not AGENTS.md, so the import
+# 5. .ignore — ripgrep-based search tools skip what it lists, and git
+#    ignores the file itself. Closed planning docs stay committed but out of
+#    agents' searches; the rule in AGENTS.md covers agents that don't use it.
+IGNORE="$DEST/.ignore"
+ARCHIVE_LINE=docs/work-archive/
+if [ ! -f "$IGNORE" ]; then
+  printf '%s\n' "$ARCHIVE_LINE" > "$IGNORE"
+  echo "  installed .ignore"
+elif ! grep -qxF "$ARCHIVE_LINE" "$IGNORE"; then
+  if [ -s "$IGNORE" ] && [ -n "$(tail -c 1 "$IGNORE")" ]; then printf '\n' >> "$IGNORE"; fi
+  printf '%s\n' "$ARCHIVE_LINE" >> "$IGNORE"
+  echo "  added $ARCHIVE_LINE to .ignore"
+fi
+
+# 6. CLAUDE.md — Claude Code reads CLAUDE.md, not AGENTS.md, so the import
 #    line from project/CLAUDE.md goes at the top to pull AGENTS.md in.
 if [ "$AGENT" = claude ]; then
   IMPORT=$(cat "$SRC/CLAUDE.md")
