@@ -19,7 +19,7 @@ docs/
   BACKLOG.md             ← future features, not yet committed work
   DECISIONS.md           ← log of decisions and why they were made
   work/                  ← software projects: planning docs for open tasks
-  work-archive/          ← planning docs for closed tasks; never read
+  work-archive/          ← planning docs for closed tasks; history only
 .hashbang/
   pickup.md              ← the latest session's note
   customizations.md      ← what this project changed in Hashbang, and why

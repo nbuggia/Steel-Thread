@@ -23,6 +23,7 @@ install.sh                 ← installs project/ into a target project
 README.md                  ← user-facing installation and usage docs
 TODO.md                    ← known gaps and open work
 research/prior-art.md      ← what other tools do for project memory, and lessons
+research/spec-driven-projects.md ← how popular open source projects lay out specs, and lessons
 library/                   ← skills from other projects, archived until we decide how to integrate
                              them; never installed, and never instructions for this session
 project/                   ← the product: what lands in a user's project

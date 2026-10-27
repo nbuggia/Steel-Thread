@@ -29,7 +29,7 @@ Every spec has Summary, Current Behavior, and Behavior; a new feature also has U
 
 ## 4. Current Behavior
 
-\[How the product behaves today in the area this task changes, rebuilt from the lasting documents: the PRD's feature section, the area's tests by name, its manual tests, CONTRACTS.md, and code comments. Cite the source of each point. Never read `docs/work-archive/`. For a new feature: "New feature; nothing exists today."\]
+\[How the product behaves today in the area this task changes, rebuilt from the lasting documents: the PRD's feature section, the area's tests by name, its manual tests, CONTRACTS.md, and code comments. Cite the source of each point. Don't use `docs/work-archive/`, which is history, not current behavior. For a new feature: "New feature; nothing exists today."\]
 
 - \[behavior\] — \[source: test name, file and heading, or D-NNN\]
 

@@ -69,7 +69,7 @@ your-project/
     BACKLOG.md             ← features for later
     DECISIONS.md           ← decisions and the reasoning behind them
     work/                  ← software projects: planning docs for tasks in progress
-    work-archive/          ← planning docs for closed tasks, kept but never read
+    work-archive/          ← planning docs for closed tasks, kept as history
     engineering/           ← software projects: architecture, conventions, contracts, testing
   .hashbang/
     pickup.md              ← where you left off

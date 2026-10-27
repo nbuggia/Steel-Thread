@@ -22,7 +22,7 @@ Read CONTEXT.md and the Active decisions that touch the feature. Then rebuild ho
 - `docs/engineering/CONTRACTS.md`
 - comments in the code the area runs through
 
-Never read `docs/work-archive/`. Write the summary into the spec's Current Behavior section, citing where each point came from. It is for this task's review; it is never kept anywhere else. A new feature has no current behavior: say so in one line.
+Don't use `docs/work-archive/` for this: it is history, not current behavior. Write the summary into the spec's Current Behavior section, citing where each point came from. It is for this task's review; it is never kept anywhere else. A new feature has no current behavior: say so in one line.
 
 - **A small change** leaves the core value, users, and scope as they are, such as a bug fix's rule or a changed limit. Go straight to step 3. In step 4, recommend hb-crit only if a use case changed.
 

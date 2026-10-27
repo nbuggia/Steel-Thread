@@ -33,7 +33,7 @@ Before drafting, read the following files:
 - `docs/engineering/COMMON-FAILURE-MODES.md` (if missing, create from template `templates/common-failure-modes-template.md`)
 - `docs/engineering/REVIEW-PATTERNS.md` (if missing, create from template `templates/review-patterns-template.md`)
 
-Work from these and the code, never from older designs: don't read `docs/work-archive/`.
+Work from these and the code, never from older designs: `docs/work-archive/` is history, not current behavior.
 
 Mark each entry in `docs/engineering/COMMON-FAILURE-MODES.md` Applicable / Not applicable / Checked — no issue / Accepted risk in the Failure Modes table, with evidence.
 

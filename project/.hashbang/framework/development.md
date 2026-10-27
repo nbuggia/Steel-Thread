@@ -39,7 +39,7 @@ Check the Trivial criteria first; they need no file reads. If the change isn't c
 
 What each level runs:
 
-| | Trivial | Simple | Complex |
+|  | Trivial | Simple | Complex |
 | --- | --- | --- | --- |
 | Task in TASKS.md | None; the commit is the record | Yes | Yes |
 | Work entry | None | Yes | Yes |
@@ -53,7 +53,7 @@ What each level runs:
 
 ## Planning Docs Are Scaffolding
 
-**Planning docs are inputs to one task. When the task closes, everything the next change needs is in the code, the tests, and the lasting documents.** From then on, nothing reads or links to that task's planning docs.
+**Planning docs are inputs to one task. When the task closes, everything the next change needs is in the code, the tests, and the lasting documents.** From then on, nothing relies on or links to that task's planning docs; they are kept only as history.
 
 The planning docs are a task's spec, prototype, tech design, and slicing plan, with their review findings. While the task is open they can be rewritten freely: there is no history to keep, because none of them is a record. The close (step 6) moves everything that lasts out of them, and moves the task's folder to `docs/work-archive/`.
 
@@ -79,7 +79,7 @@ docs/
       slices.md
     T-015-export-spaces/        ← a folder even when it holds one document
       design.md
-  work-archive/                 ← closed tasks; never read
+  work-archive/                 ← closed tasks; history only
     T-009-file-conflicts/
       close.md                  ← where each lasting change landed
   engineering/                  ← project-wide technical reference
@@ -99,14 +99,14 @@ Rules:
 - A work entry is named after its task in TASKS.md: `T-NNN-<short-name>`. Every work entry has a task; propose one with the hb-tasks skill if it doesn't.
 - A work entry is always a folder, even when it holds a single document, so adding a second one never moves the first.
 - `docs/work/` holds only open tasks. Closing a task moves its folder to `docs/work-archive/`.
-- Never read `docs/work-archive/`, and never rely on search results from it. Work from the lasting documents and the code instead.
+- Read `docs/work-archive/` only for history: why something was built the way it was, when DECISIONS.md and the lasting documents don't say, or when the customer asks. Never use it as current behavior, and never rely on search results from it; current behavior is in the code, the tests, and the lasting documents.
 - Nothing lasting links into `docs/work/` or `docs/work-archive/`: no code comment, test, lasting document, or done task. Cite a task ID, D-NNN, FM-NNN, or commit instead. While a task is open, its detail line in TASKS.md may name its folder.
 
 ### Where information lives
 
 Each lasting document answers one question, and each fact lives in exactly one of them; the others link to it.
 
-| | ARCHITECTURE.md | CONVENTIONS.md | DECISIONS.md |
+|  | ARCHITECTURE.md | CONVENTIONS.md | DECISIONS.md |
 | --- | --- | --- | --- |
 | **Answers** | What is there? | How do I make a change here? | Why is it this way, and what was rejected? |
 | **Voice** | Describes: "The Rust core owns all file access." | Instructs: "Never read files from UI code; add a command." | Explains: "We chose X over Y because…" |
@@ -270,35 +270,41 @@ Choose the kind of test by what it has to prove:
 Close a task as soon as its code is finished and validated against its spec (step 5). The close moves everything that lasts out of the planning docs, records where each piece landed, and archives them. A task with a work entry is not done until it is closed.
 
 1. **List what has to last.** Read every document in the work entry. List every rule in `spec.md` (new, changed, and `SHALL CONTINUE TO`, plus its limits, edge cases, and contracts), the spec's summary, users, Not Doing, and success criteria, its deferred use cases, every row in the design's Lasting Changes, and the chosen decisions of a prototype or spike.
+
 2. **Apply them,** following "Where each part of a planning doc goes". Most are in place once the tests and code are done; check rather than assume.
-    - A rule is covered by a test whose name states it; the design's test table says which one. Rename a test whose name doesn't. A rule automation can't reach gets a manual test step. A rule whose reason isn't obvious from the code gets a comment there.
-    - Contracts go in CONTRACTS.md, from hb-dev-setup's `contracts-template.md` if it doesn't exist yet.
-    - The design's Lasting Changes go in the documents they name, describing what was actually built. A new practice goes in CONVENTIONS.md if every change must follow it, and otherwise in the convention skill for its area.
-    - If this task repeated a multi-step change an earlier task also made, such as wiring a new setting through every layer, propose a recipe for it: a convention skill from hb-dev-setup's `convention-skill-template.md`, listed in CONVENTIONS.md.
-    - The spec's intent goes in the feature's section of `docs/PRD.md`. `.hashbang/framework/files.md` says how to create the PRD.
-    - Deferred use cases and follow-up ideas become BACKLOG.md rows, with this task as their Source.
-    - For each rejected alternative, ask: "Will someone propose this again?" Only those that pass get a DECISIONS.md entry.
+
+   - A rule is covered by a test whose name states it; the design's test table says which one. Rename a test whose name doesn't. A rule automation can't reach gets a manual test step. A rule whose reason isn't obvious from the code gets a comment there.
+   - Contracts go in CONTRACTS.md, from hb-dev-setup's `contracts-template.md` if it doesn't exist yet.
+   - The design's Lasting Changes go in the documents they name, describing what was actually built. A new practice goes in CONVENTIONS.md if every change must follow it, and otherwise in the convention skill for its area.
+   - If this task repeated a multi-step change an earlier task also made, such as wiring a new setting through every layer, propose a recipe for it: a convention skill from hb-dev-setup's `convention-skill-template.md`, listed in CONVENTIONS.md.
+   - The spec's intent goes in the feature's section of `docs/PRD.md`. `.hashbang/framework/files.md` says how to create the PRD.
+   - Deferred use cases and follow-up ideas become BACKLOG.md rows, with this task as their Source.
+   - For each rejected alternative, ask: "Will someone propose this again?" Only those that pass get a DECISIONS.md entry.
+
 3. **Get one approval.** The engineering docs, tests, and code are yours to update. The PRD, BACKLOG.md, and DECISIONS.md are the customer's: propose all of this task's changes to them, and any new convention skill, in one message. A rule is dropped only with the customer's approval.
-4. **Write `close.md`** in the work entry: one row for each item from the list, naming where it landed. A test name, a file and heading, or an ID; never a path into `docs/work/` or `docs/work-archive/`. A dropped item says so, with the reason. A task with nothing to keep says "No lasting changes." in place of the table.
 
-    ```markdown
-    # Close: T-014 Autosync at launch
+4. **Write** `close.md` in the work entry: one row for each item from the list, naming where it landed. A test name, a file and heading, or an ID; never a path into `docs/work/` or `docs/work-archive/`. A dropped item says so, with the reason. A task with nothing to keep says "No lasting changes." in place of the table.
 
-    | Item | Landed in |
-    | --- | --- |
-    | Rule: sync starts within 5 seconds of launch | Test `syncs within five seconds of launch` |
-    | Rule: sync state shows in the menu bar | docs/manual-tests/sync.md, "Menu bar status" |
-    | Contract: on-device filename format | docs/engineering/CONTRACTS.md, "Device filenames" |
-    | Lasting Change: SyncScheduler owns sync timing | docs/engineering/ARCHITECTURE.md, "Sync" |
-    | Rejected: background fetch API | D-031 |
-    | Intent and success criteria | docs/PRD.md, "Sync" |
-    | Deferred: sync over cellular | BACKLOG.md |
-    | Rule: retry banner after three failures | Dropped: the customer chose silent retries |
-    ```
+   ```markdown
+   # Close: T-014 Autosync at launch
+   
+   | Item | Landed in |
+   | --- | --- |
+   | Rule: sync starts within 5 seconds of launch | Test `syncs within five seconds of launch` |
+   | Rule: sync state shows in the menu bar | docs/manual-tests/sync.md, "Menu bar status" |
+   | Contract: on-device filename format | docs/engineering/CONTRACTS.md, "Device filenames" |
+   | Lasting Change: SyncScheduler owns sync timing | docs/engineering/ARCHITECTURE.md, "Sync" |
+   | Rejected: background fetch API | D-031 |
+   | Intent and success criteria | docs/PRD.md, "Sync" |
+   | Deferred: sync over cellular | BACKLOG.md |
+   | Rule: retry banner after three failures | Dropped: the customer chose silent retries |
+   ```
 
 5. **Check it.** Fix what these find, then run them again.
-    - **Trace check:** every item from the list has a row, and every row's target exists. Search the tests for each test name, find each heading in its file, and find each ID.
-    - **No-link check:** search the project, outside `docs/work/`, `docs/work-archive/`, `.hashbang/`, and the agent's skills folder, for `docs/work` and this entry's folder name. Code, tests, lasting documents, and TASKS.md cite a task ID, D-NNN, FM-NNN, or commit instead.
+
+   - **Trace check:** every item from the list has a row, and every row's target exists. Search the tests for each test name, find each heading in its file, and find each ID.
+   - **No-link check:** search the project, outside `docs/work/`, `docs/work-archive/`, `.hashbang/`, and the agent's skills folder, for `docs/work` and this entry's folder name. Code, tests, lasting documents, and TASKS.md cite a task ID, D-NNN, FM-NNN, or commit instead.
+
 6. **Archive and finish.** Move the work entry to `docs/work-archive/`. Mark the task done with the hb-tasks skill, citing the closing commit, if the project uses version control, and the D- and FM- IDs the task added. Tell the customer in a few lines what landed where, anything dropped, and what went to BACKLOG.md.
 
 The close is never heavier than the task. At Simple rigor it is usually a few rows, the spec's rules and their tests: do steps 1–4 and 6, and check the rows by eye instead of running step 5's searches. At Complex rigor, do every step.
