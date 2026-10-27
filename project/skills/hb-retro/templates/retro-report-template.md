@@ -59,4 +59,4 @@ Severity counts (current-format entries only — legacy entries didn't record se
 
 ## 5. Recommendation
 
-[If anything here suggests a concrete change to `hb-design` itself — e.g., a rigor-level boundary that keeps getting crossed, a red flag that never fires, a review pattern that's not paying for itself — name it and the evidence for it. If nothing rises to that bar yet, say so; a retro with no action item is a legitimate result.]
+[If anything here suggests a concrete change to `hb-design` itself, or to the Rigor Levels in `.hashbang/framework/development.md` — e.g., a rigor-level boundary that keeps getting crossed, a red flag that never fires, a review pattern that's not paying for itself — name it and the evidence for it. If nothing rises to that bar yet, say so; a retro with no action item is a legitimate result.]

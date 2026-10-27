@@ -11,7 +11,7 @@ review iteration: 0
 
 # Tech Design: Bug or Feature Name
 
-\[Keep this plan under \~200 lines. Growing past that is a sign the change has outgrown Simple rigor — re-run §1 of `hb-design` rather than padding this plan out.\]
+\[Keep this plan under \~200 lines. Growing past that is a sign the change has outgrown Simple rigor — re-size the task (Rigor Levels in `.hashbang/framework/development.md`) rather than padding this plan out.\]
 
 ## 1. Summary
 
@@ -19,7 +19,7 @@ review iteration: 0
 
 ## 2. Rigor Gate
 
-[Which selection criteria decided Simple, per §1 of `hb-design` — also recorded in `deciding tenet` above.]
+[Which selection criteria decided Simple, per Rigor Levels in `.hashbang/framework/development.md` — also recorded in `deciding tenet` above.]
 
 - Blocking trigger, if any:
 

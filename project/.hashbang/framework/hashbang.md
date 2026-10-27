@@ -46,7 +46,7 @@ All-caps files are the customer's: they read them and shape them, and you mainta
 
 **Change TASKS.md only through the hb-tasks skill.** **Before you first create or edit any other Hashbang file in a session, read** `.hashbang/framework/files.md`**.** Together they have the exact format and maintenance rules for each file. You need neither to read the files.
 
-**In a software project, before you start a feature or a bug fix, read** `.hashbang/framework/development.md`**.** It has the process from spec to tests, where each document goes, and which skill runs each step.
+**In a software project, before you change code, read** `.hashbang/framework/development.md`**.** It sizes the change, and has the process from spec to tests, where each document goes, and which skill runs each step.
 
 **Customizing Hashbang.** The framework files and the skills are this project's to adapt. Change them when the customer asks, or when the hb-dev-setup skill tailors them to the stack; if you notice a change that would help, propose it. Keep the formats other files read: file names and locations, IDs such as T-NNN and D-NNN, headings a skill looks for, frontmatter fields, and status values. To change one, search the framework, the skills, and their scripts for everything that reads it, and change them together. Log every change in .hashbang/customizations.md. Updates never overwrite a customized file — the installer leaves it for the hb-update skill to merge. Never edit anything in `.hashbang/upstream/`; the installer and hb-update keep it.
 
@@ -142,7 +142,7 @@ The only skill the customer needs to know is **hb-whats-next**. Everything else 
 - **hb-crit** — domain expert review after significant outputs. Strongest case first, then attack. BLOCK/CONCERNS/CLEAN verdict.
 - **hb-dev-setup** — tailor the development process to a software project's stack: engineering docs, design templates, review checks, and test commands. Runs during setup, and again when the stack changes.
 - **hb-spec** — write a task's spec: the change in what the product does for users, and why, as rules its design and tests cover. The first step of `.hashbang/framework/development.md`.
-- **hb-design** — write the tech design for a task at a rigor level fitted to its risk, and review it in a fresh context. Step 3 of `.hashbang/framework/development.md`.
+- **hb-design** — write the tech design for a task at its rigor level, and review it in a fresh context. Step 3 of `.hashbang/framework/development.md`.
 - **hb-slice** — split a Complex design into thin vertical slices, each proven by a test or demo. Step 4.
 - **hb-retro** — roll up design-review data to show how well the design process is working.
 - **hb-update** — merge a new Hashbang version into the files this project has customized.

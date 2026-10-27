@@ -1,6 +1,6 @@
 # Hashbang Development Process
 
-How to take a feature or a bug from idea to tested code in a software project. Read this before you start a feature, a bug fix, or any change that needs more than a direct edit. You do not need it for questions, reading code, or trivial changes.
+How to take a feature or a bug from idea to tested code in a software project. Read this before you change code: its Rigor Levels section decides how much of the process the change needs. You do not need it for questions or reading code.
 
 This process is written for any stack. The hb-dev-setup skill tailors this project's copy, and the development skills, to its languages and platforms. If `docs/engineering/ARCHITECTURE.md` does not exist yet, run it before the first feature.
 
@@ -19,7 +19,37 @@ Stop for the customer only when the work is blocked, for one of two reasons:
 
 When you stop, ask one question, give your recommendation, and keep working on anything that does not depend on the answer.
 
-A step is skipped only when the rules below say so. When you skip one, say which and why: "This is a Simple fix, so no slicing plan."
+A step is skipped only when the task's rigor level or the rules below say so. When you skip one, say which and why: "This is a Simple fix, so no slicing plan."
+
+## Rigor Levels
+
+**Every change gets a rigor level before work starts: Trivial, Simple, or Complex.** The level decides which steps run and how heavy each one is, so a one-line fix doesn't pay for a feature's process. Set it once, at the start of the task, and tell the customer in one line which criterion decided it: "This is Trivial: one comparison, and a failing test proves the fix."
+
+Check the Trivial criteria first; they need no file reads. If the change isn't clearly Trivial, read `AGENTS.md`, `docs/engineering/CONVENTIONS.md`, and `docs/engineering/ARCHITECTURE.md` before choosing between Simple and Complex.
+
+| Rigor level | Criteria | Examples |
+| --- | --- | --- |
+| Trivial | All of these:<br>1. One local edit; nothing else depends on what it changes.<br>2. No promise changes, unless a bug fix restores one.<br>3. A mistake is visible on sight, or one test settles it. | A copy fix, a style value, a default. A wrong comparison in one function, with a failing test that reproduces the bug. |
+| Simple | All of these:<br>1. The scope is well understood; it follows an existing CONVENTIONS.md pattern and doesn't cross an ARCHITECTURE.md boundary.<br>2. Reverting the commit undoes it completely; nothing lasting reaches data stores, users' files, or other systems.<br>3. Correctness can be fully tested: it doesn't depend on thread interleaving, or on behavior invented as you go.<br>4. It fits in one or two slices. | A save handler that skips a validation the other handlers apply: a few edits in one component, following their pattern, and one test proves both the broken and the fixed behavior. |
+| Complex | Anything that misses a Simple criterion. | Adding a field to the persisted settings file. Builds already shipped wrote the old shape to disk, so reverting a commit can't undo it. |
+
+- A close call is Simple.
+- A bug with more than one independent cause is more than one task. Size each one.
+- **Re-size when the work shows the level was wrong,** in either direction, and say so: "This touches the export format, so it's Complex now." The steps the new level adds start from there. A Trivial change that grows gets a task and a work entry; a Simple design that grows is rewritten from the Complex template.
+
+What each level runs:
+
+| | Trivial | Simple | Complex |
+| --- | --- | --- | --- |
+| Task in TASKS.md | None; the commit is the record | Yes | Yes |
+| Work entry | None | Yes | Yes |
+| Spec (step 1) | None | When users would notice the change | When users would notice the change |
+| Prototype (step 2) | None | When step 2 calls for one | When step 2 calls for one |
+| Bug diagnosis review | None; the failing test is the proof | Only when a failing test doesn't prove the cause | Always |
+| Tech design (step 3) | None | Simple template, one review pass | Complex template, two review passes, plus at most one blocker-verification pass |
+| Slicing plan (step 4) | None | None | When the design needs more than two slices |
+| Tests and code (step 5) | A bug's reproducing test, then the fix | Tests first, at the design's test points | Tests first, slice by slice |
+| Close (step 6) | None; the commit message records the cause and the test | Steps 1–4 and 6; check the rows by eye | Every step, including the searches |
 
 ## Planning Docs Are Scaffolding
 
@@ -153,7 +183,7 @@ Rules:
 
 ## Step 1 — Spec
 
-**Produces:** `docs/work/T-NNN-<name>/spec.md`, the behavior delta. **Skip when:** the change does not alter anything the product's users would notice: a refactor, an internal fix, a performance change with no visible effect.
+**Produces:** `docs/work/T-NNN-<name>/spec.md`, the behavior delta. **Skip when:** the task is Trivial, or the change does not alter anything the product's users would notice: a refactor, an internal fix, a performance change with no visible effect.
 
 Use the hb-spec skill. A spec says what one task changes in user-visible behavior, and why: new rules, changed rules, and `SHALL CONTINUE TO` rules for what must not change. It never says how. External contracts such as URLs, file formats, and keyboard shortcuts are behavior; code, internal paths, and technology choices belong in the tech design.
 
@@ -172,9 +202,9 @@ A prototype answers a question, and it is thrown away. Its `README.md` starts wi
 
 ## Step 3 — Tech Design
 
-**Produces:** `docs/work/T-NNN-<name>/design.md`. **Skip when:** the change is Trivial: one obvious edit whose mistakes are visible on sight, such as a copy fix, a style value, or a default.
+**Produces:** `docs/work/T-NNN-<name>/design.md`. **Skip when:** the task is Trivial.
 
-Use the hb-design skill. It picks a rigor level (Trivial, Simple, or Complex), fills in the matching template, and runs the review passes. Whatever the rigor level, a design must:
+Use the hb-design skill. It fills in the template for the task's rigor level and runs that level's review passes. At either level, a design must:
 
 1. Read the spec, `docs/engineering/ARCHITECTURE.md`, `CONVENTIONS.md`, and `CONTRACTS.md`, and the code the change touches.
 2. For a bug, reproduce it first, with a failing test or proof from the source. If you can't, the design starts with diagnosis, not a fix.
@@ -188,7 +218,7 @@ Any spec claim the design changes goes back into the spec and through its review
 
 ## Step 4 — Slicing Plan (Complex designs only)
 
-**Produces:** `docs/work/T-NNN-<name>/slices.md`. **Skip when:** the design is Simple, or it fits in one or two slices.
+**Produces:** `docs/work/T-NNN-<name>/slices.md`. **Skip when:** the task is Trivial or Simple, or the design fits in one or two slices.
 
 Use the hb-slice skill. It splits the design into thin vertical slices:
 
@@ -203,7 +233,9 @@ Do not copy slices into TASKS.md. The task stays the unit of work there; keep it
 
 ## Step 5 — Tests and Code
 
-Work one slice at a time, or the whole design if it has no slicing plan. For each one:
+A Trivial change runs this step alone. For a bug, write the reproducing test and confirm it fails, then fix the code and run the full suite. Suggest a commit message that names the cause and the test.
+
+Otherwise, work one slice at a time, or the whole design if it has no slicing plan. For each one:
 
 1. **Write the tests first,** at the test points the design chose, each named for the behavior it proves. Run them and confirm they fail for the right reason. For a bug, the reproduction from step 3 is the first test.
 2. **Write the code** until those tests pass, then run the full suite.
@@ -225,7 +257,7 @@ Choose the kind of test by what it has to prove:
 
 ## Step 6 — Close
 
-**Produces:** `close.md` in the work entry, and the folder moved to `docs/work-archive/`. **Skip when:** the task has no work entry.
+**Produces:** `close.md` in the work entry, and the folder moved to `docs/work-archive/`. **Skip when:** the task is Trivial, or has no work entry.
 
 Close a task as soon as its code is finished. The close moves everything that lasts out of the planning docs, records where each piece landed, and archives them. A task with a work entry is not done until it is closed.
 
@@ -260,7 +292,7 @@ Close a task as soon as its code is finished. The close moves everything that la
     - **No-link check:** search the project, outside `docs/work/`, `docs/work-archive/`, `.hashbang/`, and the agent's skills folder, for `docs/work` and this entry's folder name. Code, tests, lasting documents, and TASKS.md cite a task ID, D-NNN, FM-NNN, or commit instead.
 6. **Archive and finish.** Move the work entry to `docs/work-archive/`. Mark the task done with the hb-tasks skill, citing the closing commit, if the project uses version control, and the D- and FM- IDs the task added. Tell the customer in a few lines what landed where, anything dropped, and what went to BACKLOG.md.
 
-The close is never heavier than the task. After a Simple design it is usually a few rows: the spec's rules and their tests. After a Complex one, it is every step in full.
+The close is never heavier than the task. At Simple rigor it is usually a few rows, the spec's rules and their tests: do steps 1–4 and 6, and check the rows by eye instead of running step 5's searches. At Complex rigor, do every step.
 
 If your agent can start a subagent, you can also run a fresh-context review with the hb-crit skill: given only the lasting documents and the code, can an agent make the next change in this area and tell intended behavior from accidental? It adds confidence but never decides the close, because an agent without a subagent would be grading its own work.
 
@@ -268,11 +300,12 @@ If your agent can start a subagent, you can also run a fresh-context review with
 
 A bug follows the same flow with a shorter spec:
 
-1. **Diagnose.** Reproduce the bug, find the root cause, and say how confident you are and why. If you can't reach confidence, add logging or a probe to learn more before proposing a fix. Get the diagnosis reviewed with the hb-crit skill before designing a fix.
-2. **Spec,** only if the correct behavior was never a promise or the promise was wrong: use the hb-spec skill to write the rule for the fixed behavior, and `SHALL CONTINUE TO` rules for what must not change.
-3. **Tech design** at the rigor level the fix needs. Most bugs are Simple. A bug with more than one independent cause is more than one task.
-4. **Tests and code,** starting with the failing reproduction.
-5. **Close.**
+1. **Diagnose.** Reproduce the bug, find the root cause, and say how confident you are and why. If you can't reach confidence, add logging or a probe to learn more before proposing a fix.
+2. **Size it,** following Rigor Levels. A one-line fix with a failing test that reproduces it is usually Trivial; most other bugs are Simple. At Complex rigor, or when a failing test doesn't prove the cause, get the diagnosis reviewed with the hb-crit skill before designing a fix.
+3. **Spec,** only if the correct behavior was never a promise or the promise was wrong: use the hb-spec skill to write the rule for the fixed behavior, and `SHALL CONTINUE TO` rules for what must not change.
+4. **Tech design,** unless the fix is Trivial.
+5. **Tests and code,** starting with the failing reproduction.
+6. **Close,** unless the fix is Trivial.
 
 ## How the Skills Connect
 
