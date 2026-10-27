@@ -7,7 +7,9 @@ last updated: YYYY-MM-DD
 
 # Spec: \[Feature Name\]
 
-\[Status meanings: Draft — being written or changed. Approved — it passed review with no open decisions; the next step can start. Blocked — waiting on the customer; say why on a `Blocked:` line under the status. This spec is scaffolding for one task: when the task closes, the close step moves its rules into tests and its intent into the PRD, then archives it.\]
+\[Status meanings: Draft — being written or changed. Approved — it passed review with no open decisions; the next step can start. Blocked — waiting on the customer; say why on a `Blocked:` line under the status. This spec is scaffolding for one task: when the task closes, the close step moves its rules into tests and its intent into the PRD, then archives it.
+
+Every spec has Summary, Current Behavior, and Behavior; a new feature also has Users, Not Doing, and Use Cases. Leave out any other section, heading and all, when it has nothing in it. Keep the framing thin and let Behavior carry the length.\]
 
 ## 1. Summary
 
@@ -15,7 +17,7 @@ last updated: YYYY-MM-DD
 
 ## 2. Users
 
-- **For:** \[who uses this, and the situation they are in\]
+- **For:** \[who consumes what this changes, and the situation they are in: people using the product, callers of an API, a developer typing a command, or code reading a file format\]
 - **Core value:** \[the one thing this must do for them to be worth building, in one specific sentence. "Helps people write" is too vague; "a writer can hand an agent a draft and review its changes without losing their own edits" is specific.\]
 - **Not for:** \[who this is deliberately not built for\]
 
@@ -76,7 +78,7 @@ B.3 THE SYSTEM SHALL CONTINUE TO \[behavior\]. Covered by: \[test name\]
 
 ## 9. Edge Cases and Errors
 
-\[Empty, failure, and boundary states, written as rules.\]
+\[Empty, failure, and boundary states, written as rules. Check hb-spec's edge-case list: loading, cancelling, permission denied, offline, timeouts, races, several instances, stale data, focus loss, keyboard and accessibility, and neighboring features.\]
 
 E.1 WHEN \[condition\] THE SYSTEM SHALL \[behavior\].
 

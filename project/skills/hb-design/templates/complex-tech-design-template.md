@@ -113,10 +113,10 @@ Name the baseline platform, then one row for every other platform, browser, or r
 
 ## 13. Testing Strategy
 
-Every declared error and lifecycle/concurrency failure needs automated or manual proof. Cover applicable partial success, stale dialog state, missing wiring, cleanup, reload between decision/action, and concurrent entry points. Every boundary an operation crosses needs an integration test through the real boundary, or a manual check with the reason.
+Every declared error and lifecycle/concurrency failure needs automated or manual proof. Cover applicable partial success, stale dialog state, missing wiring, cleanup, reload between decision/action, and concurrent entry points. Every boundary an operation crosses needs an integration test through the real boundary, or a manual check with the reason. Every spec rule appears in the Spec rules column of at least one row.
 
-| Test | Kind (unit / integration / UI / manual) | Regression prevented |
-| ---- | --------------------------------------- | -------------------- |
+| Test | Kind (unit / integration / UI / manual) | Spec rules proved | Regression prevented |
+| ---- | --------------------------------------- | ----------------- | -------------------- |
 
 ## 14. Rollout
 

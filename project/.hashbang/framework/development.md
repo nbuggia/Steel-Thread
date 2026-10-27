@@ -30,7 +30,7 @@ Check the Trivial criteria first; they need no file reads. If the change isn't c
 | Rigor level | Criteria | Examples |
 | --- | --- | --- |
 | Trivial | All of these:<br>1. One local edit; nothing else depends on what it changes.<br>2. No promise changes, unless a bug fix restores one.<br>3. A mistake is visible on sight, or one test settles it. | A copy fix, a style value, a default. A wrong comparison in one function, with a failing test that reproduces the bug. |
-| Simple | All of these:<br>1. The scope is well understood; it follows an existing CONVENTIONS.md pattern and doesn't cross an ARCHITECTURE.md boundary.<br>2. Reverting the commit undoes it completely; nothing lasting reaches data stores, users' files, or other systems.<br>3. Correctness can be fully tested: it doesn't depend on thread interleaving, or on behavior invented as you go.<br>4. It fits in one or two slices. | A save handler that skips a validation the other handlers apply: a few edits in one component, following their pattern, and one test proves both the broken and the fixed behavior. |
+| Simple | All of these:<br>1. The scope is well understood; it follows an existing convention, in CONVENTIONS.md or a convention skill, and doesn't cross an ARCHITECTURE.md boundary.<br>2. Reverting the commit undoes it completely; nothing lasting reaches data stores, users' files, or other systems.<br>3. Correctness can be fully tested: it doesn't depend on thread interleaving, or on behavior invented as you go.<br>4. It fits in one or two slices. | A save handler that skips a validation the other handlers apply: a few edits in one component, following their pattern, and one test proves both the broken and the fixed behavior. |
 | Complex | Anything that misses a Simple criterion. | Adding a field to the persisted settings file. Builds already shipped wrote the old shape to disk, so reverting a commit can't undo it. |
 
 - A close call is Simple.
@@ -48,7 +48,7 @@ What each level runs:
 | Bug diagnosis review | None; the failing test is the proof | Only when a failing test doesn't prove the cause | Always |
 | Tech design (step 3) | None | Simple template, one review pass | Complex template, two review passes, plus at most one blocker-verification pass |
 | Slicing plan (step 4) | None | None | When the design needs more than two slices |
-| Tests and code (step 5) | A bug's reproducing test, then the fix | Tests first, at the design's test points | Tests first, slice by slice |
+| Tests and code (step 5) | A bug's reproducing test, then the fix | Tests first, at the design's test points, then validate against the spec | Tests first, slice by slice, then validate against the spec |
 | Close (step 6) | None; the commit message records the cause and the test | Steps 1–4 and 6; check the rows by eye | Every step, including the searches |
 
 ## Planning Docs Are Scaffolding
@@ -110,7 +110,7 @@ Each lasting document answers one question, and each fact lives in exactly one o
 | --- | --- | --- | --- |
 | **Answers** | What is there? | How do I make a change here? | Why is it this way, and what was rejected? |
 | **Voice** | Describes: "The Rust core owns all file access." | Instructs: "Never read files from UI code; add a command." | Explains: "We chose X over Y because…" |
-| **Holds** | The stack and key dependencies, components, boundaries, where state lives, data flow, persistence, and which component implements each contract | The practices a change must follow: structure, naming, error handling, state management, and boundary rules stated as rules | Choices future work must follow that are expensive to undo or likely to be argued again, with what was rejected |
+| **Holds** | The stack and key dependencies, components, boundaries, where state lives, data flow, persistence, and which component implements each contract | The practices every change must follow: structure, naming, error handling, state management, and boundary rules stated as rules; and the list of convention skills, with when to load each | Choices future work must follow that are expensive to undo or likely to be argued again, with what was rejected |
 | **Belongs here if** | You would draw it on a diagram | A reviewer would flag a violation in a diff | Someone will propose the opposite, and the answer is "we considered that" |
 | **Changes by** | Editing in place; it always describes now | Editing in place; it always describes now | Appending; an old entry is superseded, never edited |
 
@@ -126,7 +126,8 @@ The neighbors:
 - **Manual tests** hold behavior that automation can't reach, by product area, in `docs/manual-tests/<area>.md`. A person runs them, often the customer.
 - **CONTRACTS.md** holds the promises other systems and users' files rely on: file formats, on-device filenames, URL schemes, update feeds, public APIs. ARCHITECTURE.md names the component that implements each one.
 - **PRD.md** holds product intent per feature area: who it is for, why it matters, what it doesn't do, and what done means. `framework/files.md` has its format.
-- **Code comments** hold the why of non-obvious code, citing D-NNN or FM-NNN.
+- **Convention skills** hold the rules for one area of the code, such as UI or logging, or the steps for one recurring kind of change, such as adding a feature flag. They live in the agent's skills folder, named without the `hb-` prefix, so Hashbang updates never touch them. A skill that keeps project paths in its examples can be copied to another project on the same stack.
+- **Code comments** hold the why of non-obvious code, citing D-NNN or FM-NNN. They describe the code as it is now; what a change did belongs in its commit message.
 - **TESTING.md** says how to check a change: the kinds of test, where each lives, their tools, and the commands that run them.
 - **COMMON-FAILURE-MODES.md** records traps the project has hit, or that its stack is known for.
 - **BACKLOG.md** holds future features; **CONTEXT.md** holds the vocabulary, tenets, and never-do rules.
@@ -148,7 +149,7 @@ The close step uses this table. Every row lands in a lasting document, or is dro
 | Spec: success criteria | PRD feature section's Done Means |
 | Spec: deferred use cases | BACKLOG.md |
 | Design: structure, boundaries, formats | ARCHITECTURE.md |
-| Design: new practices | CONVENTIONS.md |
+| Design: new practices | CONVENTIONS.md, or the convention skill for their area |
 | Design: rejected alternatives likely to be proposed again | DECISIONS.md |
 | Design: traps found during implementation | COMMON-FAILURE-MODES.md |
 | Design: rigor level and review passes | The design review log |
@@ -206,11 +207,11 @@ A prototype answers a question, and it is thrown away. Its `README.md` starts wi
 
 Use the hb-design skill. It fills in the template for the task's rigor level and runs that level's review passes. At either level, a design must:
 
-1. Read the spec, `docs/engineering/ARCHITECTURE.md`, `CONVENTIONS.md`, and `CONTRACTS.md`, and the code the change touches.
+1. Read the spec, `docs/engineering/ARCHITECTURE.md`, `CONVENTIONS.md`, and `CONTRACTS.md`, the convention skills CONVENTIONS.md lists for the areas the change touches, and the code it touches.
 2. For a bug, reproduce it first, with a failing test or proof from the source. If you can't, the design starts with diagnosis, not a fix.
 3. Before building anything new, check whether the code, the framework, the standard library, or an existing dependency already does it.
 4. Write the design: the current state, the proposed change, the alternatives rejected and why, and the risks.
-5. **Choose the test points.** Say where the change will be tested, preferring existing test points to new ones and the highest-level one that can prove the behavior. Fewer is better. The tests in step 5 are written against these and nowhere else.
+5. **Choose the test points.** Say where the change will be tested, preferring existing test points to new ones and the highest-level one that can prove the behavior. Fewer is better. For each test point, name the spec rules it proves, such as B.2, E.1, or a limit. Every rule needs a test point or a manual test; the review treats a rule with neither as a gap. The tests in step 5 are written against these and nowhere else.
 6. **List the Lasting Changes:** what the design adds to ARCHITECTURE.md, CONVENTIONS.md, CONTRACTS.md, COMMON-FAILURE-MODES.md, and DECISIONS.md. The close step applies them.
 7. Get a review in a fresh context. The reviewer judges what the design says, not your explanation of it, and must not expand scope.
 
@@ -233,14 +234,21 @@ Do not copy slices into TASKS.md. The task stays the unit of work there; keep it
 
 ## Step 5 — Tests and Code
 
-A Trivial change runs this step alone. For a bug, write the reproducing test and confirm it fails, then fix the code and run the full suite. Suggest a commit message that names the cause and the test.
+A Trivial change runs this step alone. For a bug, write the reproducing test and confirm it fails, then fix the code and run the checks TESTING.md lists for the area it touches. Suggest a commit message that names the cause and the test.
 
-Otherwise, work one slice at a time, or the whole design if it has no slicing plan. For each one:
+Otherwise, work one slice at a time, or the whole design if it has no slicing plan. Before writing code, load the convention skills CONVENTIONS.md lists for the areas the slice touches, and follow a recipe when the slice makes the change it covers. For each one:
 
 1. **Write the tests first,** at the test points the design chose, each named for the behavior it proves. Run them and confirm they fail for the right reason. For a bug, the reproduction from step 3 is the first test.
-2. **Write the code** until those tests pass, then run the full suite.
+2. **Write the code** until those tests pass, then run the checks TESTING.md lists for the areas the slice touches, such as their tests, lint, and the formatter. Don't re-run a check on code that hasn't changed since it passed.
 3. **Check it against the spec.** Every spec rule the slice covers has a test whose name states it, or a manual test.
 4. **Suggest a commit message** that records the evidence: the tests added, and any drift from the plan. Then checkpoint pickup.md.
+
+**After the last slice, validate the change against its spec and design.** Run the full suite, unless TESTING.md leaves it to CI. Then list every commitment: each spec rule, limit, edge case, and contract, and each design decision a reviewer would check, such as a boundary or a persisted format. For each one, confirm the code does it, from a passing test that exercises it or from the code path itself; a test's name alone is not proof. For each mismatch, recommend one of two fixes:
+
+- **Fix the code** when the spec is right. That is yours to do.
+- **Fix the spec** when the implementation found something better, or the rule was wrong. A change users would notice is a high-judgment decision: put every such mismatch to the customer in one message, with your recommendation. Revise the spec, and send it back through review only if a use case changed.
+
+Re-run the checks for what changed. The task is ready to close when no mismatch is open.
 
 Choose the kind of test by what it has to prove:
 
@@ -252,24 +260,25 @@ Choose the kind of test by what it has to prove:
 
 - Test what the code does from the outside, never how it does it. A test that breaks during a refactor that changes no behavior is a bad test.
 - Each use case gets at least one automated UI or integration test. Unit tests alone do not prove a use case works.
-- Follow the project's `docs/engineering/TESTING.md` for tools and commands. If it does not exist, propose creating it the first time you write a test, with the commands that run each kind.
+- Follow the project's `docs/engineering/TESTING.md` for tools and commands, and for its validation order: which checks a change runs, and when the full suite runs. If it does not exist, propose creating it the first time you write a test, with the commands that run each kind.
 - When automated testing can't reach a behavior, add a step to its product area's manual test in `docs/manual-tests/<area>.md`, from hb-dev-setup's `manual-test-template.md`, instead of skipping the check. Without one, that behavior has no lasting home.
 
 ## Step 6 — Close
 
 **Produces:** `close.md` in the work entry, and the folder moved to `docs/work-archive/`. **Skip when:** the task is Trivial, or has no work entry.
 
-Close a task as soon as its code is finished. The close moves everything that lasts out of the planning docs, records where each piece landed, and archives them. A task with a work entry is not done until it is closed.
+Close a task as soon as its code is finished and validated against its spec (step 5). The close moves everything that lasts out of the planning docs, records where each piece landed, and archives them. A task with a work entry is not done until it is closed.
 
 1. **List what has to last.** Read every document in the work entry. List every rule in `spec.md` (new, changed, and `SHALL CONTINUE TO`, plus its limits, edge cases, and contracts), the spec's summary, users, Not Doing, and success criteria, its deferred use cases, every row in the design's Lasting Changes, and the chosen decisions of a prototype or spike.
 2. **Apply them,** following "Where each part of a planning doc goes". Most are in place once the tests and code are done; check rather than assume.
-    - A rule is covered by a test whose name states it. Rename a test whose name doesn't. A rule automation can't reach gets a manual test step. A rule whose reason isn't obvious from the code gets a comment there.
+    - A rule is covered by a test whose name states it; the design's test table says which one. Rename a test whose name doesn't. A rule automation can't reach gets a manual test step. A rule whose reason isn't obvious from the code gets a comment there.
     - Contracts go in CONTRACTS.md, from hb-dev-setup's `contracts-template.md` if it doesn't exist yet.
-    - The design's Lasting Changes go in the documents they name, describing what was actually built.
+    - The design's Lasting Changes go in the documents they name, describing what was actually built. A new practice goes in CONVENTIONS.md if every change must follow it, and otherwise in the convention skill for its area.
+    - If this task repeated a multi-step change an earlier task also made, such as wiring a new setting through every layer, propose a recipe for it: a convention skill from hb-dev-setup's `convention-skill-template.md`, listed in CONVENTIONS.md.
     - The spec's intent goes in the feature's section of `docs/PRD.md`. `.hashbang/framework/files.md` says how to create the PRD.
     - Deferred use cases and follow-up ideas become BACKLOG.md rows, with this task as their Source.
     - For each rejected alternative, ask: "Will someone propose this again?" Only those that pass get a DECISIONS.md entry.
-3. **Get one approval.** The engineering docs, tests, and code are yours to update. The PRD, BACKLOG.md, and DECISIONS.md are the customer's: propose all of this task's changes to them in one message. A rule is dropped only with the customer's approval.
+3. **Get one approval.** The engineering docs, tests, and code are yours to update. The PRD, BACKLOG.md, and DECISIONS.md are the customer's: propose all of this task's changes to them, and any new convention skill, in one message. A rule is dropped only with the customer's approval.
 4. **Write `close.md`** in the work entry: one row for each item from the list, naming where it landed. A test name, a file and heading, or an ID; never a path into `docs/work/` or `docs/work-archive/`. A dropped item says so, with the reason. A task with nothing to keep says "No lasting changes." in place of the table.
 
     ```markdown

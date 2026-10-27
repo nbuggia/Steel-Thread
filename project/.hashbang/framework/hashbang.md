@@ -149,6 +149,8 @@ The only skill the customer needs to know is **hb-whats-next**. Everything else 
 - **hb-tasks** — every change to TASKS.md: adding, finishing, blocking, and reordering tasks, and planning phases. Other skills hand their tasks to it.
 - **hb-recap** — show the current pickup note and let the customer adjust it: add a note for tomorrow, change the suggested start, leave themselves a message. Optional — the system works without it.
 
+A software project can also have **convention skills** of its own: rules for one area of the code, or the steps for one recurring kind of change. `docs/engineering/CONVENTIONS.md` lists them, and `.hashbang/framework/development.md` says when to load them. They don't start with `hb-`, and Hashbang updates never touch them.
+
 Skills are loaded on demand — never at session start. Either you or the customer can invoke any skill. Suggest one naturally when the moment calls for it: "This is a good moment for an hb-crit — want me to run one?" Not: "You should invoke the hb-crit skill." When a task finishes, use the hb-whats-next skill to recommend the next one — it handles closing the task, closing a phase, and checking against Done Means.
 
 ---

@@ -6,7 +6,7 @@ based-on: Matt Pocock, to-spec (https://github.com/mattpocock/skills); GitHub Sp
 
 A spec is the behavior delta for one task: what the task changes in how the product behaves for its users, and why. It is scaffolding. When the task closes, its rules live on in tests, manual tests, and CONTRACTS.md, and its intent in the PRD; the spec itself is archived. The format and most of the guidance are in `spec-template.md`; follow it closely. This is step 1 of `.hashbang/framework/development.md`.
 
-In this skill, **users** are the people the feature is built for. The **customer** is the person you are working with.
+In this skill, **users** are whoever consumes what the task changes: the people using the product for a UI, the callers for an API or library, the developer typing a CLI command, the code that reads a file format. The **customer** is the person you are working with.
 
 This skill also owns `docs/BACKLOG.md` and release planning. Its format is in `.hashbang/framework/files.md`.
 
@@ -45,11 +45,16 @@ While shaping, watch for two things:
 
 ## Step 3 — Write it
 
-Fill in the template, leaving out optional sections with nothing in them. Then check:
+Fill in the template. Every spec has Summary, Current Behavior, and Behavior; a new feature also has Users, Not Doing, and Use Cases. Include any other section only when it has content, and leave out its heading otherwise.
+
+Size it to the task. Behavior is as long as the change needs, and everything around it stays thin: at Simple rigor a spec is usually 30–60 lines, and at Complex 80–150, most of them in Behavior. If the Summary, Users, and Behavior say the same thing, cut the framing, not the rules.
+
+Then check:
 
 - **No implementation:** no code identifiers, internal file paths, components, libraries, or test plans. External contracts are behavior and belong in the spec, such as URLs, file formats, keyboard shortcuts, and commands users type; list each one under Contracts.
 - **A complete delta:** every rule this task adds or changes is under New or Changed, and the behavior it must not break is under Unchanged, as `SHALL CONTINUE TO` rules. A changed rule says what it was.
 - **Testable rules:** each rule can become a test name, or a step in a manual test.
+- **Edge cases:** walk this list and write a rule for each one that applies: empty, loading, and error states; cancelling partway; permission denied; offline or a slow network; timeouts; two actions racing; more than one instance open at once; stale or missing data; focus lost mid-interaction; keyboard use and accessibility; and interactions with neighboring features. Err toward one more edge case, not one fewer.
 - **Vocabulary:** terms match CONTEXT.md; propose any new term.
 
 ## Step 4 — Review and approve

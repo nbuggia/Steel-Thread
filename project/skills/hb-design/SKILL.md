@@ -27,6 +27,7 @@ Before drafting, read the following files:
 - the template for the selected rigor level
 - the task's `spec.md`, if it has one
 - the lasting documents for the area: its PRD feature section, `docs/engineering/CONTRACTS.md`, and its tests and manual tests
+- the convention skills `docs/engineering/CONVENTIONS.md` lists for the areas the change touches
 - the current implementation
 - `.hashbang/history/design-review-log.md`
 - `docs/engineering/COMMON-FAILURE-MODES.md` (if missing, create from template `templates/common-failure-modes-template.md`)
@@ -66,7 +67,7 @@ Scope can still change while you draft. If an edge case turns up that costs more
 
 Run the review passes your rigor level's budget calls for (Rigor Levels in `.hashbang/framework/development.md`), each in a fresh context with no memory of this conversation. Number them in order (`Pass 1`, `Pass 2`, ...; the blocker-verification pass, if used, is `Blocker verification`) and record that number in each finding's Source column (§15/§8) — this is what lets a retro compare the value of each pass. If a BLOCKER is still unresolved once that budget is spent, set the status to `Blocked`, record the reason on a `Blocked:` line, add a review-log entry (§5), and hand it back to the user rather than running another pass; a design that can't converge in its budgeted passes usually needs rework, not more review. After the first full pass, later passes only need to check what changed plus earlier blockers — don't redo the whole review or reopen a settled finding without new evidence.
 
-Give each reviewer: the draft, the task's spec, the architecture, conventions, and contracts docs, the failure modes that apply, and read-only repo access, plus `design-red-flags.md` at Complex rigor. Don't give them the conversation history or any reasoning that isn't written into the design itself. They should judge what the design actually says, not your explanation of it.
+Give each reviewer: the draft, the task's spec, the architecture, conventions, and contracts docs, the convention skills for the areas it touches, the failure modes that apply, and read-only repo access, plus `design-red-flags.md` at Complex rigor. Don't give them the conversation history or any reasoning that isn't written into the design itself. They should judge what the design actually says, not your explanation of it.
 
 ```text
 You're a principal engineer reviewing this design before anyone implements it. You have the design, its spec, conventions, architecture, contracts, applicable failure modes, read-only repo access, and whatever else was provided. Your job is to keep it simple: built on the existing code, standards, and frameworks, testable with integration tests through every boundary it crosses, and easy to change later. Challenge the design where it falls short of that.
