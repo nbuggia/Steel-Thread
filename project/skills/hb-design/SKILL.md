@@ -33,7 +33,7 @@ Before drafting, read the following files:
 - `docs/engineering/COMMON-FAILURE-MODES.md` (if missing, create from template `templates/common-failure-modes-template.md`)
 - `docs/engineering/REVIEW-PATTERNS.md` (if missing, create from template `templates/review-patterns-template.md`)
 
-Work from these and the code, never from older designs: `docs/work-archive/` is history, not current behavior.
+Work from these and the code, never from older designs: closed entries in `docs/work/` are history, not current behavior.
 
 Mark each entry in `docs/engineering/COMMON-FAILURE-MODES.md` Applicable / Not applicable / Checked — no issue / Accepted risk in the Failure Modes table, with evidence.
 
@@ -127,7 +127,7 @@ Review passes: 2
 **Failure-mode KB entries produced:** FM-012
 ```
 
-- The heading is the task ID and title, an em dash, and the date. Cite the task by ID; never link to its work entry, which is archived when the task closes.
+- The heading is the task ID and title, an em dash, and the date. Cite the task by ID; never link to its work entry, which is scaffolding.
 - `Outcome` is `Approved` or `Blocked`. `Review passes` counts the passes that ran, including blocker verification and external ones.
 - Copy each finding's Severity, Decision, and Source from the design's review table.
 

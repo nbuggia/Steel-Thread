@@ -13,7 +13,7 @@ Silently read whatever exists of the objective (`docs/PRD.md`'s sections above i
 
 If there is no objective or no CONTEXT.md, first look for one the project already has, as files.md describes, and point to it.
 
-In a software project, also list `docs/work/`. A task marked done whose folder is still there, or a done task's archived folder with no `close.md`, was never closed.
+In a software project, also list `docs/work/`. A task marked done whose folder has no `close.md` was never closed.
 
 Then find the first row that matches. A skipped OBJECTIVE.md counts as done, unless the customer asked for an objective:
 

@@ -1,15 +1,15 @@
 ---
 name: hb-close
-description: Close a software task once its code is finished and validated against its spec. Moves everything that lasts out of the task's planning docs into tests, the engineering docs, the PRD, BACKLOG.md, and DECISIONS.md, records where each piece landed, and archives the work entry. Use when a task's code is done, or a task with a work entry was marked done without being closed.
+description: Close a software task once its code is finished and validated against its spec. Moves everything that lasts out of the task's planning docs into tests, the engineering docs, the PRD, BACKLOG.md, and DECISIONS.md, and records where each piece landed. Use when a task's code is done, or a task with a work entry was marked done without being closed.
 ---
 
 # Close a Task
 
 This is step 6 of `.hashbang/framework/development.md`. Close a task as soon as its code is finished and validated against its spec (step 5). If it hasn't been validated yet, do that first, as step 5 describes. **Skip when:** the task is Trivial, or has no work entry.
 
-**Produces:** `close.md` in the work entry, and the folder moved to `docs/work-archive/`.
+**Produces:** `close.md` in the work entry, which marks it closed. The folder stays in `docs/work/` as history.
 
-The close moves everything that lasts out of the planning docs, records where each piece landed, and archives them. A task with a work entry is not done until it is closed. Read `.hashbang/framework/docs-layout.md` first: it says what each lasting document holds.
+The close moves everything that lasts out of the planning docs, and records where each piece landed. A task with a work entry is not done until it is closed. Read `.hashbang/framework/docs-layout.md` first: it says what each lasting document holds.
 
 The close is never heavier than the task. At Simple rigor it is usually a few rows, the spec's rules and their tests: do steps 1–4 and 6, and check the rows by eye instead of running step 5's searches. At Complex rigor, do every step.
 
@@ -56,7 +56,7 @@ The engineering docs, tests, and code are yours to update. The PRD, BACKLOG.md, 
 
 ## 4. Write close.md
 
-Write `close.md` in the work entry: one row for each item from the list, naming where it landed. A test name, a file and heading, or an ID; never a path into `docs/work/` or `docs/work-archive/`. A dropped item says so, with the reason. A task with nothing to keep says "No lasting changes." in place of the table.
+Write `close.md` in the work entry: one row for each item from the list, naming where it landed. A test name, a file and heading, or an ID; never a path into `docs/work/`. A dropped item says so, with the reason. A task with nothing to keep says "No lasting changes." in place of the table.
 
 ```markdown
 # Close: T-014 Autosync at launch
@@ -78,10 +78,10 @@ Write `close.md` in the work entry: one row for each item from the list, naming 
 Fix what these find, then run them again.
 
 - **Trace check:** every item from the list has a row, and every row's target exists. Search the tests for each test name, find each heading in its file, and find each ID.
-- **No-link check:** search the project, outside `docs/work/`, `docs/work-archive/`, `.hashbang/`, and the agent's skills folder, for `docs/work` and this entry's folder name. Code, tests, lasting documents, and TASKS.md cite a task ID, D-NNN, FM-NNN, or commit instead.
+- **No-link check:** search the project, outside `docs/work/`, `.hashbang/`, and the agent's skills folder, for `docs/work` and this entry's folder name. Code, tests, lasting documents, and TASKS.md cite a task ID, D-NNN, FM-NNN, or commit instead.
 
 If your agent can start a subagent, you can also run a fresh-context review with the hb-crit skill: given only the lasting documents and the code, can an agent make the next change in this area and tell intended behavior from accidental? It adds confidence but never decides the close, because an agent without a subagent would be grading its own work.
 
-## 6. Archive and finish
+## 6. Finish
 
-Move the work entry to `docs/work-archive/`. Mark the task done with the hb-tasks skill, citing the closing commit, if the project uses version control, and the D- and FM- IDs the task added. Tell the customer in a few lines what landed where, anything dropped, and what went to BACKLOG.md. Then use the hb-whats-next skill to recommend the next task.
+Leave the work entry where it is; `close.md` marks it closed. Mark the task done with the hb-tasks skill, citing the closing commit, if the project uses version control, and the D- and FM- IDs the task added. Tell the customer in a few lines what landed where, anything dropped, and what went to BACKLOG.md. Then use the hb-whats-next skill to recommend the next task.

@@ -7,7 +7,7 @@ last updated: YYYY-MM-DD
 
 # Spec: \[Feature Name\]
 
-\[Status meanings: Draft — being written or changed. Approved — it passed review with no open decisions; the next step can start. Blocked — waiting on the customer; say why on a `Blocked:` line under the status. This spec is scaffolding for one task: when the task closes, the close step moves its rules into tests and its intent into the PRD, then archives it.
+\[Status meanings: Draft — being written or changed. Approved — it passed review with no open decisions; the next step can start. Blocked — waiting on the customer; say why on a `Blocked:` line under the status. This spec is scaffolding for one task: when the task closes, the close step moves its rules into tests and its intent into the PRD, and the spec stays behind as history.
 
 Every spec has Summary, Current Behavior, and Behavior; a new feature also has Users, Not Doing, and Use Cases. Leave out any other section, heading and all, when it has nothing in it. Keep the framing thin and let Behavior carry the length.\]
 
@@ -29,7 +29,7 @@ Every spec has Summary, Current Behavior, and Behavior; a new feature also has U
 
 ## 4. Current Behavior
 
-\[How the product behaves today in the area this task changes, rebuilt from the lasting documents: the PRD's feature section, the area's tests by name, its manual tests, CONTRACTS.md, and code comments. Cite the source of each point. Don't use `docs/work-archive/`, which is history, not current behavior. For a new feature: "New feature; nothing exists today."\]
+\[How the product behaves today in the area this task changes, rebuilt from the lasting documents: the PRD's feature section, the area's tests by name, its manual tests, CONTRACTS.md, and code comments. Cite the source of each point. Don't use other tasks' entries in `docs/work/`, which are history, not current behavior. For a new feature: "New feature; nothing exists today."\]
 
 - \[behavior\] — \[source: test name, file and heading, or D-NNN\]
 

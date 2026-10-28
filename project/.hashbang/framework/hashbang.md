@@ -18,8 +18,7 @@ docs/
   TASKS.md               ← phases and tasks, in priority order
   BACKLOG.md             ← future features, not yet committed work
   DECISIONS.md           ← log of decisions and why they were made
-  work/                  ← software projects: planning docs for open tasks
-  work-archive/          ← planning docs for closed tasks; history only
+  work/                  ← software projects: planning docs, one folder per task; scaffolding, never searched
 .hashbang/
   pickup.md              ← the latest session's note
   customizations.md      ← what this project changed in Hashbang, and why
@@ -145,7 +144,7 @@ The only skill the customer needs to know is **hb-whats-next**. Everything else 
 - **hb-spec** — write a task's spec: the change in what the product does for users, and why, as rules its design and tests cover. The first step of `.hashbang/framework/development.md`.
 - **hb-design** — write the tech design for a task at its rigor level, and review it in a fresh context. Step 3 of `.hashbang/framework/development.md`.
 - **hb-slice** — split a Complex design into thin vertical slices, each proven by a test or demo. Step 4.
-- **hb-close** — close a finished task: move what lasts out of its planning docs into tests and lasting documents, record where each piece landed, and archive them. Step 6.
+- **hb-close** — close a finished task: move what lasts out of its planning docs into tests and lasting documents, and record where each piece landed. Step 6.
 - **hb-retro** — roll up design-review data to show how well the design process is working.
 - **hb-update** — merge a new Hashbang version into the files this project has customized.
 - **hb-tasks** — every change to TASKS.md: adding, finishing, blocking, and reordering tasks, and planning phases. Other skills hand their tasks to it.

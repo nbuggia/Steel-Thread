@@ -4,7 +4,7 @@ description: Shape an idea into a spec for one task, saying what changes in the 
 based-on: Matt Pocock, to-spec (https://github.com/mattpocock/skills); GitHub Spec Kit, spec-template (https://github.com/github/spec-kit); Kiro, feature and bugfix specs (https://kiro.dev/docs/specs/)
 ---
 
-A spec is the behavior delta for one task: what the task changes in how the product behaves for its users, and why. It is scaffolding. When the task closes, its rules live on in tests, manual tests, and CONTRACTS.md, and its intent in the PRD; the spec itself is archived. The format and most of the guidance are in `spec-template.md`; follow it closely. This is step 1 of `.hashbang/framework/development.md`.
+A spec is the behavior delta for one task: what the task changes in how the product behaves for its users, and why. It is scaffolding. When the task closes, its rules live on in tests, manual tests, and CONTRACTS.md, and its intent in the PRD; the spec itself stays behind as history. The format and most of the guidance are in `spec-template.md`; follow it closely. This is step 1 of `.hashbang/framework/development.md`.
 
 In this skill, **users** are whoever consumes what the task changes: the people using the product for a UI, the callers for an API or library, the developer typing a CLI command, the code that reads a file format. The **customer** is the person you are working with.
 
@@ -22,7 +22,7 @@ Read CONTEXT.md and the Active decisions that touch the feature. Then rebuild ho
 - `docs/engineering/CONTRACTS.md`
 - comments in the code the area runs through
 
-Don't use `docs/work-archive/` for this: it is history, not current behavior. Write the summary into the spec's Current Behavior section, citing where each point came from. It is for this task's review; it is never kept anywhere else. A new feature has no current behavior: say so in one line.
+Don't use other tasks' entries in `docs/work/` for this: they are history, not current behavior. Write the summary into the spec's Current Behavior section, citing where each point came from. It is for this task's review; it is never kept anywhere else. A new feature has no current behavior: say so in one line.
 
 - **A small change** leaves the core value, users, and scope as they are, such as a bug fix's rule or a changed limit. Go straight to step 3. In step 4, recommend hb-crit only if a use case changed.
 

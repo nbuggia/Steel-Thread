@@ -340,17 +340,17 @@ else
 fi
 
 # 5. .ignore — ripgrep-based search tools skip what it lists, and git
-#    ignores the file itself. Closed planning docs stay committed but out of
+#    ignores the file itself. Planning docs stay committed but out of
 #    agents' searches; the rule in AGENTS.md covers agents that don't use it.
 IGNORE="$DEST/.ignore"
-ARCHIVE_LINE=docs/work-archive/
+WORK_LINE=docs/work/
 if [ ! -f "$IGNORE" ]; then
-  printf '%s\n' "$ARCHIVE_LINE" > "$IGNORE"
+  printf '%s\n' "$WORK_LINE" > "$IGNORE"
   echo "  installed .ignore"
-elif ! grep -qxF "$ARCHIVE_LINE" "$IGNORE"; then
+elif ! grep -qxF "$WORK_LINE" "$IGNORE"; then
   if [ -s "$IGNORE" ] && [ -n "$(tail -c 1 "$IGNORE")" ]; then printf '\n' >> "$IGNORE"; fi
-  printf '%s\n' "$ARCHIVE_LINE" >> "$IGNORE"
-  echo "  added $ARCHIVE_LINE to .ignore"
+  printf '%s\n' "$WORK_LINE" >> "$IGNORE"
+  echo "  added $WORK_LINE to .ignore"
 fi
 
 # 6. CLAUDE.md — Claude Code reads CLAUDE.md, not AGENTS.md, so the import

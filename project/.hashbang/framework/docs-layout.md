@@ -9,7 +9,7 @@ docs/
   PRD.md                        ← product intent, per feature area
   manual-tests/                 ← human-run checks, by product area
     <area>.md
-  work/                         ← open tasks only: one folder per task
+  work/                         ← scaffolding, never searched: one folder per task
     T-014-first-save-filename/
       spec.md                   ← the behavior delta
       prototype/
@@ -17,8 +17,7 @@ docs/
       slices.md
     T-015-export-spaces/        ← a folder even when it holds one document
       design.md
-  work-archive/                 ← closed tasks; history only
-    T-009-file-conflicts/
+    T-009-file-conflicts/       ← a closed task; history only
       close.md                  ← where each lasting change landed
   engineering/                  ← project-wide technical reference
     ARCHITECTURE.md             ← what is there
@@ -36,9 +35,9 @@ Rules:
 
 - A work entry is named after its task in TASKS.md: `T-NNN-<short-name>`. Every work entry has a task; propose one with the hb-tasks skill if it doesn't.
 - A work entry is always a folder, even when it holds a single document, so adding a second one never moves the first.
-- `docs/work/` holds only open tasks. Closing a task moves its folder to `docs/work-archive/`.
-- Read `docs/work-archive/` only for history: why something was built the way it was, when DECISIONS.md and the lasting documents don't say, or when the customer asks. Never use it as current behavior, and never rely on search results from it; current behavior is in the code, the tests, and the lasting documents.
-- Nothing lasting links into `docs/work/` or `docs/work-archive/`: no code comment, test, lasting document, or done task. Cite a task ID, D-NNN, FM-NNN, or commit instead. While a task is open, its detail line in TASKS.md may name its folder.
+- `docs/work/` holds every task's work entry, open and closed. Closing a task leaves its folder in place, with a `close.md` added.
+- Never search `docs/work/`. It is scaffolding, and the installer lists it in `.ignore` so search tools skip it. Open an entry only by its path: the open task you are working on, or a closed one for history — why something was built the way it was, when DECISIONS.md and the lasting documents don't say, or when the customer asks. Never use a closed entry as current behavior; current behavior is in the code, the tests, and the lasting documents.
+- Nothing lasting links into `docs/work/`: no code comment, test, lasting document, or done task. Cite a task ID, D-NNN, FM-NNN, or commit instead. While a task is open, its detail line in TASKS.md may name its folder.
 
 ## Where information lives
 

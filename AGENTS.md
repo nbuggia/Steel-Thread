@@ -51,11 +51,11 @@ project/                   ← the product: what lands in a user's project
     hb-spec/                  ← installed; a task's behavior delta, process in SKILL.md, format in spec-template.md
     hb-design/                ← installed; tech design at a rigor level fitted to the change, with review passes
     hb-slice/                 ← installed; splits a Complex design into thin vertical slices
-    hb-close/                 ← installed; closes a task: moves what lasts out of its planning docs, then archives them
+    hb-close/                 ← installed; closes a task: moves what lasts out of its planning docs
     hb-retro/                 ← installed; rolls up design-review data to audit the process
 ```
 
-`install.sh` copies `project/.hashbang/framework/` into the user's `.hashbang/framework/`, creates the empty state folders, copies every skill in `project/skills/` into the chosen agent's skills folder, merges `project/AGENTS.md` (and, for Claude Code, `project/CLAUDE.md`) into the user's files, and adds `docs/work-archive/` to the user's `.ignore`. The customer's Hashbang files (objective, CONTEXT, TASKS, BACKLOG, DECISIONS) live in the user's `docs/`; Hashbang's working files live in `.hashbang/`.
+`install.sh` copies `project/.hashbang/framework/` into the user's `.hashbang/framework/`, creates the empty state folders, copies every skill in `project/skills/` into the chosen agent's skills folder, merges `project/AGENTS.md` (and, for Claude Code, `project/CLAUDE.md`) into the user's files, and adds `docs/work/` to the user's `.ignore`. The customer's Hashbang files (objective, CONTEXT, TASKS, BACKLOG, DECISIONS) live in the user's `docs/`; Hashbang's working files live in `.hashbang/`.
 
 Users customize their copies; that is the extensibility model. The installer keeps the Hashbang version each installed file is based on in `.hashbang/upstream/installed/`. On update it replaces only files that still match their base, and leaves customized ones, with the new version and a `PENDING` list in `.hashbang/upstream/incoming/`, for the hb-update skill to merge.
 

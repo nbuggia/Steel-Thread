@@ -5,7 +5,7 @@ description: Audit how well the hb-design process is performing over time, by ro
 
 # hb-retro
 
-Read-only. This skill never edits `hb-design`'s output — it reports on it. It reads only the review log and the failure-mode KB, never designs: closed tasks' designs are archived, and nothing reads them.
+Read-only. This skill never edits `hb-design`'s output — it reports on it. It reads only the review log and the failure-mode KB, never designs: closed tasks' designs are history, and nothing reads them.
 
 ## Quick start
 

@@ -55,7 +55,7 @@ What each level runs:
 
 **Planning docs are inputs to one task. When the task closes, everything the next change needs is in the code, the tests, and the lasting documents.** From then on, nothing relies on or links to that task's planning docs; they are kept only as history.
 
-The planning docs are a task's spec, prototype, tech design, and slicing plan, with their review findings. While the task is open they can be rewritten freely: there is no history to keep, because none of them is a record. The close (step 6) moves everything that lasts out of them, and moves the task's folder to `docs/work-archive/`.
+The planning docs are a task's spec, prototype, tech design, and slicing plan, with their review findings. While the task is open they can be rewritten freely: there is no history to keep, because none of them is a record. The close (step 6) moves everything that lasts out of them, and leaves the folder in `docs/work/` as history.
 
 Behavior is intended or accidental:
 
@@ -66,10 +66,10 @@ So a test's name is a behavior statement in users' terms, and a change that brea
 
 ## Where Documents Live
 
-A task's planning docs go in its work entry, `docs/work/T-NNN-<short-name>/`, a folder named after its task in TASKS.md. Every work entry has a task; propose one with the hb-tasks skill if it doesn't. `docs/work/` holds only open tasks; closing a task moves its folder to `docs/work-archive/`.
+A task's planning docs go in its work entry, `docs/work/T-NNN-<short-name>/`, a folder named after its task in TASKS.md. Every work entry has a task; propose one with the hb-tasks skill if it doesn't. `docs/work/` holds every task's work entry, open and closed; closing a task leaves its folder in place, with a `close.md` added.
 
-- Read `docs/work-archive/` only for history: why something was built the way it was, when DECISIONS.md and the lasting documents don't say, or when the customer asks. Never use it as current behavior, and never rely on search results from it; current behavior is in the code, the tests, and the lasting documents.
-- Nothing lasting links into `docs/work/` or `docs/work-archive/`: no code comment, test, lasting document, or done task. Cite a task ID, D-NNN, FM-NNN, or commit instead. While a task is open, its detail line in TASKS.md may name its folder.
+- Never search `docs/work/`. It is scaffolding, and the installer lists it in `.ignore` so search tools skip it. Open an entry only by its path: the open task you are working on, or a closed one for history — why something was built the way it was, when DECISIONS.md and the lasting documents don't say, or when the customer asks. Never use a closed entry as current behavior; current behavior is in the code, the tests, and the lasting documents.
+- Nothing lasting links into `docs/work/`: no code comment, test, lasting document, or done task. Cite a task ID, D-NNN, FM-NNN, or commit instead. While a task is open, its detail line in TASKS.md may name its folder.
 
 `.hashbang/framework/docs-layout.md` has the full layout, and which lasting document holds what: ARCHITECTURE.md, CONVENTIONS.md, CONTRACTS.md, TESTING.md, the PRD, manual tests, and the rest. Read it before you create a work entry, write a design's Lasting Changes, close a task, or edit a document in `docs/engineering/`.
 
@@ -94,7 +94,7 @@ Rules:
 
 - **A step starts only from an Approved document.** A tech design is drafted from an Approved spec, and a slicing plan from an Approved design. A prototype is the exception: it can run while the spec is still Draft, because its answer often settles the spec's open questions.
 - **Going back is allowed, and must be said out loud.** If a later step shows an Approved document is wrong, revise it, set it back to Draft, tell the customer why, and block only the work that depends on the part that changed.
-- **A task's documents finish together, at the close.** There is no Done state for a document: the close step moves what lasts into the lasting documents, then archives the folder.
+- **A task's documents finish together, at the close.** There is no Done state for a document: the close step moves what lasts into the lasting documents, and the folder stays behind as history.
 
 ## Step 1 — Spec
 
@@ -165,9 +165,9 @@ Choose the kind of test by what it has to prove:
 
 ## Step 6 — Close
 
-**Produces:** `close.md` in the work entry, and the folder moved to `docs/work-archive/`. **Skip when:** the task is Trivial, or has no work entry.
+**Produces:** `close.md` in the work entry. **Skip when:** the task is Trivial, or has no work entry.
 
-Use the hb-close skill as soon as the code is finished and validated against its spec. It moves everything that lasts out of the planning docs into tests, the engineering docs, the PRD, BACKLOG.md, and DECISIONS.md, records where each piece landed, and archives the work entry. A task with a work entry is not done until it is closed. At Simple rigor the close is a few rows checked by eye; at Complex rigor it runs every check.
+Use the hb-close skill as soon as the code is finished and validated against its spec. It moves everything that lasts out of the planning docs into tests, the engineering docs, the PRD, BACKLOG.md, and DECISIONS.md, and records where each piece landed in `close.md`. A task with a work entry is not done until it is closed. At Simple rigor the close is a few rows checked by eye; at Complex rigor it runs every check.
 
 ## Bugs
 

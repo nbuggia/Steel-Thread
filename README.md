@@ -38,7 +38,7 @@ The installer has no dependencies beyond a POSIX shell. It:
 - Copies the skills into your agent's skills folder: `.claude/skills/`, `.agents/skills/` for Codex, or `.kiro/skills/`
 - Keeps a pristine copy of what it installed in `.hashbang/upstream/`, so updates can tell your changes from Hashbang's
 - Adds a Hashbang section to `AGENTS.md`, creating the file if needed. Your existing content is kept.
-- Adds `docs/work-archive/` to `.ignore`, creating the file if needed, so search tools skip closed planning docs
+- Adds `docs/work/` to `.ignore`, creating the file if needed, so search tools skip planning docs
 - For Claude Code, adds `@AGENTS.md` to the top of `CLAUDE.md`, creating the file if needed, so Claude Code reads the same instructions
 
 Commit everything it creates, so your whole team gets Hashbang.
@@ -68,8 +68,7 @@ your-project/
     TASKS.md               ← phases and tasks, in priority order
     BACKLOG.md             ← features for later
     DECISIONS.md           ← decisions and the reasoning behind them
-    work/                  ← software projects: planning docs for tasks in progress
-    work-archive/          ← planning docs for closed tasks, kept as history
+    work/                  ← software projects: planning docs, one folder per task; never searched
     engineering/           ← software projects: architecture, conventions, contracts, testing
   .hashbang/
     pickup.md              ← where you left off
@@ -85,7 +84,7 @@ your-project/
 
 All-caps files are yours to read and shape; the agent keeps them current with your approval. Lowercase files are its working notes.
 
-In a software project, a task's spec, design, and plans are scaffolding. When the task is done, the agent moves what lasts into tests, the PRD, and the engineering docs, records where each piece went, and archives the rest. The product's behavior lives in its tests, not in documents that go stale.
+In a software project, a task's spec, design, and plans are scaffolding. When the task is done, the agent moves what lasts into tests, the PRD, and the engineering docs, and records where each piece went. The rest stays in `docs/work/` as history, which the agent never searches. The product's behavior lives in its tests, not in documents that go stale.
 
 ## Skills
 
@@ -100,7 +99,7 @@ Twelve skills are included. Your agent suggests them when the moment calls for o
 - **hb-spec** — shapes an idea into a spec for one task: what changes for the product's users and why, never how. Plans releases from the backlog.
 - **hb-design** — writes the tech design for a task, with rigor fitted to the change's risk, and reviews it in a fresh context.
 - **hb-slice** — splits a Complex design into thin vertical slices, each proven by a test or demo.
-- **hb-close** — closes a finished task: moves what lasts out of its spec and design into tests and the docs, records where each piece went, and archives the rest.
+- **hb-close** — closes a finished task: moves what lasts out of its spec and design into tests and the docs, and records where each piece went.
 - **hb-retro** — rolls up design-review data to show how well the design process is working.
 - **hb-update** — merges a new Hashbang version into the files you've customized.
 

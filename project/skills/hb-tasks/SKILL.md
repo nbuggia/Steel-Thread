@@ -31,8 +31,8 @@ Adding tasks and phases needs the customer's approval; ask in one line as the wo
 
 - **Add a task:** put it in the phase it serves, in priority order: after the open tasks of the same or higher priority, before lower ones. A task belongs to exactly one phase. Before adding, check that no open task already covers it.
 - **Start a task:** add or update its detail line with what is in progress.
-- **Finish a task:** `- [x]`, with ` · done YYYY-MM-DD` appended. Replace a detail line that described work in progress with nothing, or with what the task produced: the closing commit, if the project uses version control, and any D- and FM- IDs it added. Never a path into `docs/work/` or `docs/work-archive/`; those folders are scaffolding.
-  - A task that has a work entry (`docs/work/T-NNN-*/` in a software project) is finished only once it is closed: the entry has moved to `docs/work-archive/` and holds a `close.md`. If it hasn't, close it first with the hb-close skill, which comes back here to finish the task.
+- **Finish a task:** `- [x]`, with ` · done YYYY-MM-DD` appended. Replace a detail line that described work in progress with nothing, or with what the task produced: the closing commit, if the project uses version control, and any D- and FM- IDs it added. Never a path into `docs/work/`; it is scaffolding.
+  - A task that has a work entry (`docs/work/T-NNN-*/` in a software project) is finished only once it is closed: the entry holds a `close.md`. If it hasn't, close it first with the hb-close skill, which comes back here to finish the task.
   - A Trivial change (see Rigor Levels in development.md) needs no task; its commit is the record, so don't propose one. If it already has a task, that task is finished when its work is, as is any task with no work entry, such as one in a project that isn't software.
 - **Block a task:** it stays incomplete; add the `Blocked:` line saying what would unblock it. **Unblock:** remove that line, and say which decision or event cleared it.
 - **Reprioritize:** change the priority tag or move the line within its phase. The customer can also reorder by editing the file; treat what they wrote as current.
