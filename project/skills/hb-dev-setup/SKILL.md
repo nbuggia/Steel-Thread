@@ -22,7 +22,7 @@ For a new project with no code yet, take the stack from the objective's constrai
 
 ## Step 2 — Write the engineering docs
 
-Create or update these in `docs/engineering/`. What belongs in each is defined in "Where information lives" in `.hashbang/framework/development.md`; follow it. Describe what the code does now, citing example files; where the code is inconsistent, record it as an open question, not a rule. If the project already documents something elsewhere, link to it instead of copying it.
+Create or update these in `docs/engineering/`. What belongs in each is defined in "Where information lives" in `.hashbang/framework/docs-layout.md`; follow it. Describe what the code does now, citing example files; where the code is inconsistent, record it as an open question, not a rule. If the project already documents something elsewhere, link to it instead of copying it.
 
 - **ARCHITECTURE.md** — start from `architecture-template.md` in this skill's folder. Fill it from the manifests and the code's structure.
 - **CONVENTIONS.md** — start from `conventions-template.md` in this skill's folder. Fill it from the patterns the code keeps consistently. A boundary appears twice: ARCHITECTURE.md says it exists ("all file access is in the Rust core"), and CONVENTIONS.md says how a change respects it ("UI code never touches the filesystem; add a command").

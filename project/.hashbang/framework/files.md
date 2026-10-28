@@ -78,11 +78,11 @@ The PRD holds the product's intent: why it exists, what done means, and for each
 - The sections above the first feature are the objective. They follow OBJECTIVE.md's rules, above: read at every session start, and every change gets a DECISIONS.md entry.
 - One `## Feature:` section per product area, named the way the product names it. Feature sections are read on demand, when work touches the area.
 - **Flows** lists behavior that spans features, and names the other feature. Leave out any subsection with nothing in it.
-- The PRD holds intent, not behavior rules. Rules live in tests, manual tests, and CONTRACTS.md (see `.hashbang/framework/development.md`).
+- The PRD holds intent, not behavior rules. Rules live in tests, manual tests, and CONTRACTS.md (see `.hashbang/framework/docs-layout.md`).
 
 ### Creating and changing it
 
-The close (step 6 of `.hashbang/framework/development.md`) creates the PRD the first time a task adds a feature section. If `docs/OBJECTIVE.md` exists, the PRD starts with its sections, and OBJECTIVE.md is deleted in the same approved change. If OBJECTIVE.md points to an existing PRD, that file is the PRD; add feature sections there instead.
+The close (the hb-close skill) creates the PRD the first time a task adds a feature section. If `docs/OBJECTIVE.md` exists, the PRD starts with its sections, and OBJECTIVE.md is deleted in the same approved change. If OBJECTIVE.md points to an existing PRD, that file is the PRD; add feature sections there instead.
 
 Feature sections change when a task closes, approved with the rest of that task's changes to the customer's files. They need a DECISIONS.md entry only when the change meets DECISIONS.md's bar.
 
@@ -150,7 +150,7 @@ Affects: T-003, OBJECTIVE.md
 - Record a decision only if future work has to follow it, and it is also expensive to undo or likely to be proposed the other way later. A choice that shapes only the current task stays in the document where it was made: its spec, design, or slicing plan.
 - Planning docs are archived when their task closes, so DECISIONS.md is the only lasting home for a rejected alternative. The close asks of each one: "Will someone propose this again?" and proposes all of a task's entries in one approval.
 - Code comments, lasting documents, and done tasks cite decisions by ID: "(D-003)".
-- DECISIONS.md never states the current rule. The rule lives where it applies — CONTEXT.md, or in a software project the documents in `.hashbang/framework/development.md`'s "Where information lives" — and cites the decision for the reason: "Voice: first person (D-004)."
+- DECISIONS.md never states the current rule. The rule lives where it applies — CONTEXT.md, or in a software project the documents in `.hashbang/framework/docs-layout.md`'s "Where information lives" — and cites the decision for the reason: "Voice: first person (D-004)."
 
 ---
 

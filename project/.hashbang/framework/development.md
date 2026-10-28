@@ -49,7 +49,7 @@ What each level runs:
 | Tech design (step 3) | None | Simple template, one review pass | Complex template, two review passes, plus at most one blocker-verification pass |
 | Slicing plan (step 4) | None | None | When the design needs more than two slices |
 | Tests and code (step 5) | A bug's reproducing test, then the fix | Tests first, at the design's test points, then validate against the spec | Tests first, slice by slice, then validate against the spec |
-| Close (step 6) | None; the commit message records the cause and the test | Steps 1–4 and 6; check the rows by eye | Every step, including the searches |
+| Close (step 6) | None; the commit message records the cause and the test | hb-close steps 1–4 and 6; check the rows by eye | Every hb-close step, including the searches |
 
 ## Planning Docs Are Scaffolding
 
@@ -64,100 +64,14 @@ Behavior is intended or accidental:
 
 So a test's name is a behavior statement in users' terms, and a change that breaks a promise is a change users would notice.
 
-## File Structure
+## Where Documents Live
 
-```
-docs/
-  PRD.md                        ← product intent, per feature area
-  manual-tests/                 ← human-run checks, by product area
-    <area>.md
-  work/                         ← open tasks only: one folder per task
-    T-014-first-save-filename/
-      spec.md                   ← the behavior delta
-      prototype/
-      design.md
-      slices.md
-    T-015-export-spaces/        ← a folder even when it holds one document
-      design.md
-  work-archive/                 ← closed tasks; history only
-    T-009-file-conflicts/
-      close.md                  ← where each lasting change landed
-  engineering/                  ← project-wide technical reference
-    ARCHITECTURE.md             ← what is there
-    CONVENTIONS.md              ← how to make a change here
-    CONTRACTS.md                ← promises to users' files and other systems
-    TESTING.md                  ← how to check a change
-    COMMON-FAILURE-MODES.md     ← traps hit here or known for the stack
-    REVIEW-PATTERNS.md
-    retros/
-```
+A task's planning docs go in its work entry, `docs/work/T-NNN-<short-name>/`, a folder named after its task in TASKS.md. Every work entry has a task; propose one with the hb-tasks skill if it doesn't. `docs/work/` holds only open tasks; closing a task moves its folder to `docs/work-archive/`.
 
-Automated tests live where the stack's tooling expects them; TESTING.md says where each kind is. PRD.md, manual tests, and CONTRACTS.md are created the first time a task needs one.
-
-Rules:
-
-- A work entry is named after its task in TASKS.md: `T-NNN-<short-name>`. Every work entry has a task; propose one with the hb-tasks skill if it doesn't.
-- A work entry is always a folder, even when it holds a single document, so adding a second one never moves the first.
-- `docs/work/` holds only open tasks. Closing a task moves its folder to `docs/work-archive/`.
 - Read `docs/work-archive/` only for history: why something was built the way it was, when DECISIONS.md and the lasting documents don't say, or when the customer asks. Never use it as current behavior, and never rely on search results from it; current behavior is in the code, the tests, and the lasting documents.
 - Nothing lasting links into `docs/work/` or `docs/work-archive/`: no code comment, test, lasting document, or done task. Cite a task ID, D-NNN, FM-NNN, or commit instead. While a task is open, its detail line in TASKS.md may name its folder.
 
-### Where information lives
-
-Each lasting document answers one question, and each fact lives in exactly one of them; the others link to it.
-
-|  | ARCHITECTURE.md | CONVENTIONS.md | DECISIONS.md |
-| --- | --- | --- | --- |
-| **Answers** | What is there? | How do I make a change here? | Why is it this way, and what was rejected? |
-| **Voice** | Describes: "The Rust core owns all file access." | Instructs: "Never read files from UI code; add a command." | Explains: "We chose X over Y because…" |
-| **Holds** | The stack and key dependencies, components, boundaries, where state lives, data flow, persistence, and which component implements each contract | The practices every change must follow: structure, naming, error handling, state management, and boundary rules stated as rules; and the list of convention skills, with when to load each | Choices future work must follow that are expensive to undo or likely to be argued again, with what was rejected |
-| **Belongs here if** | You would draw it on a diagram | A reviewer would flag a violation in a diff | Someone will propose the opposite, and the answer is "we considered that" |
-| **Changes by** | Editing in place; it always describes now | Editing in place; it always describes now | Appending; an old entry is superseded, never edited |
-
-DECISIONS.md never states the current rule; the other two do, and cite the decision for the reason. One fact can touch all three without repeating itself:
-
-- **ARCHITECTURE.md:** "Tauri 2 app: a Rust core and a WebView UI. All file access is in the core."
-- **CONVENTIONS.md:** "UI code never touches the filesystem; add a command in `commands.ts` (D-003)."
-- **DECISIONS.md:** "D-003 · Tauri over Electron. Why: bundle size and memory. Rejected: Electron, which ships a second runtime."
-
-The neighbors:
-
-- **Tests** hold behavior. Each test's name states the behavior it proves, in users' terms, and suites are grouped by product area.
-- **Manual tests** hold behavior that automation can't reach, by product area, in `docs/manual-tests/<area>.md`. A person runs them, often the customer.
-- **CONTRACTS.md** holds the promises other systems and users' files rely on: file formats, on-device filenames, URL schemes, update feeds, public APIs. ARCHITECTURE.md names the component that implements each one.
-- **PRD.md** holds product intent per feature area: who it is for, why it matters, what it doesn't do, and what done means. `framework/files.md` has its format.
-- **Convention skills** hold the rules for one area of the code, such as UI or logging, or the steps for one recurring kind of change, such as adding a feature flag. They live in the agent's skills folder, named without the `hb-` prefix, so Hashbang updates never touch them. A skill that keeps project paths in its examples can be copied to another project on the same stack.
-- **Code comments** hold the why of non-obvious code, citing D-NNN or FM-NNN. They describe the code as it is now; what a change did belongs in its commit message.
-- **TESTING.md** says how to check a change: the kinds of test, where each lives, their tools, and the commands that run them.
-- **COMMON-FAILURE-MODES.md** records traps the project has hit, or that its stack is known for.
-- **BACKLOG.md** holds future features; **CONTEXT.md** holds the vocabulary, tenets, and never-do rules.
-
-### Where each part of a planning doc goes
-
-The close step uses this table. Every row lands in a lasting document, or is dropped with the customer's approval.
-
-| Content | Lasting home |
-| --- | --- |
-| Spec: summary, users, why it matters | PRD feature section |
-| Spec: Not Doing | PRD feature section's Not Doing |
-| Spec: behavior rules and use cases | Behavior-named tests; a code comment where the behavior surprises |
-| Spec: behavior automation can't reach | A manual test |
-| Spec: UI sizes, states, wording | The UI code; UI tests for the states that matter |
-| Spec: limits | A named constant with a comment, and a test at the edge |
-| Spec: edge cases and errors | Tests; the general approach in CONVENTIONS.md |
-| Spec: external contracts | CONTRACTS.md, and contract tests |
-| Spec: success criteria | PRD feature section's Done Means |
-| Spec: deferred use cases | BACKLOG.md |
-| Design: structure, boundaries, formats | ARCHITECTURE.md |
-| Design: new practices | CONVENTIONS.md, or the convention skill for their area |
-| Design: rejected alternatives likely to be proposed again | DECISIONS.md |
-| Design: traps found during implementation | COMMON-FAILURE-MODES.md |
-| Design: rigor level and review passes | The design review log |
-| Design and slices: evidence, tests added, drift | Commit messages |
-| Prototype: chosen UI decisions | UI code and UI tests |
-| Spike: result | DECISIONS.md or COMMON-FAILURE-MODES.md |
-
-If the project already has docs in a different layout, do not reorganize them unasked. Propose the move once, as a task, and follow the existing layout until the customer agrees.
+`.hashbang/framework/docs-layout.md` has the full layout, and which lasting document holds what: ARCHITECTURE.md, CONVENTIONS.md, CONTRACTS.md, TESTING.md, the PRD, manual tests, and the rest. Read it before you create a work entry, write a design's Lasting Changes, close a task, or edit a document in `docs/engineering/`.
 
 ## Document States
 
@@ -188,10 +102,6 @@ Rules:
 
 Use the hb-spec skill. A spec says what one task changes in user-visible behavior, and why: new rules, changed rules, and `SHALL CONTINUE TO` rules for what must not change. It never says how. External contracts such as URLs, file formats, and keyboard shortcuts are behavior; code, internal paths, and technology choices belong in the tech design.
 
-Before writing a delta, hb-spec rebuilds how the product behaves today from the lasting documents and the tests. That summary goes in the spec for review, and is never kept anywhere else.
-
-A product release usually becomes a phase in TASKS.md, and its use cases become that phase's tasks. Use cases that wait go to BACKLOG.md.
-
 ## Step 2 — Prototype (optional)
 
 **Produces:** `docs/work/T-NNN-<name>/prototype/`. **Build one when:** the feature creates new UI; the feature is novel and the spec can't yet say how it should behave; a complex system has more than one plausible design approach; or a technical assumption needs proof before design, such as an OS behavior, a library's limits, or a performance ceiling. **Consider one when:** the feature changes existing UI. **Skip when:** there is no UI and every behavior and technical assumption is already settled.
@@ -205,15 +115,10 @@ A prototype answers a question, and it is thrown away. Its `README.md` starts wi
 
 **Produces:** `docs/work/T-NNN-<name>/design.md`. **Skip when:** the task is Trivial.
 
-Use the hb-design skill. It fills in the template for the task's rigor level and runs that level's review passes. At either level, a design must:
+Use the hb-design skill. It fills in the template for the task's rigor level and runs that level's review passes in a fresh context. Two parts of every design feed later steps:
 
-1. Read the spec, `docs/engineering/ARCHITECTURE.md`, `CONVENTIONS.md`, and `CONTRACTS.md`, the convention skills CONVENTIONS.md lists for the areas the change touches, and the code it touches.
-2. For a bug, reproduce it first, with a failing test or proof from the source. If you can't, the design starts with diagnosis, not a fix.
-3. Before building anything new, check whether the code, the framework, the standard library, or an existing dependency already does it.
-4. Write the design: the current state, the proposed change, the alternatives rejected and why, and the risks.
-5. **Choose the test points.** Say where the change will be tested, preferring existing test points to new ones and the highest-level one that can prove the behavior. Fewer is better. For each test point, name the spec rules it proves, such as B.2, E.1, or a limit. Every rule needs a test point or a manual test; the review treats a rule with neither as a gap. The tests in step 5 are written against these and nowhere else.
-6. **List the Lasting Changes:** what the design adds to ARCHITECTURE.md, CONVENTIONS.md, CONTRACTS.md, COMMON-FAILURE-MODES.md, and DECISIONS.md. The close step applies them.
-7. Get a review in a fresh context. The reviewer judges what the design says, not your explanation of it, and must not expand scope.
+- **Test points.** Where the change will be tested, preferring existing test points to new ones and the highest-level one that can prove the behavior. Fewer is better. Each names the spec rules it proves, such as B.2, E.1, or a limit, and every rule needs a test point or a manual test. The tests in step 5 are written against these and nowhere else.
+- **Lasting Changes.** What the design adds to ARCHITECTURE.md, CONVENTIONS.md, CONTRACTS.md, COMMON-FAILURE-MODES.md, and DECISIONS.md. The close applies them.
 
 Any spec claim the design changes goes back into the spec and through its review. Do not let the design quietly redefine behavior; a change users would notice is a high-judgment decision.
 
@@ -221,12 +126,7 @@ Any spec claim the design changes goes back into the spec and through its review
 
 **Produces:** `docs/work/T-NNN-<name>/slices.md`. **Skip when:** the task is Trivial or Simple, or the design fits in one or two slices.
 
-Use the hb-slice skill. It splits the design into thin vertical slices:
-
-- Each slice delivers one outcome that can be checked on its own, through every layer it needs, and ends with a test or demo that proves it.
-- Slice 1 starts from the code as it is today. Every later slice builds on a slice before it.
-- Prefer few slices. Split for risk or for a useful checkpoint, never for time.
-- For each slice, record what is deliberately left for later and what would prove the design wrong.
+Use the hb-slice skill. It splits the design into thin vertical slices, each delivering one outcome that can be checked on its own and ending with a test or demo that proves it.
 
 Do not copy slices into TASKS.md. The task stays the unit of work there; keep its detail line, through the hb-tasks skill, naming the slice in progress: `Slice 2 of 4 in docs/work/T-014-first-save-filename/slices.md.`
 
@@ -267,49 +167,7 @@ Choose the kind of test by what it has to prove:
 
 **Produces:** `close.md` in the work entry, and the folder moved to `docs/work-archive/`. **Skip when:** the task is Trivial, or has no work entry.
 
-Close a task as soon as its code is finished and validated against its spec (step 5). The close moves everything that lasts out of the planning docs, records where each piece landed, and archives them. A task with a work entry is not done until it is closed.
-
-1. **List what has to last.** Read every document in the work entry. List every rule in `spec.md` (new, changed, and `SHALL CONTINUE TO`, plus its limits, edge cases, and contracts), the spec's summary, users, Not Doing, and success criteria, its deferred use cases, every row in the design's Lasting Changes, and the chosen decisions of a prototype or spike.
-
-2. **Apply them,** following "Where each part of a planning doc goes". Most are in place once the tests and code are done; check rather than assume.
-
-   - A rule is covered by a test whose name states it; the design's test table says which one. Rename a test whose name doesn't. A rule automation can't reach gets a manual test step. A rule whose reason isn't obvious from the code gets a comment there.
-   - Contracts go in CONTRACTS.md, from hb-dev-setup's `contracts-template.md` if it doesn't exist yet.
-   - The design's Lasting Changes go in the documents they name, describing what was actually built. A new practice goes in CONVENTIONS.md if every change must follow it, and otherwise in the convention skill for its area.
-   - If this task repeated a multi-step change an earlier task also made, such as wiring a new setting through every layer, propose a recipe for it: a convention skill from hb-dev-setup's `convention-skill-template.md`, listed in CONVENTIONS.md.
-   - The spec's intent goes in the feature's section of `docs/PRD.md`. `.hashbang/framework/files.md` says how to create the PRD.
-   - Deferred use cases and follow-up ideas become BACKLOG.md rows, with this task as their Source.
-   - For each rejected alternative, ask: "Will someone propose this again?" Only those that pass get a DECISIONS.md entry.
-
-3. **Get one approval.** The engineering docs, tests, and code are yours to update. The PRD, BACKLOG.md, and DECISIONS.md are the customer's: propose all of this task's changes to them, and any new convention skill, in one message. A rule is dropped only with the customer's approval.
-
-4. **Write** `close.md` in the work entry: one row for each item from the list, naming where it landed. A test name, a file and heading, or an ID; never a path into `docs/work/` or `docs/work-archive/`. A dropped item says so, with the reason. A task with nothing to keep says "No lasting changes." in place of the table.
-
-   ```markdown
-   # Close: T-014 Autosync at launch
-   
-   | Item | Landed in |
-   | --- | --- |
-   | Rule: sync starts within 5 seconds of launch | Test `syncs within five seconds of launch` |
-   | Rule: sync state shows in the menu bar | docs/manual-tests/sync.md, "Menu bar status" |
-   | Contract: on-device filename format | docs/engineering/CONTRACTS.md, "Device filenames" |
-   | Lasting Change: SyncScheduler owns sync timing | docs/engineering/ARCHITECTURE.md, "Sync" |
-   | Rejected: background fetch API | D-031 |
-   | Intent and success criteria | docs/PRD.md, "Sync" |
-   | Deferred: sync over cellular | BACKLOG.md |
-   | Rule: retry banner after three failures | Dropped: the customer chose silent retries |
-   ```
-
-5. **Check it.** Fix what these find, then run them again.
-
-   - **Trace check:** every item from the list has a row, and every row's target exists. Search the tests for each test name, find each heading in its file, and find each ID.
-   - **No-link check:** search the project, outside `docs/work/`, `docs/work-archive/`, `.hashbang/`, and the agent's skills folder, for `docs/work` and this entry's folder name. Code, tests, lasting documents, and TASKS.md cite a task ID, D-NNN, FM-NNN, or commit instead.
-
-6. **Archive and finish.** Move the work entry to `docs/work-archive/`. Mark the task done with the hb-tasks skill, citing the closing commit, if the project uses version control, and the D- and FM- IDs the task added. Tell the customer in a few lines what landed where, anything dropped, and what went to BACKLOG.md.
-
-The close is never heavier than the task. At Simple rigor it is usually a few rows, the spec's rules and their tests: do steps 1–4 and 6, and check the rows by eye instead of running step 5's searches. At Complex rigor, do every step.
-
-If your agent can start a subagent, you can also run a fresh-context review with the hb-crit skill: given only the lasting documents and the code, can an agent make the next change in this area and tell intended behavior from accidental? It adds confidence but never decides the close, because an agent without a subagent would be grading its own work.
+Use the hb-close skill as soon as the code is finished and validated against its spec. It moves everything that lasts out of the planning docs into tests, the engineering docs, the PRD, BACKLOG.md, and DECISIONS.md, records where each piece landed, and archives the work entry. A task with a work entry is not done until it is closed. At Simple rigor the close is a few rows checked by eye; at Complex rigor it runs every check.
 
 ## Bugs
 
@@ -333,10 +191,10 @@ A bug follows the same flow with a shorter spec:
 | Tech design | hb-design | hb-elevate when blocked |
 | Slicing plan | hb-slice |  |
 | Tests and code | none yet; follow step 5 | hb-crit at the end of a Complex design |
-| Close | none; follow step 6 | hb-tasks to mark the task done |
+| Close | hb-close | hb-tasks to mark the task done, hb-crit for an optional fresh-context check |
 | Improve the process | hb-retro |  |
 
 - **hb-elevate** is for when a step is blocked: it resolves a high-judgment decision or gathers critical input with the customer in one focused session.
 - **hb-crit** comes after a document is written: its review is what lets the document become Approved.
-- **When a step finishes,** start the next one and say so in one line: "Spec approved after review. Starting the tech design." When the last slice ships, close the task (step 6), then use the hb-whats-next skill to recommend the next one.
+- **When a step finishes,** start the next one and say so in one line: "Spec approved after review. Starting the tech design." When the last slice ships, close the task with the hb-close skill, then use the hb-whats-next skill to recommend the next one.
 - **Hashbang files stay current throughout.** Each approved document is a checkpoint for pickup.md. Choices all future work has to follow go to DECISIONS.md, new terms to CONTEXT.md, future features to BACKLOG.md, and follow-up work to TASKS.md through the hb-tasks skill, each with the customer's approval.

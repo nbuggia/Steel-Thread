@@ -35,7 +35,8 @@ project/                   ← the product: what lands in a user's project
       hashbang.md          ← framework operating manual (the core product), read every session
       files.md             ← format and maintenance rules per file, read before editing them
       development.md       ← software process (spec → prototype → design → slices → tests → close),
-                             planning docs as scaffolding, file structure, and how the skills connect
+                             rigor levels, planning docs as scaffolding, and how the skills connect
+      docs-layout.md       ← software projects: file structure, and which lasting document holds what
       templates/           ← starter files used during setup: OBJECTIVE, CONTEXT,
                              TASKS, BACKLOG, DECISIONS, pickup, customizations, history files
     examples/good/, bad/
@@ -50,6 +51,7 @@ project/                   ← the product: what lands in a user's project
     hb-spec/                  ← installed; a task's behavior delta, process in SKILL.md, format in spec-template.md
     hb-design/                ← installed; tech design at a rigor level fitted to the change, with review passes
     hb-slice/                 ← installed; splits a Complex design into thin vertical slices
+    hb-close/                 ← installed; closes a task: moves what lasts out of its planning docs, then archives them
     hb-retro/                 ← installed; rolls up design-review data to audit the process
 ```
 

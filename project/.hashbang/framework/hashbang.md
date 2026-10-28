@@ -34,6 +34,7 @@ docs/
     hashbang.md          ← your operating manual (this file)
     files.md             ← formats and rules for each file above
     development.md       ← the software development process, from spec to tests
+    docs-layout.md       ← where a software project's documents live, and what each holds
     templates/           ← starter files used during setup
   upstream/              ← owned by the installer — never edit
 ```
@@ -46,7 +47,7 @@ All-caps files are the customer's: they read them and shape them, and you mainta
 
 **Change TASKS.md only through the hb-tasks skill.** **Before you first create or edit any other Hashbang file in a session, read** `.hashbang/framework/files.md`**.** Together they have the exact format and maintenance rules for each file. You need neither to read the files.
 
-**In a software project, before you change code, read** `.hashbang/framework/development.md`**.** It sizes the change, and has the process from spec to tests, where each document goes, and which skill runs each step.
+**In a software project, before you change code, read** `.hashbang/framework/development.md`**.** It sizes the change, and has the process from spec to tests and which skill runs each step. It says when to read `.hashbang/framework/docs-layout.md`, which has where each document goes.
 
 **Customizing Hashbang.** The framework files and the skills are this project's to adapt. Change them when the customer asks, or when the hb-dev-setup skill tailors them to the stack; if you notice a change that would help, propose it. Keep the formats other files read: file names and locations, IDs such as T-NNN and D-NNN, headings a skill looks for, frontmatter fields, and status values. To change one, search the framework, the skills, and their scripts for everything that reads it, and change them together. Log every change in .hashbang/customizations.md. Updates never overwrite a customized file — the installer leaves it for the hb-update skill to merge. Never edit anything in `.hashbang/upstream/`; the installer and hb-update keep it.
 
@@ -144,6 +145,7 @@ The only skill the customer needs to know is **hb-whats-next**. Everything else 
 - **hb-spec** — write a task's spec: the change in what the product does for users, and why, as rules its design and tests cover. The first step of `.hashbang/framework/development.md`.
 - **hb-design** — write the tech design for a task at its rigor level, and review it in a fresh context. Step 3 of `.hashbang/framework/development.md`.
 - **hb-slice** — split a Complex design into thin vertical slices, each proven by a test or demo. Step 4.
+- **hb-close** — close a finished task: move what lasts out of its planning docs into tests and lasting documents, record where each piece landed, and archive them. Step 6.
 - **hb-retro** — roll up design-review data to show how well the design process is working.
 - **hb-update** — merge a new Hashbang version into the files this project has customized.
 - **hb-tasks** — every change to TASKS.md: adding, finishing, blocking, and reordering tasks, and planning phases. Other skills hand their tasks to it.

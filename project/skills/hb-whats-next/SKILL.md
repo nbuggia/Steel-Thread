@@ -128,7 +128,7 @@ The next step must be concrete and small enough to start immediately — a speci
 
 ## Close the task
 
-A software task's code is finished, or a task was marked done without being closed. Say so in one line, "T-014's code is done, so the next step is closing it — moving what lasts into the tests and docs," and follow step 6 of `.hashbang/framework/development.md`. If the code hasn't been validated against its spec yet, do that first, as step 5 describes. Then come back to Choose the next step.
+A software task's code is finished, or a task was marked done without being closed. Say so in one line, "T-014's code is done, so the next step is closing it — moving what lasts into the tests and docs," and use the hb-close skill. If the code hasn't been validated against its spec yet, do that first, as step 5 of `.hashbang/framework/development.md` describes. Then come back to Choose the next step.
 
 ## Close the phase
 
