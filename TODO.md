@@ -1,42 +1,11 @@
 # TODO
 
-The review's verdict is CONCERNS. The core design holds up, but the process around it is too heavy for agents to follow reliably. Nothing has to be fixed before more work happens, but four findings are worth fixing before anyone relies on it daily. I checked the rigor-level wording and the code-review gap in development.md myself, and both are accurate. I haven't checked the other findings.
+## Review findings (hb-crit, 2026-10-29)
 
-What it thinks is strong:
+From a review of whether the framework achieves its objectives; the verdict was CONCERNS. The third finding, an eval harness, is under Framework.
 
-- Planning docs as scaffolding. Specs and designs get folded into tests and engineering docs, then never searched. That avoids the stale-spec problem in spec-kit, Kiro and BMAD.
-- Test names as the behavior record. A behavior counts as a promise only if a test named for it checks it.
-- Rigor levels with stated criteria, including "a trivial change's commit is the record."
-- One home per fact across ARCHITECTURE, CONVENTIONS and DECISIONS.
-- Gates that only stop for real decisions. The agent runs on its own and stops only for a high-judgment call or input only you have.
-- Updates that keep your changes. hb-update merges new versions while keeping project customizations, which it says nothing else in this space does.
-
-The four HIGH findings:
-
-1. Too much instruction. An agent reads about 1,370 lines of framework before a typical Simple change. The manual alone is 165 lines read every session, and in practice files.md (287 lines) is read every session too. Agents will start dropping rules.
-2. "Simple" isn't light, and new projects default to Complex. Simple requires following an existing convention, and a new project has none, so early features all land in the 16-section Complex process. Even the Simple design template has 8 tables.
-3. Diffs barely get reviewed. Design docs get review passes, a review log and a retro. Code review is one table cell, and there's no git workflow (branches, PRs, CI). In agent-written software, the bugs are in the diff.
-4. The README promises team use, but the files don't support it. IDs are "highest plus one," so two branches will produce the same IDs. There's a single shared pickup note, and the append-only history files will conflict on merge.
-
-Medium findings:
-
-- The same rules are copied across files and already drifting. "Never search docs/work" appears in five files, and hb-crit and development.md disagree on when a diagnosis gets reviewed.
-- "User" means two things. hb-design uses it to mean you, though hb-spec reserves "customer" for that.
-- Some skills don't earn their place. It recommends cutting hb-recap, moving hb-retro and its review log to library/, separating hb-elevate (interactive, about intent) from hb-crit (adversarial, about finished work), and dropping the rule that every TASKS.md checkbox edit goes through hb-tasks.
-- The review gates need subagents. Without one, a review becomes the agent reviewing its own work. It also isn't confirmed that Kiro's search respects .ignore.
-- changelog.json duplicates git.
-
-Its top five changes:
-
-1. Redefine Simple as "adds no new boundary, file format or contract," and cut the Simple design to about 30 lines.
-2. Cut always-loaded instructions to about a third, with each rule stated in one place.
-3. Add a diff-review row to the rigor table and a short git section to development.md, paid for by archiving hb-retro.
-4. Decide the team story: make pickup and history per-developer, or drop the "whole team" claim.
-5. Go from 12 skills to 10.
-
-My take: I agree most with #1 and #3. They're cheap, and they put rigor where agents actually make mistakes. #2 is the biggest job and would be easier after #5 and the hb-elevate trim we discussed. #4 needs your call: is Hashbang for solo developers or for teams?
-
-The coding-only changes are still uncommitted. Want me to commit them first, then work through these in order?
+- [ ] **H2 — Commit the memory files.** Nothing the agent commits includes pickup.md, `customizations.md`, `review-log.md`, or CONTEXT.md and DECISIONS.md edits made outside a task: Commits in development.md stages only "the files the work changed", hb-build checkpoints pickup.md after the slice commit, and hb-close's commit lists close.md, the lasting documents and TASKS.md. So the pickup note doesn't travel to another machine, the session start scopes its git log by a stale date, and hashbang.md's "earlier notes are in git history" is false. Add a rule to Commits: Hashbang's memory files go in the next commit, and the checkpoint when the customer stops commits them on their own.
+- [x] **H3 — Decide the positioning.** Decided: Hashbang is a development process that includes memory, not a memory tool with an optional process. Follow-ups: write the README around the process (drop "lightweight project memory and task tracker"), rewrite hashbang.md's Philosophy to match, and update the description at the top of this repo's AGENTS.md.
 
 ## Review findings (hb-crit, 2026-10-28)
 
