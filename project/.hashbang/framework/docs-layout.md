@@ -1,6 +1,6 @@
 # Hashbang Docs Layout
 
-Where the project's documents live, and what each lasting one holds. Read this before you create a work entry, write a design's Lasting Changes, close a task, or create or edit a document in `docs/engineering/`. The process that produces these documents is in `.hashbang/framework/development.md`.
+Where the project's documents live, and what each lasting one holds. Read this before you create a work entry, write a planning document, close a task, or create or edit a document in `docs/engineering/`. The process that produces these documents is in `.hashbang/framework/development.md`.
 
 ## File Structure
 
@@ -39,6 +39,42 @@ Rules:
 - Never search `docs/work/`. It is scaffolding, and the installer lists it in `.ignore` so search tools skip it. Open an entry only by its path: the open task you are working on, or a closed one for history — why something was built the way it was, when DECISIONS.md and the lasting documents don't say, or when the customer asks. Never use a closed entry as current behavior; current behavior is in the code, the tests, and the lasting documents.
 - Nothing lasting links into `docs/work/`: no code comment, test, lasting document, or done task. Cite a task ID, D-NNN, FM-NNN, or commit instead. While a task is open, its detail line in TASKS.md may name its folder.
 
+## Planning Docs Are Scaffolding
+
+**Planning docs are inputs to one task. When the task closes, everything the next change needs is in the code, the tests, and the lasting documents.** From then on, nothing relies on or links to that task's planning docs; they are kept only as history.
+
+The planning docs are a task's spec, prototype, tech design, and slicing plan, with their review findings. While the task is open they can be rewritten freely: there is no history to keep, because none of them is a record. The close moves everything that lasts out of them, and leaves the folder in `docs/work/` as history.
+
+Behavior is intended or accidental:
+
+- **Intended behavior is a promise.** Behavior is a promise if a test whose name states it checks it, a manual test covers it, CONTRACTS.md lists it, or a code comment explains it.
+- **Anything else is an accident,** and can change. What a test asserts along the way, such as a snapshot or exact wording, is not a promise unless the test's name says so.
+
+So a test's name is a behavior statement in users' terms, and a change that breaks a promise is a change users would notice.
+
+## Document States
+
+Every planning document records its state on a `status:` line in its frontmatter. Prototypes have no status: an empty or filled Answer section shows whether the question was answered.
+
+| Document | States |
+| --- | --- |
+| Spec, tech design, slicing plan | Draft → Approved, or Blocked |
+| Slice, inside a slicing plan | Pending → Done, or Blocked |
+
+What each state means:
+
+- **Draft** — being written. Nothing downstream may rely on it.
+- **Approved** — it passed its review and has no open `[NEEDS DECISION]` markers, so the next step can start from it. You set it.
+- **Pending** — the slice has not started.
+- **Done** — the slice is finished.
+- **Blocked** — the document or slice cannot proceed without the customer: a high-judgment decision or critical input. Say why on the next line, starting `Blocked:`, the same as a task in TASKS.md.
+
+Rules:
+
+- **A step starts only from an Approved document.** A tech design is drafted from an Approved spec, and a slicing plan from an Approved design. A prototype is the exception: it can run while the spec is still Draft, because its answer often settles the spec's open questions.
+- **Going back is allowed, and must be said out loud.** If a later step shows an Approved document is wrong, revise it, set it back to Draft, tell the customer why, and block only the work that depends on the part that changed.
+- **A task's documents finish together, at the close.** There is no Done state for a document: the close step moves what lasts into the lasting documents, and the folder stays behind as history.
+
 ## Where information lives
 
 Each lasting document answers one question, and each fact lives in exactly one of them; the others link to it.
@@ -62,7 +98,7 @@ The neighbors:
 - **Tests** hold behavior. Each test's name states the behavior it proves, in users' terms, and suites are grouped by product area.
 - **Manual tests** hold behavior that automation can't reach, by product area, in `docs/manual-tests/<area>.md`. A person runs them, often the customer.
 - **CONTRACTS.md** holds the promises other systems and users' files rely on: file formats, on-device filenames, URL schemes, update feeds, public APIs. ARCHITECTURE.md names the component that implements each one.
-- **PRD.md** holds the objective, and product intent per feature area: who it is for, why it matters, what it doesn't do, and what done means. `framework/files.md` has its format.
+- **PRD.md** holds the objective, and product intent per feature area: who it is for, why it matters, what it doesn't do, and what done means. `.hashbang/framework/files/prd.md` has its format.
 - **Convention skills** hold the rules for one area of the code, such as UI or logging, or the steps for one recurring kind of change, such as adding a feature flag. They live in the agent's skills folder, named without the `hb-` prefix, so Hashbang updates never touch them. A skill that keeps project paths in its examples can be copied to another project on the same stack.
 - **Code comments** hold the why of non-obvious code, citing D-NNN or FM-NNN. They describe the code as it is now; what a change did belongs in its commit message.
 - **TESTING.md** says how to check a change: the kinds of test, where each lives, their tools, and the commands that run them.

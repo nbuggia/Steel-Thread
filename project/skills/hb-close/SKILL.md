@@ -5,7 +5,7 @@ description: Close a task once its code is finished and validated against its sp
 
 # Close a Task
 
-This is step 6 of `.hashbang/framework/development.md`. Close a task as soon as its code is finished and validated against its spec (step 5). If it hasn't been validated yet, do that first, as step 5 describes. **Skip when:** the task is Trivial, or has no work entry.
+This is step 6 of `.hashbang/framework/development.md`. Close a task as soon as its code is finished, validated against its spec, and its diff reviewed, by the hb-build skill. If any of that hasn't happened yet, do it first with hb-build. **Skip when:** the task is Trivial, or has no work entry.
 
 **Produces:** `close.md` in the work entry, which marks it closed. The folder stays in `docs/work/` as history.
 
@@ -45,7 +45,7 @@ Every item lands in a lasting document, or is dropped with the customer's approv
 - Contracts go in CONTRACTS.md, from hb-dev-setup's `contracts-template.md` if it doesn't exist yet.
 - The design's Lasting Changes go in the documents they name, describing what was actually built. A new practice goes in CONVENTIONS.md if every change must follow it, and otherwise in the convention skill for its area.
 - If this task repeated a multi-step change an earlier task also made, such as wiring a new setting through every layer, propose a recipe for it: a convention skill from hb-dev-setup's `convention-skill-template.md`, listed in CONVENTIONS.md.
-- The spec's intent goes in the feature's section of `docs/PRD.md`. Add the feature's section if it has none; `.hashbang/framework/files.md` has the format.
+- The spec's intent goes in the feature's section of `docs/PRD.md`. Add the feature's section if it has none; `.hashbang/framework/files/prd.md` has the format.
 - Deferred use cases and follow-up ideas become BACKLOG.md rows, with this task as their Source.
 - For each rejected alternative, ask: "Will someone propose this again?" Only those that pass get a DECISIONS.md entry.
 

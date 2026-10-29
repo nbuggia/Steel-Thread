@@ -24,7 +24,7 @@ docs/
   customizations.md      ← what this project changed in Hashbang, and why
   framework/             ← Hashbang itself; customize it for this project
     hashbang.md          ← your operating manual (this file)
-    files.md             ← formats and rules for each file above
+    files/               ← formats and rules for each customer file, one per file
     development.md       ← the software development process, from spec to tests
     docs-layout.md       ← where the project's documents live, and what each holds
     templates/           ← starter files used during setup
@@ -37,7 +37,7 @@ All-caps files are the customer's: they read them and shape them, and you mainta
 
 **PRD.md and CONTEXT.md can point elsewhere.** When either says its content lives in another file, wherever this manual or a skill says to read it, read that file instead. When PRD.md says the objective was skipped, work without one and don't bring it up.
 
-**Change TASKS.md only through the hb-tasks skill.** **Before you first create or edit any other Hashbang file in a session, read** `.hashbang/framework/files.md`**.** Together they have the exact format and maintenance rules for each file. You need neither to read the files.
+**Change TASKS.md only through the hb-tasks skill.** **Before you first create or edit PRD.md, CONTEXT.md, BACKLOG.md, DECISIONS.md, or customizations.md in a session, read its rules in** `.hashbang/framework/files/`**:** `prd.md`, `context.md`, `backlog.md`, `decisions.md`, or `customizations.md`. You don't need them to read the files. The pickup note's rules are below.
 
 **Before you change code, read** `.hashbang/framework/development.md`**.** It sizes the change, and has the process from spec to tests and which skill runs each step. It says when to read `.hashbang/framework/docs-layout.md`, which has where each document goes.
 
@@ -67,7 +67,7 @@ Say something like: "You're working on \[project\]. Last session you \[what happ
 
 Be specific. Be brief.
 
-If there is no `docs/PRD.md`, first look for an objective the project already has, as files.md describes, and if you find one, point to it. If there is none, say once in the greeting that the project has no objective yet and offer the hb-whats-next skill to write one. Don't repeat the offer later in the session. If the customer doesn't take it up, write the skipped form at the first checkpoint.
+If there is no `docs/PRD.md`, first look for an objective the project already has, as `files/prd.md` describes, and if you find one, point to it. If there is none, say once in the greeting that the project has no objective yet and offer the hb-whats-next skill to write one. Don't repeat the offer later in the session. If the customer doesn't take it up, write the skipped form at the first checkpoint.
 
 If the customer wants the full picture — exactly where they were inside a task, what's done, what's left — run the hb-whats-next skill. The greeting is the short version; hb-whats-next is the deep one.
 
@@ -85,13 +85,24 @@ You need to ensure the pickup note is always current. The customer should be abl
 
 Do not rewrite it after every small edit. Rewriting the note constantly wastes effort and buries the moments that matter. A checkpoint is a moment the next session would want to know about.
 
-The first checkpoint of a session replaces the previous note with a new one: next Session ID, today's date. Later checkpoints in the same session update it in place. files.md says what goes in the note.
+The first checkpoint of a session replaces the previous note with a new one: next Session ID, today's date. Later checkpoints in the same session update it in place.
+
+**What goes in the note.** Use the headings in `.hashbang/framework/templates/pickup.md`, and leave out any with nothing in it:
+
+- **Accomplished** — what was done this session, verified, not assumed.
+- **In Flight** — which task, the files and locations involved, what is done, what is left, the very next step, and open questions. Write it so a cold reader could resume mid-task without asking anything.
+- **Blocked** — what is blocked and what would unblock it.
+- **Up Next** — what the customer said they want to do next.
+- **Suggested Start** — where the next session should begin.
+- **Proposed Updates** — changes to the customer's files they have not yet approved.
+
+The `Session:` line is `S-` plus three digits: the previous note's ID plus one, or S-001 for the first note. Reference tasks and decisions by ID (T-003, D-002) and files by path; don't copy what the other Hashbang files already hold.
 
 ---
 
 ## Keeping the Customer's Files
 
-The customer's files — PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, DECISIONS.md — change only with their approval, except for marking progress on tasks. The detailed rules are in the hb-tasks skill for TASKS.md, and in files.md for the others.
+The customer's files — PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, DECISIONS.md — change only with their approval, except for marking progress on tasks. The detailed rules are in the hb-tasks skill for TASKS.md, and in `.hashbang/framework/files/` for the others.
 
 - **Propose as things happen, not as a wrap-up ritual.** One-tap approval: "We just decided X — want me to log that so it's remembered next session?" "I noticed X needs doing — want me to add that to your task list?" They don't need to review the change.
 - **Respect their edits.** They can edit any of these files directly. Treat what they wrote as current.
@@ -121,6 +132,7 @@ The only skill the customer needs to know is **hb-whats-next**. Everything else 
 - **hb-spec** — write a task's spec: the change in what the product does for users, and why, as rules its design and tests cover. The first step of `.hashbang/framework/development.md`.
 - **hb-design** — write the tech design for a task at its rigor level, and review it in a fresh context. Step 3 of `.hashbang/framework/development.md`.
 - **hb-slice** — split a Complex design into thin vertical slices, each proven by a test or demo. Step 4.
+- **hb-build** — write the tests and code slice by slice, validate the change against its spec, and review the diff. Step 5.
 - **hb-close** — close a finished task: move what lasts out of its planning docs into tests and lasting documents, and record where each piece landed. Step 6.
 - **hb-update** — merge a new Hashbang version into the files this project has customized.
 - **hb-tasks** — every change to TASKS.md: adding, finishing, blocking, and reordering tasks, and planning phases. Other skills hand their tasks to it.

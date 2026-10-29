@@ -9,7 +9,7 @@ This is step 3 of `.hashbang/framework/development.md`. This file describes the 
 
 ## 1. Rigor Level
 
-The task's rigor level comes from "Rigor Levels" in `.hashbang/framework/development.md`, which also sets each level's review budget. If the task hasn't been sized yet, size it there now. A Trivial change has no design: implement it directly, following step 5 of development.md.
+The task's rigor level comes from "Rigor Levels" in `.hashbang/framework/development.md`, which also sets each level's review budget. If the task hasn't been sized yet, size it there now. A Trivial change has no design: implement it directly, following Trivial Changes in development.md.
 
 Write the rigor level into the output file's frontmatter. A Complex design also names the trigger that made it Complex, in its `trigger:` field.
 
@@ -46,7 +46,7 @@ Narrowing or deferring a requirement changes what users get, so it is a high-jud
 
 Create the output file for your rigor level. If you're revising an existing one, read the whole thing first, then revise it in place. There is no history to keep; the design only has to be right for this task.
 
-At Simple rigor, fill in the template's five sections and stop: the Complex audits below don't apply, and the design's review is the diff review in step 5 of development.md. The rest of this section is for Complex designs.
+At Simple rigor, fill in the template's five sections and stop: the Complex audits below don't apply, and the design's review is the hb-build skill's diff review. The rest of this section is for Complex designs.
 
 The template's sections aren't rigid — add one when a design produces real content none of them can hold, most often something post-implementation (outcome, drift) the pre-implementation sections were never meant to capture. Don't add one to dodge an existing section: a one-line negative answer is that section doing its job, not a gap to route around.
 
@@ -60,13 +60,15 @@ Before adding a coordinator, a framework, durable state, a replay protocol, a ge
 
 List the Lasting Changes: what this design adds to the lasting documents, following "Where information lives" in `.hashbang/framework/docs-layout.md`. Structure the design adds, such as a dependency, a boundary, a persisted format, or an external interface, goes to `docs/engineering/ARCHITECTURE.md`; a contract other systems or users' files rely on, to `docs/engineering/CONTRACTS.md`; a practice it introduces, to `docs/engineering/CONVENTIONS.md`. The why goes to DECISIONS.md, cited from those docs, only when future work has to follow the design and it either can't be undone by reverting a commit, or rejects an obvious alternative that will likely be proposed again. List a narrowed requirement the user accepts, and an accepted risk whose exposure outlasts this task, the same way. Don't edit those documents now: the close applies the list once the code is built, so they describe what was actually built. Anything not on the list is lost when the task closes.
 
+Choose the test points: where the change will be tested, preferring existing test points to new ones, and the highest-level one that can prove the behavior. Fewer is better. Each names the spec rules it proves, such as B.2, E.1, or a limit, and every rule needs a test point or a manual test. The hb-build skill writes the tests against these and nowhere else.
+
 Design for testability. Testable means each operation in the Operation table has a test that goes through the real boundary it crosses: an integration test, as development.md describes in step 5. A unit test with that boundary faked doesn't count. If a boundary can't be tested that way, treat it as a design problem: reshape the design so it can be, or record a manual check and the reason.
 
 Scope can still change while you draft. If an edge case turns up that costs more than the rest of the design combined, propose narrowing it the same way as in §2. The simplification takes effect only if the user accepts it.
 
 ## 4. Review
 
-A Simple design gets no review pass: go to §5. Its review is the hb-crit pass on the diff, in step 5 of `.hashbang/framework/development.md`.
+A Simple design gets no review pass: go to §5. Its review is the hb-crit pass on the diff, in the hb-build skill.
 
 At Complex rigor, run the review passes your rigor level's budget calls for (Rigor Levels in `.hashbang/framework/development.md`), each in a fresh context with no memory of this conversation. Number them in order (`Pass 1`, `Pass 2`, ...; the blocker-verification pass, if used, is `Blocker verification`) and record that number in each finding's Source column (§15), so you can tell which pass found what. If a BLOCKER is still unresolved once that budget is spent, set the status to `Blocked`, record the reason on a `Blocked:` line, and hand it back to the user rather than running another pass; a design that can't converge in its budgeted passes usually needs rework, not more review. After the first full pass, later passes only need to check what changed plus earlier blockers — don't redo the whole review or reopen a settled finding without new evidence.
 

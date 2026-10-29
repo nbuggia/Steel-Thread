@@ -8,7 +8,7 @@ A spec is the behavior delta for one task: what the task changes in how the prod
 
 In this skill, **users** are whoever consumes what the task changes: the people using the product for a UI, the callers for an API or library, the developer typing a CLI command, the code that reads a file format. The **customer** is the person you are working with.
 
-This skill also owns `docs/BACKLOG.md` and release planning. Its format is in `.hashbang/framework/files.md`.
+This skill also owns `docs/BACKLOG.md` and release planning. Its format is in `.hashbang/framework/files/backlog.md`.
 
 ## Step 1 — Find the task and today's behavior
 

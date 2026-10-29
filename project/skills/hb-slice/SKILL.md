@@ -19,7 +19,7 @@ Find the section that defines the design's slicing strategy, per whichever hb-de
 
 ## 3. Slice
 
-Create `slices.md` from the template, in the same task folder as the design: `docs/work/T-NNN-<name>/slices.md`.
+Create `slices.md` from the template, in the same task folder as the design: `docs/work/T-NNN-<name>/slices.md`. Do not copy slices into TASKS.md: the task stays the unit of work there. Keep its detail line, through the hb-tasks skill, naming the slice in progress: `Slice 2 of 4 in docs/work/T-014-first-save-filename/slices.md.`
 
 - Prefer few slices.
 - Each slice closes one cohesive, independently verifiable outcome.

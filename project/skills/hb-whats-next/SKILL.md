@@ -5,13 +5,13 @@ description: Recommend the single most valuable next step and give the customer 
 
 One job: recommend the single most valuable next step, and give the customer everything they need to start it right away. One recommendation, not a menu. Offer at most one alternative, and only when it is a real contender.
 
-The customer's files live in `docs/`: PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, and DECISIONS.md. Hashbang's working files live in `.hashbang/`. Starter files are in `.hashbang/framework/templates/`, and the format and rules for each file are in `.hashbang/framework/files.md` — read it before writing any of them.
+The customer's files live in `docs/`: PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, and DECISIONS.md. Hashbang's working files live in `.hashbang/`. Starter files are in `.hashbang/framework/templates/`, and the format and rules for each are in `.hashbang/framework/files/` — read a file's rules before writing it.
 
 ## Step 1 — Read the state
 
 Silently read whatever exists of the objective (`docs/PRD.md`'s sections above its first feature), `docs/CONTEXT.md`, `docs/TASKS.md`, `docs/DECISIONS.md`, `.hashbang/pickup.md`, and the git log since the pickup note's date, following any pointer to another file. In TASKS.md, read from the current phase onward and skip phases marked ✓. Never ask the customer for something these files already answer.
 
-If there is no objective or no CONTEXT.md, first look for one the project already has, as files.md describes, and point to it.
+If there is no objective or no CONTEXT.md, first look for one the project already has, as `files/prd.md` and `files/context.md` describe, and point to it.
 
 Also list `docs/work/`. A task marked done whose folder has no `close.md` was never closed.
 
@@ -40,7 +40,7 @@ Use the hb-elevate skill for every interview. Propose what you've captured befor
 
 ### Create the objective
 
-Say: "Let's set this project up. First: what is it for? I'll ask a few questions." If the customer would rather not, write the skipped form (see files.md) and move to the next step.
+Say: "Let's set this project up. First: what is it for? I'll ask a few questions." If the customer would rather not, write the skipped form (see `files/prd.md`) and move to the next step.
 
 Interview, in order:
 
@@ -51,7 +51,7 @@ Interview, in order:
 
 Write `docs/PRD.md` from the template. Feature sections come later, as tasks close. At the same time, create whichever of these don't exist yet, from the templates: `docs/DECISIONS.md`, and in `.hashbang/`, pickup.md and customizations.md. Never overwrite a file that exists.
 
-If `docs/OBJECTIVE.md` exists from an older install, propose moving its sections into the PRD instead of interviewing (see files.md).
+If `docs/OBJECTIVE.md` exists from an older install, propose moving its sections into the PRD instead of interviewing (see `files/prd.md`).
 
 Log any hard-to-reverse choice the interview surfaced in DECISIONS.md, with approval.
 
@@ -122,7 +122,7 @@ The next step must be concrete and small enough to start immediately — a speci
 
 ## Close the task
 
-A task's code is finished, or a task was marked done without being closed. Say so in one line, "T-014's code is done, so the next step is closing it — moving what lasts into the tests and docs," and use the hb-close skill. If the code hasn't been validated against its spec yet, do that first, as step 5 of `.hashbang/framework/development.md` describes. Then come back to Choose the next step.
+A task's code is finished, or a task was marked done without being closed. Say so in one line, "T-014's code is done, so the next step is closing it — moving what lasts into the tests and docs," and use the hb-close skill. If the code hasn't been validated against its spec and its diff reviewed yet, do that first with the hb-build skill. Then come back to Choose the next step.
 
 ## Close the phase
 

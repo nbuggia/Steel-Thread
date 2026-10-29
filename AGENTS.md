@@ -33,22 +33,24 @@ project/                   ← the product: what lands in a user's project
   .hashbang/
     framework/
       hashbang.md          ← framework operating manual (the core product), read every session
-      files.md             ← format and maintenance rules per file, read before editing them
+      files/               ← format and maintenance rules, one file per customer file, read before editing it
       development.md       ← software process (spec → prototype → design → slices → tests → close),
-                             rigor levels, planning docs as scaffolding, and how the skills connect
-      docs-layout.md       ← file structure, and which lasting document holds what
+                             rigor levels, and which skill runs each step
+      docs-layout.md       ← file structure, planning docs as scaffolding, document states,
+                             and which lasting document holds what
       templates/           ← starter files used during setup: PRD, CONTEXT, TASKS,
                              BACKLOG, DECISIONS, pickup, customizations
   skills/
     hb-whats-next/SKILL.md    ← installed; setup, resume, and recommend the next step
     hb-elevate/SKILL.md       ← installed; interview that clarifies intent and stress-tests plans
-    hb-crit/SKILL.md          ← installed; domain expert review of outputs
+    hb-crit/SKILL.md          ← installed; expert review of a spec, design, diagnosis, or diff
     hb-tasks/SKILL.md         ← installed; owns TASKS.md: its format and every change to it
     hb-dev-setup/SKILL.md     ← installed; tailors the development process to a project's stack
     hb-update/SKILL.md        ← installed; merges a new version into customized files
     hb-spec/                  ← installed; a task's behavior delta, process in SKILL.md, format in spec-template.md
     hb-design/                ← installed; tech design at a rigor level fitted to the change, with review passes
     hb-slice/                 ← installed; splits a Complex design into thin vertical slices
+    hb-build/SKILL.md         ← installed; tests and code slice by slice, validation, and the diff review
     hb-close/                 ← installed; closes a task: moves what lasts out of its planning docs
 ```
 

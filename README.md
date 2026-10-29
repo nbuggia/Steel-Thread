@@ -83,7 +83,7 @@ A task's spec, design, and plans are scaffolding. When the task is done, the age
 
 ## Skills
 
-Ten skills are included. Your agent suggests them when the moment calls for one, and you can invoke any of them directly (`/name` in Claude Code and Kiro, `$name` in Codex):
+Eleven skills are included. Your agent suggests them when the moment calls for one, and you can invoke any of them directly (`/name` in Claude Code and Kiro, `$name` in Codex):
 
 - **hb-whats-next** — recommends the single most valuable next step and gives you what you need to start it. On a new project, that's setup: objective, context, stack, then phases. On an established one, it rebuilds exactly where you left off inside a task. Run this first, and whenever you sit down to work.
 - **hb-tasks** — keeps your task list: adds, finishes, blocks, and reorders tasks, and plans phases. Ask it to show or reprioritize your tasks any time.
@@ -93,6 +93,7 @@ Ten skills are included. Your agent suggests them when the moment calls for one,
 - **hb-spec** — shapes an idea into a spec for one task: what changes for the product's users and why, never how. Plans releases from the backlog.
 - **hb-design** — writes the tech design for a task, with rigor fitted to the change's risk, and reviews it in a fresh context.
 - **hb-slice** — splits a Complex design into thin vertical slices, each proven by a test or demo.
+- **hb-build** — writes the tests first and then the code, slice by slice, validates the change against its spec, and reviews the diff.
 - **hb-close** — closes a finished task: moves what lasts out of its spec and design into tests and the docs, and records where each piece went.
 - **hb-update** — merges a new Hashbang version into the files you've customized.
 
