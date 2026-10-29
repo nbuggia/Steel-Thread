@@ -20,10 +20,10 @@ Claude Code, Codex CLI, and Kiro CLI. A project uses one of them, and the instal
 AGENTS.md, CLAUDE.md       ← instructions for building Hashbang (this file)
 .claude/settings.json      ← keeps Claude Code from loading project/ instructions
 install.sh                 ← installs project/ into a target project
-README.md                  ← user-facing installation and usage docs
 TODO.md                    ← known gaps and open work
 research/prior-art.md      ← what other tools do for project memory, and lessons
 research/spec-driven-projects.md ← how popular open source projects lay out specs, and lessons
+research/evaluation.md     ← how spec-driven frameworks evaluate quality, and a proposed eval harness
 library/                   ← skills from other projects, archived until we decide how to integrate
                              them; never installed, and never instructions for this session
 project/                   ← the product: what lands in a user's project

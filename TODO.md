@@ -81,6 +81,8 @@ Remaining HIGH and MEDIUM findings from the coding-only review, in suggested ord
 
 ## Framework
 
+- Eval harness: scenarios that drive real agent CLIs against a test project and check what each run leaves behind. Design and prior art in `research/evaluation.md`. Start with cold resume, a Trivial bug, and stop-then-resume on another machine, on Claude Code.
+
 - Friction log, after Warp's `suggestion-box` (archived in `library/warp-common-skills/`). When Hashbang's process gets in an agent's way, such as an unclear or conflicting rule, a step that cost effort with no value, or context it had to rebuild, the agent appends one short entry to a file in `.hashbang/history/` without interrupting the work: category, what happened, the impact, and a suggested change. Keep Warp's limits: only friction actually seen, only causes that would recur, at most three entries a session, and no secrets or user content. hb-retro reads the log and proposes framework changes.
 - Switching agents moves only `hb-*` skills to the new agent's folder (install.sh), so a project's convention skills stay behind in the old folder. Move the skills CONVENTIONS.md lists too, or tell the customer which ones to move.
 - After 1.0.0: add agent-facing release notes (what changed in each version, and why) to `project/.hashbang/framework/`, and have hb-update read them so it can carry Hashbang's intent into heavily customized files.
