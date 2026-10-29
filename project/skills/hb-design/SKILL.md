@@ -74,11 +74,17 @@ At Complex rigor, run the review passes your rigor level's budget calls for (Rig
 
 Give each reviewer: the draft, the task's spec, the architecture, conventions, and contracts docs, the convention skills for the areas it touches, the failure modes that apply, and read-only repo access, plus `design-red-flags.md` at Complex rigor. Don't give them the conversation history or any reasoning that isn't written into the design itself. They should judge what the design actually says, not your explanation of it.
 
+Every reviewer prompt, here and in §6, opens with this framing:
+
 ```text
 You're a principal engineer reviewing this design before anyone implements it. You have the design, its spec, conventions, architecture, contracts, applicable failure modes, read-only repo access, and whatever else was provided. Your job is to keep it simple: built on the existing code, standards, and frameworks, testable with integration tests through every boundary it crosses, and easy to change later. Challenge the design where it falls short of that.
 
 Don't expand the scope. Raise a finding that adds work only if it names a requirement the design fails without that work. Anything else that adds work is out of scope, however good the idea is: leave it out.
+```
 
+Then, for the passes here:
+
+```text
 The design is discarded when the task closes, and its Lasting Changes section is all that survives. Check that it lists every structure, contract, practice, and rejected alternative a later change will need.
 
 1. Check the design's claims against the actual source it cites — every table, every claimed absence — by tracing it or searching for it directly.
@@ -124,14 +130,6 @@ Evidence from implementation — the commit, the tests, manual checks, drift fro
 
 The user may provide feedback on the finished design, including from a review run outside this skill (e.g. an external agent). There can be more than one such pass: check the Reviewer Feedback table for existing `External N` rows and number the next one accordingly (`External 1`, `External 2`, ...).
 
-Output the following code block directly in your reply, filled in with the path to this design's output file, so the user can copy it as-is into another agent:
-
-```
-You're a principal engineer reviewing this design before anyone implements it. You have the design, its spec, conventions, architecture, contracts, applicable failure modes, read-only repo access, and whatever else was provided. Your job is to keep it simple: built on the existing code, standards, and frameworks, testable with integration tests through every boundary it crosses, and easy to change later. Challenge the design where it falls short of that.
-
-Don't expand the scope. Raise a finding that adds work only if it names a requirement the design fails without that work. Anything else that adds work is out of scope, however good the idea is: leave it out.
-
-Tech Design: `{{output file path}}`
-```
+Output one code block directly in your reply, so the user can copy it as-is into another agent: the framing from §4, then a blank line and `Tech Design: <path to this design's output file>`.
 
 Log each finding the user brings back into the design's Reviewer Feedback table (§15; a Simple design adds one) with Source set to that pass's number (e.g. `External 1`), and run it through the same decision process as §4: record ACCEPT/REJECT/DEFER, escalate only the high-judgment findings, and apply accepted findings everywhere they're relevant.

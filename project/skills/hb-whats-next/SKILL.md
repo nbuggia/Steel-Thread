@@ -9,7 +9,7 @@ The customer's files live in `docs/`: PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, 
 
 ## Step 1 — Read the state
 
-Silently read whatever exists of the objective (`docs/PRD.md`'s sections above its first feature), `docs/CONTEXT.md`, `docs/TASKS.md`, `docs/DECISIONS.md`, `.hashbang/pickup.md`, and the git log since the pickup note's date, following any pointer to another file. In TASKS.md, read from the current phase onward and skip phases marked ✓. Never ask the customer for something these files already answer.
+Start from what the Session Start Protocol in `.hashbang/framework/hashbang.md` reads, and read whatever of it this session hasn't yet. Never ask the customer for something these files already answer.
 
 If there is no objective or no CONTEXT.md, first look for one the project already has, as `files/prd.md` and `files/context.md` describe, and point to it.
 

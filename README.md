@@ -1,6 +1,6 @@
 # Hashbang Agent Framework
 
-The Hashbang Agent Framework is a lightweight project memory and task tracker for coding agents. It helps your agent remember decisions, track active work, and start each session with the right context. When the agent carries the operational overhead, you can go deeper into a problem, step back to reprioritize, or make a creative leap you couldn't make while managing details.
+The Hashbang Agent Framework is a lightweight project memory and task tracker for coding agents, built for an individual developer. It helps your agent remember decisions, track active work, and start each session with the right context. When the agent carries the operational overhead, you can go deeper into a problem, step back to reprioritize, or make a creative leap you couldn't make while managing details.
 
 It works with **Claude Code**, **Codex CLI**, or **Kiro CLI** — pick one per project.
 
@@ -41,7 +41,9 @@ The installer has no dependencies beyond a POSIX shell. It:
 - Adds `docs/work/` to `.ignore`, creating the file if needed, so search tools skip planning docs
 - For Claude Code, adds `@AGENTS.md` to the top of `CLAUDE.md`, creating the file if needed, so Claude Code reads the same instructions
 
-Commit everything it creates, so your whole team gets Hashbang.
+Commit everything it creates, so your project memory travels with the repo to every machine you work on.
+
+Hashbang is built for one developer working on one branch at a time. Task and decision IDs are the highest existing ID plus one, and there is a single pickup note, so work started on two branches at once can create the same IDs; renumber the newer ones when you merge.
 
 ### Updating
 

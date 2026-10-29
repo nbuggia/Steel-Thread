@@ -57,7 +57,7 @@ What each level runs:
 
 ## Trivial Changes
 
-A Trivial change skips every step below. For a bug, first write the reproducing test and confirm it fails. Make the change, run the checks TESTING.md lists for the area it touches, and suggest a commit message that names the change, and for a bug the cause and the test. It needs no task and no work entry; the commit is the record.
+A Trivial change skips every step below. For a bug, first write the reproducing test and confirm it fails. Make the change, run the checks TESTING.md lists for the area it touches, and commit it, following Commits below. It needs no task and no work entry; the commit is the record.
 
 ## Step 1 — Spec
 
@@ -88,6 +88,15 @@ A prototype answers a question, and it is thrown away. Its `README.md` starts wi
 
 **Produces:** `close.md` in the work entry. **Skip when:** the task is Trivial, or has no work entry. Use the hb-close skill as soon as the diff review is clean. A task with a work entry is not done until it is closed.
 
+## Commits
+
+Commit the work yourself, so the record never depends on someone remembering to: one commit for a Trivial change, one per slice (or for the whole design, if it has no slicing plan), one for the fixes from validation and the diff review, and one for the close.
+
+- Stage only the files the work changed. Leave the customer's unrelated changes out; if a file holds both, ask before committing it.
+- The first line names the change and cites the task ID. The body records the evidence: the tests added and that they pass, any drift from the design and why, and for a bug the cause and the reproducing test.
+- Commit on the current branch. Never push, amend, rebase, or rewrite history unless the customer asks, and follow CONTEXT.md's never-do rules.
+- In a project without version control, the close records the evidence in close.md instead.
+
 ## Bugs
 
 A bug follows the same flow with a shorter spec:
@@ -101,7 +110,7 @@ A bug follows the same flow with a shorter spec:
 
 ## Between Steps
 
-- **When a step finishes,** start the next one and say so in one line: "Spec approved after review. Starting the tech design." After the close, use the hb-whats-next skill to recommend the next task.
+- **When a step finishes,** start the next one and say so in one line: "Spec approved after review. Starting the tech design."
 - **hb-elevate** is for when a step is blocked: it resolves a high-judgment decision or gathers critical input with the customer in one focused session.
 - **hb-crit** comes after work is written: its review is what lets a spec become Approved, and what lets a diff go to the close.
 - **Hashbang files stay current throughout.** Each approved document is a checkpoint for pickup.md. Choices all future work has to follow go to DECISIONS.md, new terms to CONTEXT.md, future features to BACKLOG.md, and follow-up work to TASKS.md through the hb-tasks skill, each with the customer's approval.

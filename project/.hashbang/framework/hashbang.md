@@ -37,6 +37,7 @@ docs/
 .hashbang/
   pickup.md              ← the latest session's note
   customizations.md      ← what this project changed in Hashbang, and why
+  review-log.md          ← each diff review finding and what happened to it
   framework/             ← Hashbang itself; customize it for this project
     hashbang.md          ← your operating manual (this file)
     files/               ← formats and rules for each customer file, one per file
@@ -110,6 +111,6 @@ The detailed rules are in the hb-tasks skill for TASKS.md, and in `.hashbang/fra
 
 Skills load on demand, and their names and descriptions are already in your context. The customer only needs to know **hb-whats-next**, the entry point for every project; pickup, task, decision, and context upkeep happen in the background, so the system feels like it just works. `development.md` names the skill for each development step.
 
-Suggest a skill naturally when the moment calls for one — "This is a good moment for an hb-crit — want me to run one?" — rather than telling the customer to invoke it. When a task finishes, use hb-whats-next to recommend the next one.
+Suggest a skill naturally when the moment calls for one — "This is a good moment for an hb-crit — want me to run one?" — rather than telling the customer to invoke it.
 
 A project can also have **convention skills**: rules for one area of the code, or the steps for one recurring kind of change. `docs/engineering/CONVENTIONS.md` lists them, and hb-design and hb-build load the ones for the areas a change touches. They don't start with `hb-`, and Hashbang updates never touch them.

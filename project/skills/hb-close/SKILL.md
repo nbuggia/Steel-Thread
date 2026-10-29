@@ -17,6 +17,8 @@ The close is never heavier than the task. At Simple rigor it is usually a few ro
 
 Read every document in the work entry. List every rule in `spec.md` (new, changed, and `SHALL CONTINUE TO`, plus its limits, edge cases, and contracts), the spec's summary, users, Not Doing, and success criteria, its deferred use cases, every row in the design's Lasting Changes, and the chosen decisions of a prototype or spike.
 
+Then list each place the build drifted from the design. Read it from the task's commits (`git log --grep T-NNN`), and from the slicing plan's Checkpoint Log and Design Drift if there is one. A slice with no commit citing the task has lost its evidence; tell the customer.
+
 ## 2. Apply them
 
 Every item lands in a lasting document, or is dropped with the customer's approval. Most are in place once the tests and code are done; check rather than assume.
@@ -37,7 +39,11 @@ Every item lands in a lasting document, or is dropped with the customer's approv
 | Design: new practices | CONVENTIONS.md, or the convention skill for their area |
 | Design: rejected alternatives likely to be proposed again | DECISIONS.md |
 | Design: traps found during implementation | COMMON-FAILURE-MODES.md |
-| Design and slices: evidence, tests added, drift | Commit messages |
+| Drift: changes what is there, such as a component or boundary | ARCHITECTURE.md, describing what was built |
+| Drift: a choice someone reading the code might undo | A code comment where the choice was made |
+| Drift: sets a practice later changes should follow | CONVENTIONS.md, or the convention skill for its area |
+| Drift: rejects an alternative likely to be proposed again | DECISIONS.md |
+| Other drift, and evidence: tests added, results | Commit messages; close.md without version control |
 | Prototype: chosen UI decisions | UI code and UI tests |
 | Spike: result | DECISIONS.md or COMMON-FAILURE-MODES.md |
 
@@ -67,6 +73,7 @@ Write `close.md` in the work entry: one row for each item from the list, naming 
 | Contract: on-device filename format | docs/engineering/CONTRACTS.md, "Device filenames" |
 | Lasting Change: SyncScheduler owns sync timing | docs/engineering/ARCHITECTURE.md, "Sync" |
 | Rejected: background fetch API | D-031 |
+| Drift: reused StatusItem instead of a new menu bar view | Comment in `MenuBar.swift`, `showSyncState()` |
 | Intent and success criteria | docs/PRD.md, "Sync" |
 | Deferred: sync over cellular | BACKLOG.md |
 | Rule: retry banner after three failures | Dropped: the customer chose silent retries |
@@ -83,4 +90,4 @@ If your agent can start a subagent, you can also run a fresh-context review with
 
 ## 6. Finish
 
-Leave the work entry where it is; `close.md` marks it closed. Mark the task done with the hb-tasks skill, citing the closing commit, if the project uses version control, and the D- and FM- IDs the task added. Tell the customer in a few lines what landed where, anything dropped, and what went to BACKLOG.md. Then use the hb-whats-next skill to recommend the next task.
+Leave the work entry where it is; `close.md` marks it closed. Mark the task done with the hb-tasks skill, citing the task's last code commit, if the project uses version control, and the D- and FM- IDs the task added. Then commit the close: close.md, the lasting documents, and TASKS.md (Commits in development.md). Tell the customer in a few lines what landed where, anything dropped, and what went to BACKLOG.md. Then use the hb-whats-next skill to recommend the next task.
