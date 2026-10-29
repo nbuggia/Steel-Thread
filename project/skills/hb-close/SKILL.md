@@ -37,7 +37,7 @@ Every item lands in a lasting document, or is dropped with the customer's approv
 | Design: new practices | CONVENTIONS.md, or the convention skill for their area |
 | Design: rejected alternatives likely to be proposed again | DECISIONS.md |
 | Design: traps found during implementation | COMMON-FAILURE-MODES.md |
-| Design: rigor level and review passes | The design review log |
+| Design: rigor level and review passes, at Complex rigor | The design review log |
 | Design and slices: evidence, tests added, drift | Commit messages |
 | Prototype: chosen UI decisions | UI code and UI tests |
 | Spike: result | DECISIONS.md or COMMON-FAILURE-MODES.md |

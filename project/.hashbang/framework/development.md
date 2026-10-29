@@ -25,15 +25,16 @@ A step is skipped only when the task's rigor level or the rules below say so. Wh
 
 **Every change gets a rigor level before work starts: Trivial, Simple, or Complex.** The level decides which steps run and how heavy each one is, so a one-line fix doesn't pay for a feature's process. Set it once, at the start of the task, and tell the customer in one line which criterion decided it: "This is Trivial: one comparison, and a failing test proves the fix."
 
-Check the Trivial criteria first; they need no file reads. If the change isn't clearly Trivial, read `AGENTS.md`, `docs/engineering/CONVENTIONS.md`, and `docs/engineering/ARCHITECTURE.md` before choosing between Simple and Complex.
+Check the Trivial criteria first; they need no file reads. If the change isn't clearly Trivial, read `AGENTS.md`, `docs/engineering/ARCHITECTURE.md`, and `docs/engineering/CONTRACTS.md` before choosing between Simple and Complex.
 
 | Rigor level | Criteria | Examples |
 | --- | --- | --- |
 | Trivial | All of these:<br>1. One local edit; nothing else depends on what it changes.<br>2. No promise changes, unless a bug fix restores one.<br>3. A mistake is visible on sight, or one test settles it. | A copy fix, a style value, a default. A wrong comparison in one function, with a failing test that reproduces the bug. |
-| Simple | All of these:<br>1. The scope is well understood; it follows an existing convention, in CONVENTIONS.md or a convention skill, and doesn't cross an ARCHITECTURE.md boundary.<br>2. Reverting the commit undoes it completely; nothing lasting reaches data stores, users' files, or other systems.<br>3. Correctness can be fully tested: it doesn't depend on thread interleaving, or on behavior invented as you go.<br>4. It fits in one or two slices. | A save handler that skips a validation the other handlers apply: a few edits in one component, following their pattern, and one test proves both the broken and the fixed behavior. |
-| Complex | Anything that misses a Simple criterion. | Adding a field to the persisted settings file. Builds already shipped wrote the old shape to disk, so reverting a commit can't undo it. |
+| Simple | Anything that is not Trivial and hits no Complex trigger. | A save handler that skips a validation the other handlers apply. A new settings screen built from existing components and commands. |
+| Complex | Any of these triggers:<br>1. **Not revertible:** it changes a persisted format or stored data, so reverting the commit can't undo it.<br>2. **Contract:** it adds or changes a promise in CONTRACTS.md, such as a file format, URL scheme, or public API.<br>3. **Structure:** it adds a component, a process or thread boundary, or a dependency, or moves a boundary in ARCHITECTURE.md.<br>4. **Risky ground:** it touches concurrency, security, or permissions.<br>5. **Not fully testable:** correctness depends on timing or on behavior invented as you go. | Adding a field to the persisted settings file. Builds already shipped wrote the old shape to disk, so reverting a commit can't undo it. |
 
-- A close call is Simple.
+- A close call is Simple. Choosing Complex names its trigger: "Complex: it adds a field to the settings file."
+- Following an existing convention is a sign a change is Simple, not a requirement. In a new project, the first change in an area sets its conventions: record them in the design's Lasting Changes rather than raising the level.
 - A bug with more than one independent cause is more than one task. Size each one.
 - **Re-size when the work shows the level was wrong,** in either direction, and say so: "This touches the export format, so it's Complex now." The steps the new level adds start from there. A Trivial change that grows gets a task and a work entry; a Simple design that grows is rewritten from the Complex template.
 
@@ -46,9 +47,10 @@ What each level runs:
 | Spec (step 1) | None | When users would notice the change | When users would notice the change |
 | Prototype (step 2) | None | When step 2 calls for one | When step 2 calls for one |
 | Bug diagnosis review | None; the failing test is the proof | Only when a failing test doesn't prove the cause | Always |
-| Tech design (step 3) | None | Simple template, one review pass | Complex template, two review passes, plus at most one blocker-verification pass |
-| Slicing plan (step 4) | None | None | When the design needs more than two slices |
+| Tech design (step 3) | None | Simple template, no review pass | Complex template, two review passes, plus at most one blocker-verification pass |
+| Slicing plan (step 4) | None | None; needing more than two slices is a reason to re-size | When the design needs more than two slices |
 | Tests and code (step 5) | A bug's reproducing test, then the fix | Tests first, at the design's test points, then validate against the spec | Tests first, slice by slice, then validate against the spec |
+| Diff review (step 5) | None | One hb-crit pass on the diff | One hb-crit pass on the diff |
 | Close (step 6) | None; the commit message records the cause and the test | hb-close steps 1–4 and 6; check the rows by eye | Every hb-close step, including the searches |
 
 ## Planning Docs Are Scaffolding
@@ -148,7 +150,9 @@ Otherwise, work one slice at a time, or the whole design if it has no slicing pl
 - **Fix the code** when the spec is right. That is yours to do.
 - **Fix the spec** when the implementation found something better, or the rule was wrong. A change users would notice is a high-judgment decision: put every such mismatch to the customer in one message, with your recommendation. Revise the spec, and send it back through review only if a use case changed.
 
-Re-run the checks for what changed. The task is ready to close when no mismatch is open.
+Re-run the checks for what changed.
+
+**Then review the diff,** at Simple and Complex rigor. Use the hb-crit skill, as a senior reviewer for this stack, on the change's whole diff against its base, with the spec and design. Fix what it finds in the code, or settle it with the customer as above, then re-run the checks. The task is ready to close when no mismatch or finding is open.
 
 Choose the kind of test by what it has to prove:
 
@@ -190,11 +194,11 @@ A bug follows the same flow with a shorter spec:
 | Prototype | none yet; follow step 2 |  |
 | Tech design | hb-design | hb-elevate when blocked |
 | Slicing plan | hb-slice |  |
-| Tests and code | none yet; follow step 5 | hb-crit at the end of a Complex design |
+| Tests and code | none yet; follow step 5 | hb-crit to review the diff |
 | Close | hb-close | hb-tasks to mark the task done, hb-crit for an optional fresh-context check |
 | Improve the process | hb-retro |  |
 
 - **hb-elevate** is for when a step is blocked: it resolves a high-judgment decision or gathers critical input with the customer in one focused session.
-- **hb-crit** comes after a document is written: its review is what lets the document become Approved.
+- **hb-crit** comes after work is written: its review is what lets a spec become Approved, and what lets a diff go to the close.
 - **When a step finishes,** start the next one and say so in one line: "Spec approved after review. Starting the tech design." When the last slice ships, close the task with the hb-close skill, then use the hb-whats-next skill to recommend the next one.
 - **Hashbang files stay current throughout.** Each approved document is a checkpoint for pickup.md. Choices all future work has to follow go to DECISIONS.md, new terms to CONTEXT.md, future features to BACKLOG.md, and follow-up work to TASKS.md through the hb-tasks skill, each with the customer's approval.

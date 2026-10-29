@@ -11,7 +11,7 @@ This is step 3 of `.hashbang/framework/development.md`. This file describes the 
 
 The task's rigor level comes from "Rigor Levels" in `.hashbang/framework/development.md`, which also sets each level's review budget. If the task hasn't been sized yet, size it there now. A Trivial change has no design: implement it directly, following step 5 of development.md.
 
-Write the rigor level, and which criteria decided it, into the output file's frontmatter.
+Write the rigor level into the output file's frontmatter. A Complex design also names the trigger that made it Complex, in its `trigger:` field.
 
 | Rigor level | Template | Where it's saved |
 | --- | --- | --- |
@@ -29,15 +29,14 @@ Before drafting, read the following files:
 - the lasting documents for the area: its PRD feature section, `docs/engineering/CONTRACTS.md`, and its tests and manual tests
 - the convention skills `docs/engineering/CONVENTIONS.md` lists for the areas the change touches
 - the current implementation
-- `.hashbang/history/design-review-log.md`
 - `docs/engineering/COMMON-FAILURE-MODES.md` (if missing, create from template `templates/common-failure-modes-template.md`)
-- `docs/engineering/REVIEW-PATTERNS.md` (if missing, create from template `templates/review-patterns-template.md`)
+- at Complex rigor, `docs/engineering/REVIEW-PATTERNS.md` (if missing, create from template `templates/review-patterns-template.md`)
 
 Work from these and the code, never from older designs: closed entries in `docs/work/` are history, not current behavior.
 
-Mark each entry in `docs/engineering/COMMON-FAILURE-MODES.md` Applicable / Not applicable / Checked — no issue / Accepted risk in the Failure Modes table, with evidence.
+At Complex rigor, mark each entry in `docs/engineering/COMMON-FAILURE-MODES.md` Applicable / Not applicable / Checked — no issue / Accepted risk in the Failure Modes table, with evidence. At Simple rigor, list only the ones that apply, under Risks.
 
-If this is a bug fix, reproduce it first — a failing test/check, or deterministic proof from source. If you can't, don't implement yet: write a diagnosis-only Slice 0, plus what would disprove your theory.
+If this is a bug fix, reproduce it first — a failing test/check, or deterministic proof from source. If you can't, don't implement yet: at Complex rigor, write a diagnosis-only Slice 0, plus what would disprove your theory; at Simple rigor, say so in the Summary and get the diagnosis reviewed, as the Bugs section of development.md says.
 
 Settle the scope before you design anything. With what you just read, list the requirements this design has to meet and what each one costs: new state, a new mechanism, a boundary crossed, an assumption not yet proven. Usually a few requirements drive most of the cost. For each of those, decide whether the release needs it now, or whether it can be narrowed, or deferred to a later task without breaking the rest.
 
@@ -46,6 +45,8 @@ Narrowing or deferring a requirement changes what users get, so it is a high-jud
 ## 3. Draft
 
 Create the output file for your rigor level. If you're revising an existing one, read the whole thing first, then revise it in place. There is no history to keep; the design only has to be right for this task.
+
+At Simple rigor, fill in the template's five sections and stop: the Complex audits below don't apply, and the design's review is the diff review in step 5 of development.md. The rest of this section is for Complex designs.
 
 The template's sections aren't rigid — add one when a design produces real content none of them can hold, most often something post-implementation (outcome, drift) the pre-implementation sections were never meant to capture. Don't add one to dodge an existing section: a one-line negative answer is that section doing its job, not a gap to route around.
 
@@ -65,7 +66,9 @@ Scope can still change while you draft. If an edge case turns up that costs more
 
 ## 4. Review
 
-Run the review passes your rigor level's budget calls for (Rigor Levels in `.hashbang/framework/development.md`), each in a fresh context with no memory of this conversation. Number them in order (`Pass 1`, `Pass 2`, ...; the blocker-verification pass, if used, is `Blocker verification`) and record that number in each finding's Source column (§15/§8) — this is what lets a retro compare the value of each pass. If a BLOCKER is still unresolved once that budget is spent, set the status to `Blocked`, record the reason on a `Blocked:` line, add a review-log entry (§5), and hand it back to the user rather than running another pass; a design that can't converge in its budgeted passes usually needs rework, not more review. After the first full pass, later passes only need to check what changed plus earlier blockers — don't redo the whole review or reopen a settled finding without new evidence.
+A Simple design gets no review pass: go to §5. Its review is the hb-crit pass on the diff, in step 5 of `.hashbang/framework/development.md`.
+
+At Complex rigor, run the review passes your rigor level's budget calls for (Rigor Levels in `.hashbang/framework/development.md`), each in a fresh context with no memory of this conversation. Number them in order (`Pass 1`, `Pass 2`, ...; the blocker-verification pass, if used, is `Blocker verification`) and record that number in each finding's Source column (§15) — this is what lets a retro compare the value of each pass. If a BLOCKER is still unresolved once that budget is spent, set the status to `Blocked`, record the reason on a `Blocked:` line, add a review-log entry (§5), and hand it back to the user rather than running another pass; a design that can't converge in its budgeted passes usually needs rework, not more review. After the first full pass, later passes only need to check what changed plus earlier blockers — don't redo the whole review or reopen a settled finding without new evidence.
 
 Give each reviewer: the draft, the task's spec, the architecture, conventions, and contracts docs, the convention skills for the areas it touches, the failure modes that apply, and read-only repo access, plus `design-red-flags.md` at Complex rigor. Don't give them the conversation history or any reasoning that isn't written into the design itself. They should judge what the design actually says, not your explanation of it.
 
@@ -91,7 +94,9 @@ A requirement change is not a finding: record it in the spec, or in Spec Review 
 
 ## 5. Ready gate
 
-The design is **not** ready for implementation if any of these are true:
+A Simple design is ready when its scope is settled, every spec rule has a test point, a bug has its reproduction or reviewed diagnosis, and no high-judgment decision is waiting on the user. Set its status to `Approved`; it gets no review-log entry.
+
+A Complex design is **not** ready for implementation if any of these are true:
 
 - A core guarantee has no concrete mechanism, or no defined linearization point.
 - An operation is missing its caller, registration, consumer, restore/cleanup step, or a test.
@@ -111,7 +116,7 @@ When none of these is true: set the status to `Approved`, make any provisional f
 
 ### The review log
 
-`.hashbang/history/design-review-log.md` is the data the hb-retro skill reads. Create it with a `# Design Review Log` heading if it doesn't exist. Append an entry when a design is Approved, and when it is Blocked after its review budget is spent. A Trivial change gets no entry.
+`.hashbang/history/design-review-log.md` is the data the hb-retro skill reads. Create it with a `# Design Review Log` heading if it doesn't exist. Append an entry when a Complex design is Approved, and when it is Blocked after its review budget is spent. Trivial and Simple changes get no entry.
 
 ```markdown
 ## T-014 Autosync at launch — 2026-10-26
@@ -149,4 +154,4 @@ Don't expand the scope. Raise a finding that adds work only if it names a requir
 Tech Design: `{{output file path}}`
 ```
 
-Log each finding the user brings back into the same Reviewer Feedback table (§15/§8) with Source set to that pass's number (e.g. `External 1`), and run it through the same decision process as §4: record ACCEPT/REJECT/DEFER, escalate only the high-judgment findings, and apply accepted findings everywhere they're relevant.
+Log each finding the user brings back into the design's Reviewer Feedback table (§15; a Simple design adds one) with Source set to that pass's number (e.g. `External 1`), and run it through the same decision process as §4: record ACCEPT/REJECT/DEFER, escalate only the high-judgment findings, and apply accepted findings everywhere they're relevant.

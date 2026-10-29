@@ -7,7 +7,7 @@ Review work from the perspective of the most knowledgeable, most critical expert
 
 Run the review in a clean context so it is unbiased. If your agent can start a subagent, give it only the work being reviewed, the objective (`docs/PRD.md`'s sections above its first feature), `docs/CONTEXT.md` (or the files they point to), and the code the work touches — not the current session's conversation history. If it cannot, review only the work, those files, and that code, and set aside what was said in this session about intent.
 
-Used where `.hashbang/framework/development.md` calls for it — a spec's review, a bug diagnosis at Complex rigor, the end of a Complex design's code — and whenever the customer asks. The customer sees the verdict and resolutions, not the process.
+Used where `.hashbang/framework/development.md` calls for it — a spec's review, a bug diagnosis at Complex rigor or one a failing test doesn't prove, and the diff review before every Simple and Complex close — and whenever the customer asks. The customer sees the verdict and resolutions, not the process.
 
 ## Step 1 — Identify the expert
 
@@ -16,7 +16,7 @@ Read the objective, CONTEXT.md, and `docs/engineering/ARCHITECTURE.md` to unders
 - Spec → a product manager who has shipped this kind of feature, and asks what users actually need and what the spec leaves unsaid
 - Tech design → a principal engineer on this stack, who keeps it simple, finds the failure modes, and pushes back on scope the spec does not need
 - Bug diagnosis → a debugging expert, who asks "how do you know that's the cause?" and wants the evidence
-- Code → a senior reviewer for this stack, who reads the diff for correctness, tests that prove behavior, and the project's conventions
+- Code → a senior reviewer for this stack, who reads the whole diff against its base, with its spec and design, for correctness, tests that prove behavior, and the project's conventions
 
 ## Step 2 — Strongest case
 

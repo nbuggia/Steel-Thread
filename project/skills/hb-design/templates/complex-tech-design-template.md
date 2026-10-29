@@ -3,7 +3,7 @@ name: feature tech design
 description: feature description
 task: T-NNN
 rigor: Complex
-deciding tenet: [what escapes, or what no test can settle]
+trigger: [the Complex trigger from development.md's Rigor Levels, such as "not revertible: adds a settings field"]
 date: YYYY-MM-DD
 review iteration: N
 status: Draft / Approved / Blocked
