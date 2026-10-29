@@ -1,5 +1,19 @@
 # TODO
 
+## Review findings (hb-crit, 2026-10-28)
+
+Remaining HIGH and MEDIUM findings from the coding-only review, in suggested order. Done so far: Complex triggers, the slim Simple design, and diff review (322c2c2).
+
+- [ ] **M3 — Prune skills (12 → 10).** Cut hb-recap. Move hb-retro, its script, and the design-review log to `library/`, and drop the review-log duty from hb-design and hb-close. Make TASKS.md checkbox edits possible without loading hb-tasks; keep hb-tasks for planning and reprioritizing.
+- [ ] **M3 — Split hb-elevate from hb-crit.** hb-elevate is interactive and about intent; hb-crit is adversarial and about work products. Remove "Challenge" and "diagnosis" from hb-elevate. Change development.md's "ask one question" to "resolve what's blocking in one hb-elevate session."
+- [ ] **H1 — Cut always-loaded context to about a third.** About 1,370 lines of framework load before a Simple change. Trim hashbang.md to about 60 lines (drop Philosophy, the vocabulary scripts, Cognitive Elevation, and What Good Looks Like down to a five-line version). Split files.md by file, or move each format into its template. Stop hb-design from reading the review log.
+- [ ] **M1 — State each rule once.** "Never search docs/work" appears in five files; the no-link and work-entry naming rules are in both development.md and docs-layout.md; hb-design's review prompt appears twice; hb-whats-next repeats the session start. Keep location rules in docs-layout.md and process rules in development.md, and have every other file point to them. Fix drift found on the way.
+- [ ] **H3 — Add a minimal git workflow.** A short Git section in development.md: a branch or worktree per task, a commit per slice, and PR and CI as TESTING.md configures them. (Diff review is done.)
+- [ ] **H4 — Decide the team story.** IDs are "highest plus one", pickup.md is a single shared note, and the append-only history files conflict on merge. Either drop the "whole team" claim from the README, or make pickup and history per-developer (gitignored), allow several tasks in flight, and say how ID collisions are resolved at merge.
+- [ ] **M5 — Drop changelog.json under version control.** It duplicates git. Read `git log -- docs/` instead, and keep the changelog only for projects without version control, or drop it entirely.
+- [ ] **M4 — Document the no-subagent fallback.** hb-design's fresh-context review passes have no fallback; hb-crit's "set aside what was said" is self-review. Offer the copy-paste external review prompt as the fallback, and say the gate is weaker. Confirm Kiro's search honors `.ignore` before claiming it.
+- [ ] **M2 — Fix "user" vs. "customer" in hb-design.** hb-spec defines users as whoever consumes the change and the customer as the person you're working with; hb-design uses "the user" for the customer.
+
 ## Development
 
 - diagnose
