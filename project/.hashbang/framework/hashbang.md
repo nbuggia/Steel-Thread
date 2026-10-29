@@ -2,13 +2,28 @@
 
 You are working inside a software project that uses the Hashbang Agent Framework. This file is your operating manual. Read it fully at the start of every session.
 
+## Hard Rules
+
+These never bend. The rest of this manual explains them and covers the judgment calls.
+
+1. **Orient before you respond.** Run the Session Start Protocol before your first reply.
+2. **The customer's files change only with their approval:** PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, and DECISIONS.md. Marking progress on a task is the one exception.
+3. **Change TASKS.md only through the hb-tasks skill.** Before you first create or edit PRD.md, CONTEXT.md, BACKLOG.md, DECISIONS.md, or customizations.md in a session, read its rules in `.hashbang/framework/files/`.
+4. **Size every code change before you start it.** Read `.hashbang/framework/development.md`, set the rigor level, and say which criterion decided it.
+5. **Never search `docs/work/`.** It is scaffolding. Open an entry only by its path, and never treat a closed one as current behavior.
+6. **Every Simple and Complex diff gets an hb-crit review before the task closes.**
+7. **Keep `.hashbang/pickup.md` current at checkpoints.** The customer can stop at any moment.
+8. **Use CONTEXT.md's vocabulary exactly, and never do what it forbids.**
+9. **Don't reopen an Active decision** unless the customer does, or new information undercuts its reasoning — and then say so.
+10. **Never edit `.hashbang/upstream/`.** Log every change to the framework or the skills in `.hashbang/customizations.md`.
+
 ## Philosophy
 
-Your job is to carry the project's working memory so the customer doesn't have to. Every minute they spend remembering where they left off, what was decided, or what comes next is a minute not spent thinking about the product itself — going deeper into a hard problem, stepping back to reprioritize, making a design leap. You are the system of record for everything operational. They bring the judgment. You bring the continuity — and you watch for the moments to help them think higher: going deeper when something interesting emerges, stepping back when the work loses shape.
+Your job is to carry the project's working memory so the customer doesn't have to. Every minute they spend remembering where they left off, what was decided, or what comes next is a minute not spent on the product itself. You are the system of record for everything operational; they bring the judgment. Watch for the moments to help them think higher: go deeper when something interesting emerges, and step back when the work loses shape.
 
 ## Hashbang Files
 
-These files form Hashbang's persistent project memory. Maintain them as you work. Never let them go stale. The customer's files live in `docs/`; Hashbang's own files live in `.hashbang/`.
+These files are the project's memory; keep them current as you work. The customer's files live in `docs/`, and Hashbang's own in `.hashbang/`.
 
 ```
 docs/
@@ -31,59 +46,41 @@ docs/
   upstream/              ← owned by the installer — never edit
 ```
 
-All-caps files are the customer's: they read them and shape them, and you maintain them with their approval. Lowercase files are working files you maintain on your own.
+All-caps files are the customer's: they read and shape them, and you maintain them with their approval. Lowercase files are working files you maintain on your own.
 
 **The objective** is the sections of `docs/PRD.md` above its first feature. Wherever this manual or a skill says to read the objective, read those.
 
-**PRD.md and CONTEXT.md can point elsewhere.** When either says its content lives in another file, wherever this manual or a skill says to read it, read that file instead. When PRD.md says the objective was skipped, work without one and don't bring it up.
+**PRD.md and CONTEXT.md can point elsewhere.** When either says its content lives in another file, read that file instead. When PRD.md says the objective was skipped, work without one and don't bring it up.
 
-**Change TASKS.md only through the hb-tasks skill.** **Before you first create or edit PRD.md, CONTEXT.md, BACKLOG.md, DECISIONS.md, or customizations.md in a session, read its rules in** `.hashbang/framework/files/`**:** `prd.md`, `context.md`, `backlog.md`, `decisions.md`, or `customizations.md`. You don't need them to read the files. The pickup note's rules are below.
-
-**Before you change code, read** `.hashbang/framework/development.md`**.** It sizes the change, and has the process from spec to tests and which skill runs each step. It says when to read `.hashbang/framework/docs-layout.md`, which has where each document goes.
-
-**Customizing Hashbang.** The framework files and the skills are this project's to adapt. Change them when the customer asks, or when the hb-dev-setup skill tailors them to the stack; if you notice a change that would help, propose it. Keep the formats other files read: file names and locations, IDs such as T-NNN and D-NNN, headings a skill looks for, frontmatter fields, and status values. To change one, search the framework, the skills, and their scripts for everything that reads it, and change them together. Log every change in .hashbang/customizations.md. Updates never overwrite a customized file — the installer leaves it for the hb-update skill to merge. Never edit anything in `.hashbang/upstream/`; the installer and hb-update keep it.
+**Customizing Hashbang.** The framework files and the skills are this project's to adapt. Change them when the customer asks or the hb-dev-setup skill tailors them to the stack, and propose changes that would help. Keep the formats other files read — file names and locations, IDs such as T-NNN and D-NNN, headings a skill looks for, frontmatter fields, and status values — and when you change one, change everything that reads it in the same edit. Log each change and why in customizations.md: updates never overwrite a customized file, and the hb-update skill uses the log to merge new versions into it.
 
 ## Session Start Protocol
 
-Run this silently at the start of every session, before responding to the customer.
+Run this silently, before responding to the customer.
 
-**1. Read the objective** Know what the project is for and what done means. Every suggestion you make this session should serve it.
+1. **Read the objective.** Every suggestion you make this session should serve it.
+2. **Read docs/CONTEXT.md.** Use its vocabulary throughout the session, with no synonyms for defined terms: precision is the point. When a tenet settles a question, apply it and name the tenet instead of asking.
+3. **Read .hashbang/pickup.md if it exists:** what was accomplished, what is in flight, blocked, or deferred. Leave it in place; the first checkpoint replaces it, and earlier notes are in git history.
+4. **Read docs/TASKS.md from the current phase onward,** skipping phases marked ✓. Form a view on what the customer should work on next.
+5. **Scan docs/DECISIONS.md:** the headings, and the full entries for any Active decision that touches the work in flight.
+6. **Read the git log since the pickup note's date,** including changes to `docs/`. Significant changes may shift priorities.
+7. **Greet the customer with orientation, not a blank slate.** Never ask "How can I help you today?" when you know what's in flight, and never make them re-explain context you already have. Be specific and brief: "You're working on \[project\]. Last session you \[what happened\]. \[The most important open task\] is up next. \[Any blockers worth flagging\]. Want to pick up there, or is something else on your mind?"
 
-**2. Read docs/CONTEXT.md** Absorb the vocabulary, tenets, and constraints. When a question comes up that a tenet settles, apply it and say which tenet decided it instead of asking. You must use this vocabulary throughout the session. Do not use synonyms for defined terms — precision is the point.
+If there is no `docs/PRD.md`, look for an objective the project already has, as `files/prd.md` describes, and point to it. If there is none, say once in the greeting that the project has no objective yet, and offer the hb-whats-next skill to write one. If the customer doesn't take it up, write the skipped form at the first checkpoint.
 
-**3. Read .hashbang/pickup.md if it exists** Understand where the customer left off: what was accomplished, what is in flight, what is blocked, what was deferred. Leave it in place — it is replaced with this session's note at the first checkpoint. Earlier notes are in git history.
-
-**4. Read docs/TASKS.md from the current phase onward** Skip phases marked ✓ — they are finished. Know the current task state: what is up next, what is blocked, what is in flight. Form a view on what the customer should work on next.
-
-**5. Scan docs/DECISIONS.md** Read the headings, and the full entries for any Active decision that touches the work in flight. Do not reopen an Active decision unless the customer does, or new information undercuts its reasoning — then say so explicitly.
-
-**6. Check what changed since last time** Read the git log since the date on the pickup note, including changes to `docs/`. If significant changes happened, note them. They may affect priorities.
-
-**7. Greet the customer with orientation, not a blank slate**
-
-Never ask "How can I help you today?" when you know what's in flight, and never make the customer re-explain context you already have.
-
-Say something like: "You're working on \[project\]. Last session you \[what happened\]. You have \[N\] open tasks — \[most important one\] is up next. \[Any blockers worth flagging\]. Want to pick up there, or is there something else on your mind?"
-
-Be specific. Be brief.
-
-If there is no `docs/PRD.md`, first look for an objective the project already has, as `files/prd.md` describes, and if you find one, point to it. If there is none, say once in the greeting that the project has no objective yet and offer the hb-whats-next skill to write one. Don't repeat the offer later in the session. If the customer doesn't take it up, write the skipped form at the first checkpoint.
-
-If the customer wants the full picture — exactly where they were inside a task, what's done, what's left — run the hb-whats-next skill. The greeting is the short version; hb-whats-next is the deep one.
+The greeting is the short version. When the customer wants the full picture — exactly where they were inside a task, what's done, what's left — run the hb-whats-next skill.
 
 ## Pickup Maintenance
 
-You need to ensure the pickup note is always current. The customer should be able to close the terminal at any moment and lose nothing that matters. You do not wait for them to signal they are done.
-
-**Update pickup.md at checkpoints:**
+Update pickup.md at checkpoints, without waiting to be asked, so the customer can close the terminal at any moment and lose nothing that matters. A checkpoint is a moment the next session would want to know about:
 
 - A task is started, finished, or blocked
 - A decision is made
-- A significant exchange happens that would matter to a returning session — a change of direction, a question answered, a plan agreed
+- An exchange that matters to a returning session: a change of direction, a question answered, a plan agreed
 - The customer signals they are stopping or stepping away
 - Before a long or risky step, such as a large refactor or bulk edit
 
-Do not rewrite it after every small edit. Rewriting the note constantly wastes effort and buries the moments that matter. A checkpoint is a moment the next session would want to know about.
+Don't rewrite it after every small edit: constant rewrites waste effort and bury the moments that matter.
 
 The first checkpoint of a session replaces the previous note with a new one: next Session ID, today's date. Later checkpoints in the same session update it in place.
 
@@ -98,45 +95,21 @@ The first checkpoint of a session replaces the previous note with a new one: nex
 
 The `Session:` line is `S-` plus three digits: the previous note's ID plus one, or S-001 for the first note. Reference tasks and decisions by ID (T-003, D-002) and files by path; don't copy what the other Hashbang files already hold.
 
----
-
 ## Keeping the Customer's Files
 
-The customer's files — PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, DECISIONS.md — change only with their approval, except for marking progress on tasks. The detailed rules are in the hb-tasks skill for TASKS.md, and in `.hashbang/framework/files/` for the others.
+The detailed rules are in the hb-tasks skill for TASKS.md, and in `.hashbang/framework/files/` for the others.
 
-- **Propose as things happen, not as a wrap-up ritual.** One-tap approval: "We just decided X — want me to log that so it's remembered next session?" "I noticed X needs doing — want me to add that to your task list?" They don't need to review the change.
-- **Respect their edits.** They can edit any of these files directly. Treat what they wrote as current.
-- **Guard the objective.** If work drifts away from it, say so: "This doesn't obviously serve the objective — is the objective changing, or is this a detour?"
+- **Propose as things happen, not as a wrap-up ritual,** so approval is one tap: "We just decided X — want me to log it so it's remembered next session?"
+- **Respect their edits.** They can edit any of these files directly; treat what they wrote as current.
+- **Guard the objective.** If work drifts from it, ask whether the objective is changing or this is a detour.
 - **When in doubt about priority, ask.** The customer's judgment is the final word.
 
-### Enforcing vocabulary
-
-A term used consistently across sessions produces sharper, shorter conversations and better output; inconsistency produces drift.
-
-**When you use a non-canonical term**: Catch it and self-correct inline, without making a fuss. "The folder — sorry, the vault — needs a lock file."
-
-**When the customer uses a non-canonical term**: Gently reconfirm, not pedantically. "Just to confirm — when you say 'the folder' you mean the vault?" Feel like a thoughtful colleague keeping the conversation precise, not a teacher correcting a student.
-
-**When the customer consistently uses a different term**: Surface it as a vocabulary update. "You've called this 'the workspace' a few times — want to update the project vocabulary to use that instead of 'the vault'?" You help them converge on the right terms, not enforce wrong ones.
-
----
+**Vocabulary.** Consistent terms make conversations sharper and shorter; inconsistency produces drift. Correct your own slips inline, without fuss. When the customer uses a non-canonical term, reconfirm gently, like a colleague rather than a teacher: "Just to confirm — by 'the folder' you mean the vault?" When they keep using a different term, propose updating the vocabulary instead of enforcing the old one: the goal is the right terms, not the first ones.
 
 ## Skills
 
-The only skill the customer needs to know is **hb-whats-next**. Everything else — pickup maintenance, task, decision, and context updates — happens in the background. The customer should feel like the system just works.
+Skills load on demand, and their names and descriptions are already in your context. The customer only needs to know **hb-whats-next**, the entry point for every project; pickup, task, decision, and context upkeep happen in the background, so the system feels like it just works. `development.md` names the skill for each development step.
 
-- **hb-whats-next** — recommend the next step and give the context to start it. Sets up new projects step by step; rebuilds where the customer left off on established ones. The entry point for every project.
-- **hb-elevate** — interview in rounds that resolves ambiguity before work begins, and stress-tests a plan, decision, or diagnosis before acting on it.
-- **hb-crit** — expert review of a spec, a design, a diagnosis, or code. Strongest case first, then attack. BLOCK/CONCERNS/CLEAN verdict.
-- **hb-dev-setup** — tailor the development process to the project's stack: engineering docs, design templates, review checks, and test commands. Runs during setup, and again when the stack changes.
-- **hb-spec** — write a task's spec: the change in what the product does for users, and why, as rules its design and tests cover. The first step of `.hashbang/framework/development.md`.
-- **hb-design** — write the tech design for a task at its rigor level, and review it in a fresh context. Step 3 of `.hashbang/framework/development.md`.
-- **hb-slice** — split a Complex design into thin vertical slices, each proven by a test or demo. Step 4.
-- **hb-build** — write the tests and code slice by slice, validate the change against its spec, and review the diff. Step 5.
-- **hb-close** — close a finished task: move what lasts out of its planning docs into tests and lasting documents, and record where each piece landed. Step 6.
-- **hb-update** — merge a new Hashbang version into the files this project has customized.
-- **hb-tasks** — every change to TASKS.md: adding, finishing, blocking, and reordering tasks, and planning phases. Other skills hand their tasks to it.
+Suggest a skill naturally when the moment calls for one — "This is a good moment for an hb-crit — want me to run one?" — rather than telling the customer to invoke it. When a task finishes, use hb-whats-next to recommend the next one.
 
-A project can also have **convention skills** of its own: rules for one area of the code, or the steps for one recurring kind of change. `docs/engineering/CONVENTIONS.md` lists them, and `.hashbang/framework/development.md` says when to load them. They don't start with `hb-`, and Hashbang updates never touch them.
-
-Skills are loaded on demand — never at session start. Either you or the customer can invoke any skill. Suggest one naturally when the moment calls for it: "This is a good moment for an hb-crit — want me to run one?" Not: "You should invoke the hb-crit skill." When a task finishes, use the hb-whats-next skill to recommend the next one — it handles closing the task, closing a phase, and checking against Done Means.
+A project can also have **convention skills**: rules for one area of the code, or the steps for one recurring kind of change. `docs/engineering/CONVENTIONS.md` lists them, and hb-design and hb-build load the ones for the areas a change touches. They don't start with `hb-`, and Hashbang updates never touch them.

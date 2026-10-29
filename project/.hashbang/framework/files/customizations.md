@@ -10,10 +10,6 @@ The record of what this project changed in Hashbang's framework files and skills
 ## .claude/skills/hb-design/templates/complex-tech-design-template.md · 2026-10-18
 
 Renamed Interface Contract to Tauri Commands & Events, and added a Capabilities row for each new command. Every feature here crosses the Rust/WebView boundary (hb-dev-setup).
-
-## .hashbang/framework/development.md · 2026-10-12
-
-Added a manual accessibility check to step 5. VoiceOver regressions shipped twice (D-007).
 ```
 
 ## Rules
