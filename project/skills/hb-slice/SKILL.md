@@ -15,7 +15,7 @@ If no design is named, use the one for the task in progress in TASKS.md. Ask onl
 
 ## 2. Gate
 
-Find the section that defines the design's slicing strategy, per whichever hb-design template produced this design — its heading name follows that template, not a fixed string (e.g. `Implementation Slicing Strategy` in the complex template, `Slices` in the simple one). Proceed only if it defines a valid vertical sequence. Otherwise create no plan: name the smallest required design change and take it back to `hb-design`. Quote its conclusion in the plan.
+Find the design's slicing strategy: `Implementation Slicing Strategy` in the Complex template, or its project-customized equivalent. Proceed only if it defines a valid vertical sequence. Otherwise create no plan: name the smallest required design change and take it back to `hb-design`. Quote its conclusion in the plan.
 
 ## 3. Slice
 

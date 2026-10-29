@@ -47,7 +47,7 @@ Every item lands in a lasting document, or is dropped with the customer's approv
 | Prototype: chosen UI decisions | UI code and UI tests |
 | Spike: result | DECISIONS.md or COMMON-FAILURE-MODES.md |
 
-- A rule is covered by a test whose name states it; the design's test table says which one. Rename a test whose name doesn't. A rule automation can't reach gets a manual test step. A rule whose reason isn't obvious from the code gets a comment there.
+- A rule is covered by a test whose name states it; the design's Test Points or Testing Strategy says which one. Rename a test whose name doesn't. A rule automation can't reach gets a manual test step. A rule whose reason isn't obvious from the code gets a comment there.
 - Contracts go in CONTRACTS.md, from hb-dev-setup's `contracts-template.md` if it doesn't exist yet.
 - The design's Lasting Changes go in the documents they name, describing what was actually built. A new practice goes in CONVENTIONS.md if every change must follow it, and otherwise in the convention skill for its area.
 - If this task repeated a multi-step change an earlier task also made, such as wiring a new setting through every layer, propose a recipe for it: a convention skill from hb-dev-setup's `convention-skill-template.md`, listed in CONVENTIONS.md.

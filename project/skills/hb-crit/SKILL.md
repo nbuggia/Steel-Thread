@@ -1,9 +1,9 @@
 ---
 name: hb-crit
-description: Expert review of a spec, a tech design, a bug diagnosis, or code. Makes the strongest case for the work, then attacks it. Mandatory findings. Clear verdict.
+description: Expert review of a spec, a tech design, a bug diagnosis, or code. Makes the strongest case for the work, then attacks it. Reports only what matters. Clear verdict.
 ---
 
-Review work from the perspective of the most knowledgeable, most critical expert for it. Strongest case first, then attack. Mandatory findings. Clear verdict.
+Review work from the perspective of the most knowledgeable, most critical expert for it. Strongest case first, then attack. Report only what matters. Clear verdict.
 
 Run the review in a clean context so it is unbiased. If your agent can start a subagent, give it only the work being reviewed, the objective (`docs/PRD.md`'s sections above its first feature), `docs/CONTEXT.md` (or the files they point to), and the code the work touches — not the current session's conversation history. If it cannot, review only the work, those files, and that code, and set aside what was said in this session about intent.
 
@@ -26,7 +26,7 @@ This is not flattery. It is understanding the work deeply enough to critique it 
 
 ## Step 3 — Attack
 
-Now become the domain expert and find what fails. You MUST find at least one issue. No clean passes without evidence.
+Now become the domain expert and find what fails. Look hard, but report a finding only when it is meaningful: a concrete way the work fails, with evidence from the work or the code. A preference, a style nit, or a "consider" is not a finding; leave it out. Finding nothing is a legitimate result.
 
 Ask:
 - How does this fail?
@@ -43,12 +43,11 @@ Classify each finding:
 - CRITICAL — fundamental flaw, must be resolved before proceeding
 - HIGH — significant issue, strong recommendation to fix
 - MEDIUM — real concern, worth addressing
-- LOW — minor issue, acceptable to defer
 
 Deliver a verdict:
 - BLOCK — a critical issue must be resolved before proceeding
 - CONCERNS — real issues worth addressing, can proceed with awareness
-- CLEAN — no significant issues found (rare — requires evidence)
+- CLEAN — nothing met the bar for a finding. Say what you checked, so the customer can tell a clean review from a shallow one
 
 ## Step 5 — Resolutions
 
