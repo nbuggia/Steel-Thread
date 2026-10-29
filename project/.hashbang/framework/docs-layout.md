@@ -27,7 +27,6 @@ docs/
     TESTING.md                  ← how to check a change
     COMMON-FAILURE-MODES.md     ← traps hit here or known for the stack
     REVIEW-PATTERNS.md
-    retros/
 ```
 
 Automated tests live where the stack's tooling expects them; TESTING.md says where each kind is. Manual tests and CONTRACTS.md are created the first time a task needs one.

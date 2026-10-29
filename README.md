@@ -72,7 +72,6 @@ your-project/
   .hashbang/
     pickup.md              ← where you left off
     customizations.md      ← what you changed in Hashbang, and why
-    history/               ← session log and changelog
     framework/             ← Hashbang's manual, process, and templates; yours to customize
     upstream/              ← managed by the installer, don't edit
   .claude/skills/          ← skills, in your agent's folder (.agents/skills/ for Codex, .kiro/skills/ for Kiro)
@@ -84,11 +83,10 @@ A task's spec, design, and plans are scaffolding. When the task is done, the age
 
 ## Skills
 
-Twelve skills are included. Your agent suggests them when the moment calls for one, and you can invoke any of them directly (`/name` in Claude Code and Kiro, `$name` in Codex):
+Ten skills are included. Your agent suggests them when the moment calls for one, and you can invoke any of them directly (`/name` in Claude Code and Kiro, `$name` in Codex):
 
 - **hb-whats-next** — recommends the single most valuable next step and gives you what you need to start it. On a new project, that's setup: objective, context, stack, then phases. On an established one, it rebuilds exactly where you left off inside a task. Run this first, and whenever you sit down to work.
 - **hb-tasks** — keeps your task list: adds, finishes, blocks, and reorders tasks, and plans phases. Ask it to show or reprioritize your tasks any time.
-- **hb-recap** — show the current pickup note and optionally adjust it. Optional — the pickup note is kept current without it.
 - **hb-elevate** — interview loop, asked in rounds. Resolves ambiguity before work begins, and stress-tests a plan, decision, or diagnosis before you act on it. Used by hb-whats-next during setup.
 - **hb-crit** — expert review of a spec, a design, a diagnosis, or code. Makes the strongest case first, then attacks. BLOCK/CONCERNS/CLEAN verdict.
 - **hb-dev-setup** — tailors the development process to your project's stack: engineering docs, design templates, review checks, and test commands. Runs during setup.
@@ -96,7 +94,6 @@ Twelve skills are included. Your agent suggests them when the moment calls for o
 - **hb-design** — writes the tech design for a task, with rigor fitted to the change's risk, and reviews it in a fresh context.
 - **hb-slice** — splits a Complex design into thin vertical slices, each proven by a test or demo.
 - **hb-close** — closes a finished task: moves what lasts out of its spec and design into tests and the docs, and records where each piece went.
-- **hb-retro** — rolls up design-review data to show how well the design process is working.
 - **hb-update** — merges a new Hashbang version into the files you've customized.
 
 ## Contributing skills

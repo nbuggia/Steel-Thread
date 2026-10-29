@@ -38,12 +38,11 @@ project/                   ← the product: what lands in a user's project
                              rigor levels, planning docs as scaffolding, and how the skills connect
       docs-layout.md       ← file structure, and which lasting document holds what
       templates/           ← starter files used during setup: PRD, CONTEXT, TASKS,
-                             BACKLOG, DECISIONS, pickup, customizations, history files
+                             BACKLOG, DECISIONS, pickup, customizations
   skills/
     hb-whats-next/SKILL.md    ← installed; setup, resume, and recommend the next step
     hb-elevate/SKILL.md       ← installed; interview that clarifies intent and stress-tests plans
     hb-crit/SKILL.md          ← installed; domain expert review of outputs
-    hb-recap/SKILL.md         ← installed; show and adjust the current pickup note
     hb-tasks/SKILL.md         ← installed; owns TASKS.md: its format and every change to it
     hb-dev-setup/SKILL.md     ← installed; tailors the development process to a project's stack
     hb-update/SKILL.md        ← installed; merges a new version into customized files
@@ -51,7 +50,6 @@ project/                   ← the product: what lands in a user's project
     hb-design/                ← installed; tech design at a rigor level fitted to the change, with review passes
     hb-slice/                 ← installed; splits a Complex design into thin vertical slices
     hb-close/                 ← installed; closes a task: moves what lasts out of its planning docs
-    hb-retro/                 ← installed; rolls up design-review data to audit the process
 ```
 
 `install.sh` copies `project/.hashbang/framework/` into the user's `.hashbang/framework/`, creates the empty state folders, copies every skill in `project/skills/` into the chosen agent's skills folder, merges `project/AGENTS.md` (and, for Claude Code, `project/CLAUDE.md`) into the user's files, and adds `docs/work/` to the user's `.ignore`. The customer's Hashbang files (PRD, CONTEXT, TASKS, BACKLOG, DECISIONS) live in the user's `docs/`; Hashbang's working files live in `.hashbang/`.
@@ -61,7 +59,7 @@ Users customize their copies; that is the extensibility model. The installer kee
 ## Releasing a change
 
 - Bump `project/VERSION` (semver) for each change users would update to. The installer records it, and hb-update reports which versions it merged between.
-- When you change a format another file reads, such as a heading, an ID, or a frontmatter field, change every file that reads it in the same commit, including hb-retro's script.
+- When you change a format another file reads, such as a heading, an ID, or a frontmatter field, change every file that reads it in the same commit.
 
 ## How skills work
 

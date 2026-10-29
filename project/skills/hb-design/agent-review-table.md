@@ -1,6 +1,6 @@
 # Review Finding Table
 
-This is the one place that defines the review table: its columns, and what each decision means. Three places use this same table — `templates/complex-tech-design-template.md` (§15 Reviewer Feedback), `templates/simple-tech-design-template.md` (§8 Review), and the review log entries (SKILL.md §5), which copy its Severity, Decision, and Source columns. They used to define it separately, and drifted out of sync (one had a different column name, the other was missing the decision definitions below). If you ever need to change a column, change it here first, then copy the new header row into both templates and check the review log format — that way they can't drift apart again.
+This is the one place that defines the review table: its columns, and what each decision means. The Complex template's §15 Reviewer Feedback uses it. To change a column, change it here first, then copy the new header row into the template.
 
 | \#  | Finding | Severity | Cost to accept | Decision | Rationale | Next step | Arch? | Source |
 | --- | ------- | -------- | -------------- | -------- | --------- | --------- | ----- | ------ |

@@ -196,7 +196,6 @@ A bug follows the same flow with a shorter spec:
 | Slicing plan | hb-slice |  |
 | Tests and code | none yet; follow step 5 | hb-crit to review the diff |
 | Close | hb-close | hb-tasks to mark the task done, hb-crit for an optional fresh-context check |
-| Improve the process | hb-retro |  |
 
 - **hb-elevate** is for when a step is blocked: it resolves a high-judgment decision or gathers critical input with the customer in one focused session.
 - **hb-crit** comes after work is written: its review is what lets a spec become Approved, and what lets a diff go to the close.

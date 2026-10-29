@@ -22,10 +22,6 @@ docs/
 .hashbang/
   pickup.md              ← the latest session's note
   customizations.md      ← what this project changed in Hashbang, and why
-  history/
-    pickup-history.md    ← log of all past sessions, newest first
-    changelog.json       ← what changed in the project
-    design-review-log.md ← design review results, for hb-retro
   framework/             ← Hashbang itself; customize it for this project
     hashbang.md          ← your operating manual (this file)
     files.md             ← formats and rules for each file above
@@ -55,13 +51,13 @@ Run this silently at the start of every session, before responding to the custom
 
 **2. Read docs/CONTEXT.md** Absorb the vocabulary, tenets, and constraints. When a question comes up that a tenet settles, apply it and say which tenet decided it instead of asking. You must use this vocabulary throughout the session. Do not use synonyms for defined terms — precision is the point.
 
-**3. Read .hashbang/pickup.md if it exists, and archive it** Understand where the customer left off: what was accomplished, what is in flight, what is blocked, what was deferred. Then, if its Session ID is not yet in .hashbang/history/pickup-history.md, archive it there (see files.md). Leave pickup.md in place — it is replaced with this session's note at the first checkpoint.
+**3. Read .hashbang/pickup.md if it exists** Understand where the customer left off: what was accomplished, what is in flight, what is blocked, what was deferred. Leave it in place — it is replaced with this session's note at the first checkpoint. Earlier notes are in git history.
 
 **4. Read docs/TASKS.md from the current phase onward** Skip phases marked ✓ — they are finished. Know the current task state: what is up next, what is blocked, what is in flight. Form a view on what the customer should work on next.
 
 **5. Scan docs/DECISIONS.md** Read the headings, and the full entries for any Active decision that touches the work in flight. Do not reopen an Active decision unless the customer does, or new information undercuts its reasoning — then say so explicitly.
 
-**6. Check what changed since last time** Scan the recent entries in .hashbang/history/changelog.json. If the project is under version control, also check its log since the date of the last session. If significant changes happened, note them. They may affect priorities.
+**6. Check what changed since last time** Read the git log since the date on the pickup note, including changes to `docs/`. If significant changes happened, note them. They may affect priorities.
 
 **7. Greet the customer with orientation, not a blank slate**
 
@@ -89,7 +85,7 @@ You need to ensure the pickup note is always current. The customer should be abl
 
 Do not rewrite it after every small edit. Rewriting the note constantly wastes effort and buries the moments that matter. A checkpoint is a moment the next session would want to know about.
 
-The first checkpoint of a session replaces the previous note (already archived at session start) with a new one: next Session ID, today's date. Later checkpoints in the same session update it in place. At each checkpoint, also log what changed in .hashbang/history/changelog.json (files.md says what to log, and what goes in the note).
+The first checkpoint of a session replaces the previous note with a new one: next Session ID, today's date. Later checkpoints in the same session update it in place. files.md says what goes in the note.
 
 ---
 
@@ -114,22 +110,6 @@ A term used consistently across sessions produces sharper, shorter conversations
 
 ---
 
-## Cognitive Elevation
-
-**Invite depth when:**
-
-- They are working through a problem and something interesting is emerging — "There's something worth exploring here. Want to go deeper before we move on?"
-- They seem to be skating past an assumption — "I want to flag something — this design rests on X being true. Is that solid?"
-- A bug or a design reveals something that affects another part of the product
-
-**Invite altitude when:**
-
-- The task list is getting long or tangled — "Before we go further, it might be worth stepping back. You have seven open tasks. Want to spend five minutes deciding which three actually matter?"
-- The session is losing focus — "We've shifted direction a few times today. Want to take stock of where we are?"
-- A decision point is approaching that will shape everything downstream — name it before they stumble into it
-
----
-
 ## Skills
 
 The only skill the customer needs to know is **hb-whats-next**. Everything else — pickup maintenance, task, decision, and context updates — happens in the background. The customer should feel like the system just works.
@@ -142,25 +122,9 @@ The only skill the customer needs to know is **hb-whats-next**. Everything else 
 - **hb-design** — write the tech design for a task at its rigor level, and review it in a fresh context. Step 3 of `.hashbang/framework/development.md`.
 - **hb-slice** — split a Complex design into thin vertical slices, each proven by a test or demo. Step 4.
 - **hb-close** — close a finished task: move what lasts out of its planning docs into tests and lasting documents, and record where each piece landed. Step 6.
-- **hb-retro** — roll up design-review data to show how well the design process is working.
 - **hb-update** — merge a new Hashbang version into the files this project has customized.
 - **hb-tasks** — every change to TASKS.md: adding, finishing, blocking, and reordering tasks, and planning phases. Other skills hand their tasks to it.
-- **hb-recap** — show the current pickup note and let the customer adjust it: add a note for tomorrow, change the suggested start, leave themselves a message. Optional — the system works without it.
 
 A project can also have **convention skills** of its own: rules for one area of the code, or the steps for one recurring kind of change. `docs/engineering/CONVENTIONS.md` lists them, and `.hashbang/framework/development.md` says when to load them. They don't start with `hb-`, and Hashbang updates never touch them.
 
 Skills are loaded on demand — never at session start. Either you or the customer can invoke any skill. Suggest one naturally when the moment calls for it: "This is a good moment for an hb-crit — want me to run one?" Not: "You should invoke the hb-crit skill." When a task finishes, use the hb-whats-next skill to recommend the next one — it handles closing the task, closing a phase, and checking against Done Means.
-
----
-
-## What Good Looks Like
-
-A customer opens the project after a week away. They start their agent in the terminal. You read the objective, context, pickup note, tasks, and decisions silently. You say:
-
-"You're working on Markymark. Last session you finished the sync design for T-014 and built slice 1 of 3 — the change log is written on save, and its tests pass. Slice 2, replaying the log on the other machine, is next. T-016 is blocked on your call about conflict markers. Want to pick up on slice 2, or is something else on your mind?"
-
-The customer says: "Let's do that. But first — am I thinking about this the right way? We keep designing around a server, and I'm not sure we need one."
-
-You say: "That's worth exploring. Tell me more about what's nagging you."
-
-That conversation — strategic, elevated, unencumbered by operational overhead — is what Hashbang makes possible. Everything in this file exists to get the customer there.

@@ -44,5 +44,3 @@ Never delete or move a task or phase between phases; the file is the full histor
 ## Reading it back
 
 When the customer asks to see the tasks, show the current phase and the next one, not the finished ones. Lead with what is in flight and what is blocked. If the list is long, tangled, or drifting from the objective, say so and offer to step back and prioritize it together.
-
-Log each change in `.hashbang/history/changelog.json` at the next checkpoint, citing task IDs.

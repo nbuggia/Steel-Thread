@@ -4,6 +4,10 @@ Skills and ideas from other projects, kept here while we decide how to bring the
 
 Each source gets its own folder, with its license and the commit it was copied from. Files are kept as copied, so they can be compared with their source later.
 
+## hb-retro/
+
+Hashbang's own retro skill, retired from the product in 0.11.0. It rolled up the design review log, which hb-design no longer writes, to show how well the design process was working. Kept as a starting point if process metrics come back, for example through the friction log in `TODO.md`.
+
 ## warp-common-skills/
 
 From [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) at commit `8792394ff1b655e0af451b8fabb68ef0cfcbd208` (2026-10-20). MIT license, in `warp-common-skills/LICENSE`; keep it with any copy.

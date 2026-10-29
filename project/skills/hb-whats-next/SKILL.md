@@ -9,7 +9,7 @@ The customer's files live in `docs/`: PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, 
 
 ## Step 1 — Read the state
 
-Silently read whatever exists of the objective (`docs/PRD.md`'s sections above its first feature), `docs/CONTEXT.md`, `docs/TASKS.md`, `docs/DECISIONS.md`, `.hashbang/pickup.md`, and `.hashbang/history/changelog.json`, following any pointer to another file. In TASKS.md, read from the current phase onward and skip phases marked ✓. Never ask the customer for something these files already answer.
+Silently read whatever exists of the objective (`docs/PRD.md`'s sections above its first feature), `docs/CONTEXT.md`, `docs/TASKS.md`, `docs/DECISIONS.md`, `.hashbang/pickup.md`, and the git log since the pickup note's date, following any pointer to another file. In TASKS.md, read from the current phase onward and skip phases marked ✓. Never ask the customer for something these files already answer.
 
 If there is no objective or no CONTEXT.md, first look for one the project already has, as files.md describes, and point to it.
 
@@ -49,7 +49,7 @@ Interview, in order:
 3. **Not doing** — what is explicitly out of scope? Get at least two items. If the customer can't name any, the project isn't scoped yet — say so.
 4. **Constraints** — deadlines, platforms, budgets, anything that cannot change.
 
-Write `docs/PRD.md` from the template. Feature sections come later, as tasks close. At the same time, create whichever of these don't exist yet, from the templates: `docs/DECISIONS.md`, and in `.hashbang/`, pickup.md, customizations.md, history/pickup-history.md, and history/changelog.json. Never overwrite a file that exists.
+Write `docs/PRD.md` from the template. Feature sections come later, as tasks close. At the same time, create whichever of these don't exist yet, from the templates: `docs/DECISIONS.md`, and in `.hashbang/`, pickup.md and customizations.md. Never overwrite a file that exists.
 
 If `docs/OBJECTIVE.md` exists from an older install, propose moving its sections into the PRD instead of interviewing (see files.md).
 
@@ -93,7 +93,7 @@ This is the moment the customer would otherwise spend reconstructing where they 
 ### Rebuild where they left off
 
 1. Start from pickup.md's In Flight and Suggested Start, and the current task in TASKS.md with its detail lines.
-2. Read the Active decisions that touch that task, and recent changelog entries.
+2. Read the Active decisions that touch that task.
 3. Open the actual files the in-flight work lives in. Check that their state matches the pickup note. Files may have changed outside the session — if version control is available, check what changed since the date on the pickup note.
 4. If the note and the files disagree, trust the files and say so: "The pickup note says calculate_window() has no logic, but it's half written — the frost offset is done, the crop lookup isn't."
 

@@ -68,7 +68,7 @@ Scope can still change while you draft. If an edge case turns up that costs more
 
 A Simple design gets no review pass: go to §5. Its review is the hb-crit pass on the diff, in step 5 of `.hashbang/framework/development.md`.
 
-At Complex rigor, run the review passes your rigor level's budget calls for (Rigor Levels in `.hashbang/framework/development.md`), each in a fresh context with no memory of this conversation. Number them in order (`Pass 1`, `Pass 2`, ...; the blocker-verification pass, if used, is `Blocker verification`) and record that number in each finding's Source column (§15) — this is what lets a retro compare the value of each pass. If a BLOCKER is still unresolved once that budget is spent, set the status to `Blocked`, record the reason on a `Blocked:` line, add a review-log entry (§5), and hand it back to the user rather than running another pass; a design that can't converge in its budgeted passes usually needs rework, not more review. After the first full pass, later passes only need to check what changed plus earlier blockers — don't redo the whole review or reopen a settled finding without new evidence.
+At Complex rigor, run the review passes your rigor level's budget calls for (Rigor Levels in `.hashbang/framework/development.md`), each in a fresh context with no memory of this conversation. Number them in order (`Pass 1`, `Pass 2`, ...; the blocker-verification pass, if used, is `Blocker verification`) and record that number in each finding's Source column (§15), so you can tell which pass found what. If a BLOCKER is still unresolved once that budget is spent, set the status to `Blocked`, record the reason on a `Blocked:` line, and hand it back to the user rather than running another pass; a design that can't converge in its budgeted passes usually needs rework, not more review. After the first full pass, later passes only need to check what changed plus earlier blockers — don't redo the whole review or reopen a settled finding without new evidence.
 
 Give each reviewer: the draft, the task's spec, the architecture, conventions, and contracts docs, the convention skills for the areas it touches, the failure modes that apply, and read-only repo access, plus `design-red-flags.md` at Complex rigor. Don't give them the conversation history or any reasoning that isn't written into the design itself. They should judge what the design actually says, not your explanation of it.
 
@@ -94,7 +94,7 @@ A requirement change is not a finding: record it in the spec, or in Spec Review 
 
 ## 5. Ready gate
 
-A Simple design is ready when its scope is settled, every spec rule has a test point, a bug has its reproduction or reviewed diagnosis, and no high-judgment decision is waiting on the user. Set its status to `Approved`; it gets no review-log entry.
+A Simple design is ready when its scope is settled, every spec rule has a test point, a bug has its reproduction or reviewed diagnosis, and no high-judgment decision is waiting on the user. Set its status to `Approved`.
 
 A Complex design is **not** ready for implementation if any of these are true:
 
@@ -112,29 +112,7 @@ A Complex design is **not** ready for implementation if any of these are true:
 - Something driving most of the design's complexity has no recorded decision behind it.
 - A high-judgment decision (from §2, §3, or §4) is still waiting on the user.
 
-When none of these is true: set the status to `Approved`, make any provisional failure-mode/review-pattern edits final, and append an entry to the review log (below).
-
-### The review log
-
-`.hashbang/history/design-review-log.md` is the data the hb-retro skill reads. Create it with a `# Design Review Log` heading if it doesn't exist. Append an entry when a Complex design is Approved, and when it is Blocked after its review budget is spent. Trivial and Simple changes get no entry.
-
-```markdown
-## T-014 Autosync at launch — 2026-10-26
-
-Rigor: Complex
-Outcome: Approved
-Review passes: 2
-
-| # | Finding | Severity | Decision | Source |
-| --- | --- | --- | --- | --- |
-| 1 | Reload between check and write loses the lock | BLOCKER | ACCEPT | Pass 1 |
-
-**Failure-mode KB entries produced:** FM-012
-```
-
-- The heading is the task ID and title, an em dash, and the date. Cite the task by ID; never link to its work entry, which is scaffolding.
-- `Outcome` is `Approved` or `Blocked`. `Review passes` counts the passes that ran, including blocker verification and external ones.
-- Copy each finding's Severity, Decision, and Source from the design's review table.
+When none of these is true: set the status to `Approved`, and make any provisional failure-mode/review-pattern edits final.
 
 When you finish, report: the rigor level and which selection criteria decided it, the files touched, how many review passes ran, the slice count, any knowledge-base changes, the Lasting Changes, open questions, the output file's line count, and either "ready" or the exact thing still blocking it.
 
