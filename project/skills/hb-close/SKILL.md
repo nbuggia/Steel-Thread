@@ -1,6 +1,6 @@
 ---
 name: hb-close
-description: Close a software task once its code is finished and validated against its spec. Moves everything that lasts out of the task's planning docs into tests, the engineering docs, the PRD, BACKLOG.md, and DECISIONS.md, and records where each piece landed. Use when a task's code is done, or a task with a work entry was marked done without being closed.
+description: Close a task once its code is finished and validated against its spec. Moves everything that lasts out of the task's planning docs into tests, the engineering docs, the PRD, BACKLOG.md, and DECISIONS.md, and records where each piece landed. Use when a task's code is done, or a task with a work entry was marked done without being closed.
 ---
 
 # Close a Task
@@ -46,7 +46,7 @@ Every item lands in a lasting document, or is dropped with the customer's approv
 - Contracts go in CONTRACTS.md, from hb-dev-setup's `contracts-template.md` if it doesn't exist yet.
 - The design's Lasting Changes go in the documents they name, describing what was actually built. A new practice goes in CONVENTIONS.md if every change must follow it, and otherwise in the convention skill for its area.
 - If this task repeated a multi-step change an earlier task also made, such as wiring a new setting through every layer, propose a recipe for it: a convention skill from hb-dev-setup's `convention-skill-template.md`, listed in CONVENTIONS.md.
-- The spec's intent goes in the feature's section of `docs/PRD.md`. `.hashbang/framework/files.md` says how to create the PRD.
+- The spec's intent goes in the feature's section of `docs/PRD.md`. Add the feature's section if it has none; `.hashbang/framework/files.md` has the format.
 - Deferred use cases and follow-up ideas become BACKLOG.md rows, with this task as their Source.
 - For each rejected alternative, ask: "Will someone propose this again?" Only those that pass get a DECISIONS.md entry.
 

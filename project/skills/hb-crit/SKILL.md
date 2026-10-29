@@ -1,24 +1,22 @@
 ---
 name: hb-crit
-description: Domain expert review that makes the strongest case for significant outputs, then attacks them. Mandatory findings. Clear verdict.
+description: Expert review of a spec, a tech design, a bug diagnosis, or code. Makes the strongest case for the work, then attacks it. Mandatory findings. Clear verdict.
 ---
 
-Review work from the perspective of the most knowledgeable, most critical domain expert in the relevant field. Strongest case first, then attack. Mandatory findings. Clear verdict.
+Review work from the perspective of the most knowledgeable, most critical expert for it. Strongest case first, then attack. Mandatory findings. Clear verdict.
 
-Run the review in a clean context so it is unbiased. If your agent can start a subagent, give it only the work being reviewed, the objective (`docs/PRD.md`'s sections above its first feature, or else `docs/OBJECTIVE.md`), and `docs/CONTEXT.md` (or the files they point to) — not the current session's conversation history. If it cannot, review only the work and those two files, and set aside what was said in this session about intent.
+Run the review in a clean context so it is unbiased. If your agent can start a subagent, give it only the work being reviewed, the objective (`docs/PRD.md`'s sections above its first feature), `docs/CONTEXT.md` (or the files they point to), and the code the work touches — not the current session's conversation history. If it cannot, review only the work, those files, and that code, and set aside what was said in this session about intent.
 
-Used after significant outputs — written arguments, strategy docs, proposals, marketing copy, reports. The customer sees the verdict and resolutions, not the process.
+Used where `.hashbang/framework/development.md` calls for it — a spec's review, a bug diagnosis at Complex rigor, the end of a Complex design's code — and whenever the customer asks. The customer sees the verdict and resolutions, not the process.
 
-## Step 1 — Identify the domain expert
+## Step 1 — Identify the expert
 
-Read the objective and CONTEXT.md to understand the project type, subject, and audience. Determine who the most critical expert would be:
+Read the objective, CONTEXT.md, and `docs/engineering/ARCHITECTURE.md` to understand the product, its users, and its stack. Determine who the most critical expert would be:
 
-- Proposal or pitch → buyer or investor who has seen a hundred of these and knows exactly where they fall apart
-- Report or memo → executive who will skim it and needs the point in 30 seconds
-- Marketing copy → skeptical target customer who is short on time and surrounded by alternatives
-- Strategy doc → skeptical executive who finds the hole in the logic
-- Written argument or thesis → peer reviewer who asks "how do you know this?"
-- Writing → senior editor in this subject matter domain
+- Spec → a product manager who has shipped this kind of feature, and asks what users actually need and what the spec leaves unsaid
+- Tech design → a principal engineer on this stack, who keeps it simple, finds the failure modes, and pushes back on scope the spec does not need
+- Bug diagnosis → a debugging expert, who asks "how do you know that's the cause?" and wants the evidence
+- Code → a senior reviewer for this stack, who reads the diff for correctness, tests that prove behavior, and the project's conventions
 
 ## Step 2 — Strongest case
 
@@ -37,7 +35,7 @@ Ask:
 - What would this expert object to immediately?
 - What looks fine now but causes real problems downstream?
 
-Do not look for minor issues. Look for things that matter. A thesis that doesn't hold. An argument that falls apart under scrutiny. A recommendation that ignores a critical constraint.
+Do not look for minor issues. Look for things that matter. A root cause that doesn't explain every symptom. A design that breaks a contract. A test that passes without proving the behavior. A requirement that ignores a critical constraint.
 
 ## Step 4 — Severity and verdict
 

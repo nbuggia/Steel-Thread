@@ -36,10 +36,9 @@ project/                   ← the product: what lands in a user's project
       files.md             ← format and maintenance rules per file, read before editing them
       development.md       ← software process (spec → prototype → design → slices → tests → close),
                              rigor levels, planning docs as scaffolding, and how the skills connect
-      docs-layout.md       ← software projects: file structure, and which lasting document holds what
-      templates/           ← starter files used during setup: OBJECTIVE, CONTEXT,
-                             TASKS, BACKLOG, DECISIONS, pickup, customizations, history files
-    examples/good/, bad/
+      docs-layout.md       ← file structure, and which lasting document holds what
+      templates/           ← starter files used during setup: PRD, CONTEXT, TASKS,
+                             BACKLOG, DECISIONS, pickup, customizations, history files
   skills/
     hb-whats-next/SKILL.md    ← installed; setup, resume, and recommend the next step
     hb-elevate/SKILL.md       ← installed; interview that clarifies intent and stress-tests plans
@@ -55,7 +54,7 @@ project/                   ← the product: what lands in a user's project
     hb-retro/                 ← installed; rolls up design-review data to audit the process
 ```
 
-`install.sh` copies `project/.hashbang/framework/` into the user's `.hashbang/framework/`, creates the empty state folders, copies every skill in `project/skills/` into the chosen agent's skills folder, merges `project/AGENTS.md` (and, for Claude Code, `project/CLAUDE.md`) into the user's files, and adds `docs/work/` to the user's `.ignore`. The customer's Hashbang files (objective, CONTEXT, TASKS, BACKLOG, DECISIONS) live in the user's `docs/`; Hashbang's working files live in `.hashbang/`.
+`install.sh` copies `project/.hashbang/framework/` into the user's `.hashbang/framework/`, creates the empty state folders, copies every skill in `project/skills/` into the chosen agent's skills folder, merges `project/AGENTS.md` (and, for Claude Code, `project/CLAUDE.md`) into the user's files, and adds `docs/work/` to the user's `.ignore`. The customer's Hashbang files (PRD, CONTEXT, TASKS, BACKLOG, DECISIONS) live in the user's `docs/`; Hashbang's working files live in `.hashbang/`.
 
 Users customize their copies; that is the extensibility model. The installer keeps the Hashbang version each installed file is based on in `.hashbang/upstream/installed/`. On update it replaces only files that still match their base, and leaves customized ones, with the new version and a `PENDING` list in `.hashbang/upstream/incoming/`, for the hb-update skill to merge.
 

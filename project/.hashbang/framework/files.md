@@ -2,53 +2,9 @@
 
 How to write and maintain each Hashbang file. Read this before you first create or edit one of them in a session. The customer's files live in `docs/`, and Hashbang's working files in `.hashbang/`; paths are from the project root. Starter files are in `.hashbang/framework/templates/`.
 
-## docs/OBJECTIVE.md
-
-OBJECTIVE.md says why the project exists and what done means. It is short enough to read at every session start, and it changes rarely.
-
-It is optional. When `docs/PRD.md` exists, the PRD is the project's objective and there is no OBJECTIVE.md: wherever the manual or a skill says to read the objective, read the PRD's sections above its first feature.
-
-### What belongs in it
-
-- **Outcome** — one paragraph: what this produces, for whom, and why it matters
-- **Done means** — testable criteria, not activities. "A zone 7 gardener gets this week's plantings in one command," not "build the planting feature."
-- **Not doing** — at least two things that are explicitly out of scope, and why. An objective with nothing out of scope has not been scoped.
-- **Constraints** — deadlines, budget, platforms, anything that cannot change
-
-### When to update it
-
-- When the customer changes direction, scope, or what done means
-- Every change to OBJECTIVE.md also gets a DECISIONS.md entry recording what changed and why
-
-### When the objective already exists elsewhere
-
-Before offering to write an objective, look for one the project already has, and use the first that exists: `PRD.md`, `.claude/PRD.md`, `.kiro/steering/product.md`, then `OBJECTIVE.md` at the project root. Match file names in any case.
-
-If you find one, write OBJECTIVE.md as a pointer to it, and tell the customer in one line: "Using PRD.md as this project's objective." Don't interview to fill in sections it lacks.
-
-```markdown
-# Objective
-
-This project's objective lives in `PRD.md`. Read that instead.
-```
-
-### When the customer skips it
-
-If no objective exists and the customer declines to write one, or doesn't take up the offer in the session it was made, write OBJECTIVE.md in the skipped form. Then never offer it again; the customer can ask for it.
-
-```markdown
-# Objective
-
-Not set. The customer chose not to write one (YYYY-MM-DD). Don't offer it again.
-```
-
-When they later ask for one, replace the skipped form with a full objective. Pointer and skipped forms need no DECISIONS.md entry.
-
----
-
 ## docs/PRD.md
 
-The PRD holds the product's intent: why it exists, what done means, and for each feature area, who it is for and why it matters. It exists only in software projects, and it replaces OBJECTIVE.md.
+The PRD holds the product's intent: why it exists, what done means, and for each feature area, who it is for and why it matters. Its sections above the first feature are the project's objective: short enough to read at every session start, and changed rarely.
 
 ### Format
 
@@ -75,16 +31,45 @@ The PRD holds the product's intent: why it exists, what done means, and for each
 - Spans Search: a synced note is searchable as soon as it lands.
 ```
 
-- The sections above the first feature are the objective. They follow OBJECTIVE.md's rules, above: read at every session start, and every change gets a DECISIONS.md entry.
+- **Outcome** — one paragraph: what the product does, for whom, and why it matters.
+- **Done Means** — testable criteria, not activities. "A writer's edit on one machine appears on the other within a minute," not "build sync."
+- **Not Doing** — at least two things that are explicitly out of scope, and why. An objective with nothing out of scope has not been scoped.
+- **Constraints** — deadlines, platforms, budgets, anything that cannot change. Leave it out if there are none.
 - One `## Feature:` section per product area, named the way the product names it. Feature sections are read on demand, when work touches the area.
 - **Flows** lists behavior that spans features, and names the other feature. Leave out any subsection with nothing in it.
 - The PRD holds intent, not behavior rules. Rules live in tests, manual tests, and CONTRACTS.md (see `.hashbang/framework/docs-layout.md`).
 
 ### Creating and changing it
 
-The close (the hb-close skill) creates the PRD the first time a task adds a feature section. If `docs/OBJECTIVE.md` exists, the PRD starts with its sections, and OBJECTIVE.md is deleted in the same approved change. If OBJECTIVE.md points to an existing PRD, that file is the PRD; add feature sections there instead.
+The hb-whats-next skill writes the objective during setup, from `.hashbang/framework/templates/PRD.md`. The close (the hb-close skill) adds a feature section the first time a task adds a feature.
 
-Feature sections change when a task closes, approved with the rest of that task's changes to the customer's files. They need a DECISIONS.md entry only when the change meets DECISIONS.md's bar.
+- Change the objective when the customer changes direction, scope, or what done means. Every change to it also gets a DECISIONS.md entry recording what changed and why.
+- Feature sections change when a task closes, approved with the rest of that task's changes to the customer's files. They need a DECISIONS.md entry only when the change meets DECISIONS.md's bar.
+- An older install may have `docs/OBJECTIVE.md`. Propose moving its sections into the PRD, and delete it in the same approved change.
+
+### When the PRD already exists elsewhere
+
+Before offering to write an objective, look for one the project already has, and use the first that exists: `PRD.md`, `.claude/PRD.md`, `.kiro/steering/product.md`, then `OBJECTIVE.md` at the project root. Match file names in any case.
+
+If you find one, write `docs/PRD.md` as a pointer to it, and tell the customer in one line: "Using PRD.md as this project's objective." Don't interview to fill in sections it lacks. Feature sections go in the file it points to.
+
+```markdown
+# Product
+
+This project's PRD lives in `PRD.md`. Read that instead.
+```
+
+### When the customer skips the objective
+
+If no objective exists and the customer declines to write one, or doesn't take up the offer in the session it was made, write the PRD in the skipped form. Then never offer it again; the customer can ask for it. Feature sections still go below it.
+
+```markdown
+# Product: Markymark
+
+Objective not set. The customer chose not to write one (YYYY-MM-DD). Don't offer it again.
+```
+
+When they later ask for one, replace that line with the objective's sections. Pointer and skipped forms need no DECISIONS.md entry.
 
 ---
 
@@ -116,7 +101,7 @@ BACKLOG.md holds the features the product may get later: deferred use cases, fol
 ### Rules
 
 - It is the customer's file: change it only with their approval. New rows go in as Later unless the customer says Next.
-- "Maybe later" belongs here; "never" belongs in the PRD's or the objective's Not Doing.
+- "Maybe later" belongs here; "never" belongs in the PRD's Not Doing, for the product or the feature.
 - When a feature becomes tasks in TASKS.md, delete its row. Rows are never marked done in place.
 - Create it from `.hashbang/framework/templates/BACKLOG.md` the first time a row is added.
 
@@ -135,9 +120,9 @@ Newest entry first:
 Status: Active
 Context: --zip needed a scope; non-US postal codes need a different frost-date source.
 Decision: Support US 5-digit zip codes only.
-Why: Matches the objective; international users are listed under Not doing.
+Why: Matches the objective; international users are listed under Not Doing.
 Rejected: Any postal code with a fallback lookup — needs a second data source.
-Affects: T-003, OBJECTIVE.md
+Affects: T-003, PRD.md
 ```
 
 - IDs are `D-` plus three digits. A new decision takes the highest existing ID plus one; IDs are never reused.
@@ -150,7 +135,7 @@ Affects: T-003, OBJECTIVE.md
 - Record a decision only if future work has to follow it, and it is also expensive to undo or likely to be proposed the other way later. A choice that shapes only the current task stays in the document where it was made: its spec, design, or slicing plan.
 - Planning docs are scaffolding that nothing reads once their task closes, so DECISIONS.md is the only lasting home for a rejected alternative. The close asks of each one: "Will someone propose this again?" and proposes all of a task's entries in one approval.
 - Code comments, lasting documents, and done tasks cite decisions by ID: "(D-003)".
-- DECISIONS.md never states the current rule. The rule lives where it applies — CONTEXT.md, or in a software project the documents in `.hashbang/framework/docs-layout.md`'s "Where information lives" — and cites the decision for the reason: "Voice: first person (D-004)."
+- DECISIONS.md never states the current rule. The rule lives where it applies — CONTEXT.md, or the documents in `.hashbang/framework/docs-layout.md`'s "Where information lives" — and cites the decision for the reason: "UI code never touches the filesystem (D-003)."
 
 ---
 
@@ -161,33 +146,19 @@ CONTEXT.md holds the standing rules for how to work on this project.
 ### What belongs in it
 
 - **Vocabulary** — defined terms and aliases to avoid. This is the most important section. When a term is defined here, use it precisely everywhere.
-- **Style** — voice, audience, format, and length rules. What would surprise someone joining this project without context. Cite the decision behind a rule when there is one.
 - **Tenets** — the principles the customer applies when good options conflict: "Correctness beats speed." They let you settle questions the customer would otherwise have to answer. Tenets are discovered through the hb-elevate skill, not asked for up front. A tenet is a principle for settling future choices; one specific choice is a decision, and goes in DECISIONS.md.
 - **What the agent should never do** — explicit constraints. These are absolute.
-- **Active skills** — which skills are enabled and why
 
-What the project is for belongs in the objective. Why a rule exists belongs in DECISIONS.md.
+What the project is for belongs in the PRD. How the code is built belongs in `docs/engineering/` (see `.hashbang/framework/docs-layout.md`). Why a rule exists belongs in DECISIONS.md.
 
 ### When context already exists elsewhere
 
-If the project root has a `CONTEXT.md`, write CONTEXT.md as a pointer to it, the same way as OBJECTIVE.md, instead of capturing context again.
-
-### Examples
-
-Short examples (a paragraph or less) live inline in CONTEXT.md alongside the vocabulary or style rule they illustrate:
-
-Voice: write "We recommend" not "It is recommended that" Length: each section should be readable in 90 seconds
-
-Longer examples live as files in examples/ and are referenced by path in CONTEXT.md:
-
-Good executive summary: .hashbang/examples/good/exec-summary.md Avoid this tone: .hashbang/examples/bad/too-formal.md
-
-Load examples on demand — only when the task calls for them. Do not load all examples at session start.
+If the project root has a `CONTEXT.md`, write CONTEXT.md as a pointer to it, the same way as the PRD, instead of capturing context again.
 
 ### When to update it
 
 - When a new term is used that isn't defined
-- When a new style rule or constraint is agreed — log the decision behind it in DECISIONS.md if it is hard to reverse
+- When a new constraint is agreed — log the decision behind it in DECISIONS.md if it is hard to reverse
 - When an hb-elevate session surfaces a tenet that applies beyond the work at hand
 
 ---
@@ -280,7 +251,7 @@ The record of what changed in the project, so a returning session can see what m
 
 ### What to log
 
-- Every edit to the customer's Hashbang files: OBJECTIVE.md, PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, and DECISIONS.md.
+- Every edit to the customer's Hashbang files: PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, and DECISIONS.md.
 - Edits to the customer's own files only when the project is not under version control. When it is, version control already records those changes — read its log instead of duplicating it here.
 - Never pickup.md or the history files. They change every session and would bury the real changes.
 

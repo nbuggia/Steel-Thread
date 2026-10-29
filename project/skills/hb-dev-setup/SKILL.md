@@ -1,6 +1,6 @@
 ---
 name: hb-dev-setup
-description: Tailor Hashbang's development process to a software project's languages, frameworks, and platforms. Reads the codebase, writes the engineering reference docs, and adapts the development skills and templates to the stack. Use during setup of a software project, when the stack changes, or when the customer asks to fit Hashbang to their stack.
+description: Tailor Hashbang's development process to the project's languages, frameworks, and platforms. Reads the codebase, writes the engineering reference docs, and adapts the development skills and templates to the stack. Use during setup, when the stack changes, or when the customer asks to fit Hashbang to their stack.
 ---
 
 Hashbang's development process — `.hashbang/framework/development.md` and the hb-spec, hb-design, hb-slice, and hb-retro skills — is written for any stack. This skill makes this project's copy specific: it learns the stack, writes it down, and edits the process so that every later design and review asks the questions this stack needs. Run it again when the stack changes, such as a new platform or a new process boundary; a re-run updates what is there rather than starting over.

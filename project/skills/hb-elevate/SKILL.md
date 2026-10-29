@@ -14,7 +14,7 @@ The goal is not to ask every question. It is to learn enough about what the cust
 
 ## Step 1 — Ground yourself
 
-Read the objective (`docs/PRD.md`'s sections above its first feature, or else `docs/OBJECTIVE.md`), `docs/CONTEXT.md` (including its tenets, which settle questions before you ask them), and any active entries in `docs/DECISIONS.md` that touch the subject, if they exist.
+Read the objective (`docs/PRD.md`'s sections above its first feature), `docs/CONTEXT.md` (including its tenets, which settle questions before you ask them), and any active entries in `docs/DECISIONS.md` that touch the subject, if they exist.
 
 If there is a plan — a proposed fix, a design, an approach, a call the customer is about to make — state it back in its strongest form: what it does, why it is a good idea, and the assumptions it rests on. Ask the customer to confirm this is the plan. Do not challenge a plan you have not stated correctly.
 

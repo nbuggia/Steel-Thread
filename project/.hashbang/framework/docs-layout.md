@@ -1,12 +1,13 @@
 # Hashbang Docs Layout
 
-Where a software project's documents live, and what each lasting one holds. Read this before you create a work entry, write a design's Lasting Changes, close a task, or create or edit a document in `docs/engineering/`. The process that produces these documents is in `.hashbang/framework/development.md`.
+Where the project's documents live, and what each lasting one holds. Read this before you create a work entry, write a design's Lasting Changes, close a task, or create or edit a document in `docs/engineering/`. The process that produces these documents is in `.hashbang/framework/development.md`.
 
 ## File Structure
 
 ```
 docs/
-  PRD.md                        ← product intent, per feature area
+  PRD.md                        ← the objective, and product intent per feature area
+  CONTEXT.md, TASKS.md, BACKLOG.md, DECISIONS.md
   manual-tests/                 ← human-run checks, by product area
     <area>.md
   work/                         ← scaffolding, never searched: one folder per task
@@ -29,7 +30,7 @@ docs/
     retros/
 ```
 
-Automated tests live where the stack's tooling expects them; TESTING.md says where each kind is. PRD.md, manual tests, and CONTRACTS.md are created the first time a task needs one.
+Automated tests live where the stack's tooling expects them; TESTING.md says where each kind is. Manual tests and CONTRACTS.md are created the first time a task needs one.
 
 Rules:
 
@@ -62,7 +63,7 @@ The neighbors:
 - **Tests** hold behavior. Each test's name states the behavior it proves, in users' terms, and suites are grouped by product area.
 - **Manual tests** hold behavior that automation can't reach, by product area, in `docs/manual-tests/<area>.md`. A person runs them, often the customer.
 - **CONTRACTS.md** holds the promises other systems and users' files rely on: file formats, on-device filenames, URL schemes, update feeds, public APIs. ARCHITECTURE.md names the component that implements each one.
-- **PRD.md** holds product intent per feature area: who it is for, why it matters, what it doesn't do, and what done means. `framework/files.md` has its format.
+- **PRD.md** holds the objective, and product intent per feature area: who it is for, why it matters, what it doesn't do, and what done means. `framework/files.md` has its format.
 - **Convention skills** hold the rules for one area of the code, such as UI or logging, or the steps for one recurring kind of change, such as adding a feature flag. They live in the agent's skills folder, named without the `hb-` prefix, so Hashbang updates never touch them. A skill that keeps project paths in its examples can be copied to another project on the same stack.
 - **Code comments** hold the why of non-obvious code, citing D-NNN or FM-NNN. They describe the code as it is now; what a change did belongs in its commit message.
 - **TESTING.md** says how to check a change: the kinds of test, where each lives, their tools, and the commands that run them.

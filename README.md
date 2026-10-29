@@ -6,10 +6,10 @@ It works with **Claude Code**, **Codex CLI**, or **Kiro CLI** — pick one per p
 
 It gives your agent four practical capabilities:
 
-1. **Context -** Remembers the project. The objective, vocabulary, constraints, and every significant decision — with the reasoning behind it — carry forward automatically.
+1. **Context -** Remembers the product. The objective, vocabulary, constraints, and every significant decision — with the reasoning behind it — carry forward automatically.
 2. **Tasks -** Remembers the work that needs to get done. Phases and tasks live in a plain checklist the agent maintains. You interact with the work, but can edit the list any time.
 3. **Continuity -** Remembers where you left off. Sessions start oriented: “You’re working on X, left off at Y, Z is up next.”
-4. **Fits your stack -** In a software project, your agent tailors Hashbang's development process to your languages and platforms, and keeps those changes when Hashbang updates.
+4. **Fits your stack -** Your agent tailors Hashbang's development process to your languages and platforms, and keeps those changes when Hashbang updates.
 
 ## Installation
 
@@ -62,21 +62,17 @@ your-project/
   AGENTS.md                ← your file, plus a short Hashbang section
   CLAUDE.md                ← your file, plus @AGENTS.md for Claude Code
   docs/
-    OBJECTIVE.md           ← why this project exists, what done means
-    PRD.md                 ← software projects: replaces OBJECTIVE.md, with intent per feature
-    CONTEXT.md             ← vocabulary, style, what the agent must never do
+    PRD.md                 ← why the product exists, what done means, and intent per feature
+    CONTEXT.md             ← vocabulary, tenets, what the agent must never do
     TASKS.md               ← phases and tasks, in priority order
     BACKLOG.md             ← features for later
     DECISIONS.md           ← decisions and the reasoning behind them
-    work/                  ← software projects: planning docs, one folder per task; never searched
-    engineering/           ← software projects: architecture, conventions, contracts, testing
+    work/                  ← planning docs, one folder per task; never searched
+    engineering/           ← architecture, conventions, contracts, testing
   .hashbang/
     pickup.md              ← where you left off
     customizations.md      ← what you changed in Hashbang, and why
     history/               ← session log and changelog
-    examples/
-      good/                ← reference examples
-      bad/                 ← anti-patterns
     framework/             ← Hashbang's manual, process, and templates; yours to customize
     upstream/              ← managed by the installer, don't edit
   .claude/skills/          ← skills, in your agent's folder (.agents/skills/ for Codex, .kiro/skills/ for Kiro)
@@ -84,18 +80,18 @@ your-project/
 
 All-caps files are yours to read and shape; the agent keeps them current with your approval. Lowercase files are its working notes.
 
-In a software project, a task's spec, design, and plans are scaffolding. When the task is done, the agent moves what lasts into tests, the PRD, and the engineering docs, and records where each piece went. The rest stays in `docs/work/` as history, which the agent never searches. The product's behavior lives in its tests, not in documents that go stale.
+A task's spec, design, and plans are scaffolding. When the task is done, the agent moves what lasts into tests, the PRD, and the engineering docs, and records where each piece went. The rest stays in `docs/work/` as history, which the agent never searches. The product's behavior lives in its tests, not in documents that go stale.
 
 ## Skills
 
 Twelve skills are included. Your agent suggests them when the moment calls for one, and you can invoke any of them directly (`/name` in Claude Code and Kiro, `$name` in Codex):
 
-- **hb-whats-next** — recommends the single most valuable next step and gives you what you need to start it. On a new project, that's setup: objective, then context, then phases. On an established one, it rebuilds exactly where you left off inside a task. Run this first, and whenever you sit down to work.
+- **hb-whats-next** — recommends the single most valuable next step and gives you what you need to start it. On a new project, that's setup: objective, context, stack, then phases. On an established one, it rebuilds exactly where you left off inside a task. Run this first, and whenever you sit down to work.
 - **hb-tasks** — keeps your task list: adds, finishes, blocks, and reorders tasks, and plans phases. Ask it to show or reprioritize your tasks any time.
 - **hb-recap** — show the current pickup note and optionally adjust it. Optional — the pickup note is kept current without it.
 - **hb-elevate** — interview loop, asked in rounds. Resolves ambiguity before work begins, and stress-tests a plan, decision, or diagnosis before you act on it. Used by hb-whats-next during setup.
-- **hb-crit** — domain expert review after significant outputs. Makes the strongest case first, then attacks. BLOCK/CONCERNS/CLEAN verdict.
-- **hb-dev-setup** — tailors the development process to your project's stack: engineering docs, design templates, review checks, and test commands. Runs during setup of a software project.
+- **hb-crit** — expert review of a spec, a design, a diagnosis, or code. Makes the strongest case first, then attacks. BLOCK/CONCERNS/CLEAN verdict.
+- **hb-dev-setup** — tailors the development process to your project's stack: engineering docs, design templates, review checks, and test commands. Runs during setup.
 - **hb-spec** — shapes an idea into a spec for one task: what changes for the product's users and why, never how. Plans releases from the backlog.
 - **hb-design** — writes the tech design for a task, with rigor fitted to the change's risk, and reviews it in a fresh context.
 - **hb-slice** — splits a Complex design into thin vertical slices, each proven by a test or demo.
@@ -117,7 +113,7 @@ Skills follow the `SKILL.md` format shared by Claude Code, Codex CLI, and Kiro C
 Skills call other skills by name rather than redefining their logic:
 
 - `use the hb-elevate skill` — interview loop that clarifies intent or stress-tests a plan
-- `use the hb-crit skill` — domain expert critique after significant outputs
+- `use the hb-crit skill` — expert review of a spec, a design, a diagnosis, or code
 
 ## Attribution
 

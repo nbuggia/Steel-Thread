@@ -201,8 +201,7 @@ if [ "$migrated_legacy" = true ]; then
   fi
 fi
 
-mkdir -p "$DEST/.hashbang/history" "$DEST/.hashbang/examples/good" \
-  "$DEST/.hashbang/examples/bad" "$INSTALLED"
+mkdir -p "$DEST/.hashbang/history" "$INSTALLED"
 
 # 2. Framework files and skills, one file at a time.
 PENDING=$(mktemp)

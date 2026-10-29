@@ -1,6 +1,6 @@
 # Hashbang Development Process
 
-How to take a feature or a bug from idea to tested code in a software project. Read this before you change code: its Rigor Levels section decides how much of the process the change needs. You do not need it for questions or reading code.
+How to take a feature or a bug from idea to tested code. Read this before you change code: its Rigor Levels section decides how much of the process the change needs. You do not need it for questions or reading code.
 
 This process is written for any stack. The hb-dev-setup skill tailors this project's copy, and the development skills, to its languages and platforms. If `docs/engineering/ARCHITECTURE.md` does not exist yet, run it before the first feature.
 
