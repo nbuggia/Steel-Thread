@@ -1,19 +1,19 @@
 # Prior Art: Project Memory Harnesses
 
-What other agents, editors and community efforts do today for project memory, and what Hashbang can learn from them. Researched 2026-10-09. Kiro, Cline Memory Bank and Agent OS were checked against their current docs; the other entries are from general knowledge and should be verified before borrowing from them.
+What other agents, editors and community efforts do today for project memory, and what Steel Thread can learn from them. Researched 2026-10-09. Kiro, Cline Memory Bank and Agent OS were checked against their current docs; the other entries are from general knowledge and should be verified before borrowing from them.
 
 ## Summary
 
-None of the tools below combines project context, tasks, session continuity and active help with thinking. Hashbang's differentiator is the thinking layer (hb-elevate, hb-crit, cognitive elevation); where others are ahead is mechanics.
+None of the tools below combines project context, tasks, session continuity and active help with thinking. Steel Thread's differentiator is the thinking layer (st-elevate, st-crit, cognitive elevation); where others are ahead is mechanics.
 
 - **Borrow from Kiro:** markdown task files the editor makes interactive, and per-file rules for when context loads.
 - **Borrow from Agent OS:** profiles as installable skill packs, an index so the agent loads only relevant context, and installing commands where the agent discovers them.
 - **Avoid Memory Bank's failure modes:** reading everything every time, files going stale, and rewriting memory after every small change.
-- **Note the trend:** Agent OS v3 dropped its task system because Claude Code now plans well on its own. Hashbang's tasks need to justify themselves as project-level memory, not step-by-step execution.
+- **Note the trend:** Agent OS v3 dropped its task system because Claude Code now plans well on its own. Steel Thread's tasks need to justify themselves as project-level memory, not step-by-step execution.
 
 ## Kiro
 
-AWS's agentic IDE (built on Code OSS) and CLI. The closest product to Hashbang inside an editor: plain markdown files on disk, with the editor adding the interactive parts.
+AWS's agentic IDE (built on Code OSS) and CLI. The closest product to Steel Thread inside an editor: plain markdown files on disk, with the editor adding the interactive parts.
 
 **Steering files** ([docs](https://kiro.dev/docs/steering/)) are Kiro's equivalent of CONTEXT.md.
 
@@ -39,7 +39,7 @@ AWS's agentic IDE (built on Code OSS) and CLI. The closest product to Hashbang i
 - Per-file inclusion modes are the answer to CONTEXT.md growing without bound.
 - A global layer plus a project layer gives beginners defaults and experts overrides.
 - "What must not change" in bug specs is a cheap, high-value prompt for the coding pack.
-- Hooks make upkeep happen without relying on the model to remember. Hashbang avoids them for cross-agent compatibility, so upkeep stays instruction-based.
+- Hooks make upkeep happen without relying on the model to remember. Steel Thread avoids them for cross-agent compatibility, so upkeep stays instruction-based.
 
 ## Cline Memory Bank
 
@@ -65,8 +65,8 @@ A prompt pattern, not a product feature: custom instructions plus six markdown f
 
 **Lessons**
 
-- Splitting files by how often they change is right. *(Hashbang: CONTEXT.md vs. pickup.md.)*
-- An explicit "update memory" command is the escape hatch users actually use. *(Hashbang: hb-recap.)*
+- Splitting files by how often they change is right. *(Steel Thread: CONTEXT.md vs. pickup.md.)*
+- An explicit "update memory" command is the escape hatch users actually use. *(Steel Thread: st-recap.)*
 - Checkpoint-based updates avoid the write loop. *(Adopted 2026-10-09.)*
 - History files need a retention rule. *(Open.)*
 
@@ -99,20 +99,20 @@ Not re-verified; from general knowledge as of mid-2026.
 - **GitHub Spec Kit** — `constitution.md` for non-negotiable rules (like CONTEXT.md's "never do"), and a fixed command sequence `/specify` → `/plan` → `/tasks`. A clear pipeline is easy for beginners.
 - **Task Master (claude-task-master)** — parses a requirements doc into `tasks.json` with dependencies and complexity scores. Dependencies are the first feature people want once tasks exist.
 - **Cursor rules** (`.cursor/rules/*.mdc`) — frontmatter controls loading: always, by glob, or agent-requested by description. The best model for keeping context small.
-- **Windsurf Memories** — the agent writes memories on its own; users don't trust or review them. Evidence for Hashbang's "propose, user approves" rule.
+- **Windsurf Memories** — the agent writes memories on its own; users don't trust or review them. Evidence for Steel Thread's "propose, user approves" rule.
 - **AGENTS.md** — the shared instructions file most agents now read. *(Adopted.)*
 - **Agent Skills standard / Matt Pocock's skills** — the SKILL.md format and good examples of small, sharp skills. Codex reads `.agents/skills/` and invokes with `$name` ([docs](https://learn.chatgpt.com/docs/build-skills)).
 
 ### Writing
 
 - **iA Writer** — marks which text was written by a human and which by AI. A trust feature a markdown editor is well placed to offer.
-- **Lex** — AI writing focused on feedback rather than generation, close to the hb-crit skill.
+- **Lex** — AI writing focused on feedback rather than generation, close to the st-crit skill.
 - **Frameworks to turn into skills:** Minto's Pyramid Principle, the Amazon 6-pager.
 
 ### Notes and knowledge base
 
 - **Obsidian** — the de facto conventions for a markdown knowledge base: `[[wikilinks]]`, frontmatter properties, daily notes. Steph Ango's "File over app" argues files should outlive the app.
-- **Methods:** Andy Matuschak's evergreen notes, Zettelkasten, Tiago Forte's PARA (Projects, Areas, Resources, Archives). PARA's project/area split maps to Hashbang project folders.
+- **Methods:** Andy Matuschak's evergreen notes, Zettelkasten, Tiago Forte's PARA (Projects, Areas, Resources, Archives). PARA's project/area split maps to Steel Thread project folders.
 - **NotebookLM** — answers grounded only in sources you provide; the model for a "synthesize my notes" skill that doesn't invent.
 - **Obsidian plugins (Smart Connections, Copilot)** — show where AI helps in a vault (finding related notes) versus where it doesn't (writing notes for you).
 

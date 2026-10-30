@@ -1,6 +1,6 @@
 # Prior Art: Spec-Driven Open Source Projects
 
-How popular open source projects lay out specs, designs, tasks, decisions and conventions in practice, and what Hashbang can learn from them. Researched 2026-10-26 from each repo's file tree on its default branch, plus its AGENTS.md, CONTRIBUTING.md and spec READMEs. Individual specs were sampled, not read in full.
+How popular open source projects lay out specs, designs, tasks, decisions and conventions in practice, and what Steel Thread can learn from them. Researched 2026-10-26 from each repo's file tree on its default branch, plus its AGENTS.md, CONTRIBUTING.md and spec READMEs. Individual specs were sampled, not read in full.
 
 ## Summary
 
@@ -8,8 +8,8 @@ Of 37 popular AI-era repos scanned, 10 have a real spec layout. The other 27 hav
 
 - **Common ground:** a product spec and a tech spec per change, a folder per change, a decision log, a glossary, and a light path for small changes.
 - **The split:** most keep every spec forever. Only OpenSpec, open-design and opencode separate current truth from history.
-- **Rare in the repo:** task lists. Almost everyone tracks work in GitHub issues. Hashbang's TASKS.md and BACKLOG.md are a deliberate difference, for solo builders with no tracker.
-- **Unique to Hashbang:** the close step's trace of where each lasting fact landed, and session memory (pickup, history).
+- **Rare in the repo:** task lists. Almost everyone tracks work in GitHub issues. Steel Thread's TASKS.md and BACKLOG.md are a deliberate difference, for solo builders with no tracker.
+- **Unique to Steel Thread:** the close step's trace of where each lasting fact landed, and session memory (pickup, history).
 - **Best source to learn from:** Warp. Its specs, skills and code are the cleanest of the ten.
 
 ## Method
@@ -38,11 +38,11 @@ Star counts are from 2026-10-26.
 - Conventions as skills, by area and by recurring change. *(Adopted: convention skills.)*
 - Validate the code against the spec before calling it done, deciding per mismatch whether to fix the code or the spec. *(Adopted: step 5 validation.)*
 - Map each test to the spec rules it proves. *(Adopted: "Spec rules proved" in the design templates.)*
-- An edge-case checklist for specs. *(Adopted: hb-spec step 3.)*
+- An edge-case checklist for specs. *(Adopted: st-spec step 3.)*
 - Comment rules, and running only the checks a change touches. *(Adopted: conventions template, TESTING.md validation order.)*
-- A spec sized to the change, and a broad meaning of "users". *(Adopted: hb-spec.)*
-- `-local` skills specialize a core skill only at extension points the core declares. An alternative to hb-update's merging; not adopted yet.
-- `scan-new-specs` was retired for documenting specs that never shipped. Lasting docs have to come from what was built, as Hashbang's close already requires.
+- A spec sized to the change, and a broad meaning of "users". *(Adopted: st-spec.)*
+- `-local` skills specialize a core skill only at extension points the core declares. An alternative to st-update's merging; not adopted yet.
+- `scan-new-specs` was retired for documenting specs that never shipped. Lasting docs have to come from what was built, as Steel Thread's close already requires.
 - Skills archived for reference in `library/`.
 
 ### open-design
@@ -56,7 +56,7 @@ Star counts are from 2026-10-26.
 **Lessons**
 
 - Separating current truth from change deltas, as OpenSpec does, without the tooling.
-- A domain glossary at the root, like Hashbang's CONTEXT.md.
+- A domain glossary at the root, like Steel Thread's CONTEXT.md.
 
 ### deer-flow
 
@@ -80,7 +80,7 @@ Star counts are from 2026-10-26.
 
 **Lessons**
 
-- The closest match to Hashbang's planning docs as scaffolding, except that opencode deletes them and relies on git, where Hashbang archives them in `docs/work-archive/`.
+- The closest match to Steel Thread's planning docs as scaffolding, except that opencode deletes them and relies on git, where Steel Thread archives them in `docs/work-archive/`.
 - An index that states each document's job keeps current and historical docs apart.
 
 ### get-shit-done
@@ -93,20 +93,20 @@ Star counts are from 2026-10-26.
 
 **Lessons**
 
-- Local sequential IDs collide across branches: `0010-*` exists twice and `0011-*` three times, so they switched to GitHub issue numbers. Hashbang's T-NNN and D-NNN have the same risk with parallel branches or agents.
+- Local sequential IDs collide across branches: `0010-*` exists twice and `0011-*` three times, so they switched to GitHub issue numbers. Steel Thread's T-NNN and D-NNN have the same risk with parallel branches or agents.
 
 ### Strands Agents
 
 [strands-agents/harness-sdk](https://github.com/strands-agents/harness-sdk), formerly sdk-python, 9k stars. An agent SDK.
 
 - **Designs:** `team/designs/NNNN-feature.md`. An accepted design becomes part of the decision history.
-- **Decisions:** one `team/DECISIONS.md`, like Hashbang's.
+- **Decisions:** one `team/DECISIONS.md`, like Steel Thread's.
 - **Process:** `team/TENETS.md`, `FEATURE_LIFECYCLE.md`, `COMPLEXITY.md`, `API_BAR_RAISING.md`. "Skip the design process for bug fixes, small improvements, documentation updates."
 
 **Lessons**
 
 - A single decision log works at this size.
-- Process and tenets written down as team docs, as Hashbang's development.md and CONTEXT.md do.
+- Process and tenets written down as team docs, as Steel Thread's development.md and CONTEXT.md do.
 
 ### OpenSpec
 
@@ -129,7 +129,7 @@ Star counts are from 2026-10-26.
 
 **Lessons**
 
-- The only one of the ten that keeps the full task list in the repo, as Hashbang does.
+- The only one of the ten that keeps the full task list in the repo, as Steel Thread does.
 
 ### ruflo
 
@@ -155,7 +155,7 @@ Star counts are from 2026-10-26.
 
 ## Patterns
 
-1. **Product and tech are separate documents.** PRODUCT and TECH, proposal and design, PRD and ADR. *(Hashbang: spec.md and design.md.)*
+1. **Product and tech are separate documents.** PRODUCT and TECH, proposal and design, PRD and ADR. *(Steel Thread: spec.md and design.md.)*
 2. **Folders are named by tracker ID** when a tracker exists, or by date or slug when not.
 3. **Active work lives in GitHub issues** or in checkboxes inside each plan. Only Task Master keeps a task list in the repo.
 4. **Decisions are one log or one file each.** One log at Strands' size; one file each scales badly without an index.
@@ -164,13 +164,13 @@ Star counts are from 2026-10-26.
 7. **Small changes skip the process.** Warp and Strands both say so in their contribution rules.
 8. **Most keep everything.** Only OpenSpec, open-design and opencode separate what is true now from what was planned.
 
-## Open ideas for Hashbang
+## Open ideas for Steel Thread
 
 - **ID collisions.** Allow a tracker issue number in place of a local T-NNN or D-NNN when the project has one (get-shit-done).
 - **Delete instead of archive.** Drop `docs/work-archive/` and rely on git history, moving close.md's table into the closing commit message. Projects without git would still need the archive (opencode).
 - **Core skills with declared extension points,** specialized by thin project skills, instead of merging customized copies (Warp's `-local` skills).
-- **A friction log** hb-retro reads, after Warp's `suggestion-box`. In TODO.md.
-- **Grading skills from transcripts,** after Warp's `skill-doctor`, to see which hb- skills agents actually follow. Archived in `library/warp-common-skills/`.
+- **A friction log** st-retro reads, after Warp's `suggestion-box`. In TODO.md.
+- **Grading skills from transcripts,** after Warp's `skill-doctor`, to see which st- skills agents actually follow. Archived in `library/warp-common-skills/`.
 
 ## The other 27
 

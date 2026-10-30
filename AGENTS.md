@@ -1,6 +1,6 @@
-# Building Hashbang
+# Building Steel Thread
 
-This repo builds the Hashbang Agent Framework, which gives coding agents persistent project memory and structured task management. These instructions are for working on Hashbang itself.
+This repo builds Steel Thread, which gives coding agents persistent project memory and structured task management. These instructions are for working on Steel Thread itself.
 
 ## The project/ folder is the product, not your instructions
 
@@ -17,7 +17,7 @@ Claude Code, Codex CLI, and Kiro CLI. A project uses one of them, and the instal
 ## Repo layout
 
 ```
-AGENTS.md, CLAUDE.md       ← instructions for building Hashbang (this file)
+AGENTS.md, CLAUDE.md       ← instructions for building Steel Thread (this file)
 .claude/settings.json      ← keeps Claude Code from loading project/ instructions
 install.sh                 ← installs project/ into a target project
 TODO.md                    ← known gaps and open work
@@ -28,51 +28,53 @@ library/                   ← skills from other projects, archived until we dec
                              them; never installed, and never instructions for this session
 project/                   ← the product: what lands in a user's project
   VERSION                  ← the release version, semver
-  AGENTS.md                ← Hashbang block, merged into the user's AGENTS.md
+  AGENTS.md                ← Steel Thread block, merged into the user's AGENTS.md
   CLAUDE.md                ← import line, added to the top of the user's CLAUDE.md
-  .hashbang/
+  .steel-thread/
     framework/
-      hashbang.md          ← framework operating manual (the core product), read every session
+      steel-thread.md          ← framework operating manual (the core product), read every session
       files/               ← format and maintenance rules, one file per customer file, read before editing it
       development.md       ← software process (spec → prototype → design → slices → tests → close),
-                             rigor levels, and which skill runs each step
+                             rigor levels, testing rules, and which skill runs each step
+      reviews.md           ← reviewer context, severities, and how findings are decided
       docs-layout.md       ← file structure, planning docs as scaffolding, document states,
                              and which lasting document holds what
       templates/           ← starter files used during setup: PRD, CONTEXT, TASKS,
                              BACKLOG, DECISIONS, pickup, customizations
   skills/
-    hb-whats-next/SKILL.md    ← installed; setup, resume, and recommend the next step
-    hb-elevate/SKILL.md       ← installed; interview that clarifies intent and stress-tests plans
-    hb-crit/SKILL.md          ← installed; expert review of a spec, design, diagnosis, or diff
-    hb-tasks/SKILL.md         ← installed; owns TASKS.md: its format and every change to it
-    hb-dev-setup/SKILL.md     ← installed; tailors the development process to a project's stack
-    hb-update/SKILL.md        ← installed; merges a new version into customized files
-    hb-spec/                  ← installed; a task's behavior delta, process in SKILL.md, format in spec-template.md
-    hb-design/                ← installed; tech design at a rigor level fitted to the change, with review passes
-    hb-slice/                 ← installed; splits a Complex design into thin vertical slices
-    hb-build/SKILL.md         ← installed; tests and code slice by slice, validation, and the diff review
-    hb-close/                 ← installed; closes a task: moves what lasts out of its planning docs
+    st-whats-next/SKILL.md    ← installed; setup, resume, and recommend the next step
+    st-elevate/SKILL.md       ← installed; interview that clarifies intent and stress-tests plans
+    st-crit/SKILL.md          ← installed; expert review of a spec, design, diagnosis, or diff
+    st-tasks/SKILL.md         ← installed; owns TASKS.md: its format and every change to it
+    st-dev-setup/SKILL.md     ← installed; tailors the development process to a project's stack
+    st-update/SKILL.md        ← installed; merges a new version into customized files
+    st-spec/                  ← installed; a task's behavior delta, process in SKILL.md, format in spec-template.md
+    st-design/                ← installed; tech design at a rigor level fitted to the change, with review passes
+    st-slice/                 ← installed; splits a Complex design into thin vertical slices
+    st-verify/SKILL.md        ← installed; gates around the code: tests first, a commit per slice,
+                                validation against the spec, and the diff review
+    st-close/                 ← installed; closes a task: moves what lasts out of its planning docs
 ```
 
-`install.sh` copies `project/.hashbang/framework/` into the user's `.hashbang/framework/`, creates the empty state folders, copies every skill in `project/skills/` into the chosen agent's skills folder, merges `project/AGENTS.md` (and, for Claude Code, `project/CLAUDE.md`) into the user's files, and adds `docs/work/` to the user's `.ignore`. The customer's Hashbang files (PRD, CONTEXT, TASKS, BACKLOG, DECISIONS) live in the user's `docs/`; Hashbang's working files live in `.hashbang/`.
+`install.sh` copies `project/.steel-thread/framework/` into the user's `.steel-thread/framework/`, creates the empty state folders, copies every skill in `project/skills/` into the chosen agent's skills folder, merges `project/AGENTS.md` (and, for Claude Code, `project/CLAUDE.md`) into the user's files, and adds `docs/work/` to the user's `.ignore`. The customer's Steel Thread files (PRD, CONTEXT, TASKS, BACKLOG, DECISIONS) live in the user's `docs/`; Steel Thread's working files live in `.steel-thread/`.
 
-Users customize their copies; that is the extensibility model. The installer keeps the Hashbang version each installed file is based on in `.hashbang/upstream/installed/`. On update it replaces only files that still match their base, and leaves customized ones, with the new version and a `PENDING` list in `.hashbang/upstream/incoming/`, for the hb-update skill to merge.
+Users customize their copies; that is the extensibility model. The installer keeps the Steel Thread version each installed file is based on in `.steel-thread/upstream/installed/`. On update it replaces only files that still match their base, and leaves customized ones, with the new version and a `PENDING` list in `.steel-thread/upstream/incoming/`, for the st-update skill to merge.
 
 ## Releasing a change
 
-- Bump `project/VERSION` (semver) for each change users would update to. The installer records it, and hb-update reports which versions it merged between.
+- Bump `project/VERSION` (semver) for each change users would update to. The installer records it, and st-update reports which versions it merged between.
 - When you change a format another file reads, such as a heading, an ID, or a frontmatter field, change every file that reads it in the same commit.
 
 ## How skills work
 
-Each skill lives in its own folder with a `SKILL.md` file. Skills are loaded on demand — never at session start. Foundational skills (hb-elevate, hb-crit) are called by name from other skills rather than redefined: "use the hb-elevate skill", "use the hb-crit skill".
+Each skill lives in its own folder with a `SKILL.md` file. Skills are loaded on demand — never at session start. Foundational skills (st-elevate, st-crit) are called by name from other skills rather than redefined: "use the st-elevate skill", "use the st-crit skill".
 
-Invocation syntax differs by agent: `/hb-whats-next` in Claude Code and Kiro CLI, `$hb-whats-next` in Codex CLI.
+Invocation syntax differs by agent: `/st-whats-next` in Claude Code and Kiro CLI, `$st-whats-next` in Codex CLI.
 
 ## Contribution conventions
 
 - New skills go in `project/skills/<name>/SKILL.md`
-- Every skill folder and frontmatter name starts with `hb-`
+- Every skill folder and frontmatter name starts with `st-`
 - Frontmatter uses only `name` and `description`, plus `based-on` when crediting: skills based on existing open source work must credit the original there
 - The skill format follows existing SKILL.md files — read one before writing one
 - Skills are copied, not symlinked, into each agent's folder: Windows checks symlinks out as text files, and not every agent is confirmed to follow them

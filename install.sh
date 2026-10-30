@@ -1,14 +1,14 @@
 #!/bin/sh
-# Install or update the Hashbang Agent Framework in a project.
+# Install or update Steel Thread in a project.
 #
-#   path/to/hashbang/install.sh [--agent claude|codex|kiro] [project-dir]
+#   path/to/steel-thread/install.sh [--agent claude|codex|kiro] [project-dir]
 #
-# Safe to re-run. Hashbang installs for one agent per project; without
+# Safe to re-run. Steel Thread installs for one agent per project; without
 # --agent it uses the one recorded at the last install, or detects it, or
 # asks. On update, files you haven't changed are updated. Files you have
-# customized are never overwritten: the new Hashbang version is saved in
-# .hashbang/upstream/incoming/ for the hb-update skill to merge in. Your
-# project state in docs/ and elsewhere in .hashbang/ is never touched.
+# customized are never overwritten: the new Steel Thread version is saved in
+# .steel-thread/upstream/incoming/ for the st-update skill to merge in. Your
+# project state in docs/ and elsewhere in .steel-thread/ is never touched.
 
 set -eu
 
@@ -35,14 +35,12 @@ DEST=$(cd "$DEST_ARG" && pwd)
 VERSION=$(cat "$SRC/VERSION")
 
 if [ "$DEST" = "$SRC" ]; then
-  echo "Refusing to install into Hashbang's own project/ folder." >&2
+  echo "Refusing to install into Steel Thread's own project/ folder." >&2
   exit 1
 fi
 
-BEGIN='<!-- hashbang:start -->'
-END='<!-- hashbang:end -->'
-LEGACY_BEGIN='<!-- steel-thread:start -->'
-LEGACY_END='<!-- steel-thread:end -->'
+BEGIN='<!-- steel-thread:start -->'
+END='<!-- steel-thread:end -->'
 
 # The skills folder each supported agent reads.
 skills_dir_for() {
@@ -54,43 +52,11 @@ skills_dir_for() {
   esac
 }
 
-migrated_legacy=false
-if [ -e "$DEST/.steel-thread" ] && [ -e "$DEST/.hashbang" ]; then
-  echo "Cannot migrate .steel-thread because .hashbang already exists." >&2
-  echo "Merge or remove one of those folders, then run the installer again." >&2
-  exit 1
-elif [ -e "$DEST/.steel-thread" ]; then
-  mv "$DEST/.steel-thread" "$DEST/.hashbang"
-  migrated_legacy=true
-  echo "  migrated .steel-thread to .hashbang"
-fi
-
-# The pristine Hashbang files each local file is based on. A local file
+# The pristine Steel Thread files each local file is based on. A local file
 # that matches its base has not been customized and is safe to update.
-UP="$DEST/.hashbang/upstream"
+UP="$DEST/.steel-thread/upstream"
 INSTALLED="$UP/installed"
 INCOMING="$UP/incoming"
-
-# Older installs kept fingerprints here instead, and copied the
-# skills into every agent's folder.
-MANIFEST="$DEST/.hashbang/framework/install-manifest"
-if [ "$migrated_legacy" = true ] && [ -f "$MANIFEST" ]; then
-  tmp=$(mktemp)
-  awk -F '\t' 'BEGIN { OFS = FS } { sub(/^\.steel-thread\//, ".hashbang/", $1); print }' \
-    "$MANIFEST" > "$tmp"
-  mv "$tmp" "$MANIFEST"
-fi
-
-# Fingerprint a file or folder the way the old manifest did.
-fingerprint() {
-  if [ -d "$1" ]; then
-    (cd "$1" && find . -type f ! -name .DS_Store | LC_ALL=C sort | while IFS= read -r f; do
-      printf '%s\n' "$f"; cat "$f"
-    done) | cksum
-  else
-    cksum < "$1"
-  fi
-}
 
 # Ask a question on the terminal and print the answer. No terminal, no answer.
 ask() {
@@ -105,7 +71,7 @@ ask() {
 
 same() { cmp -s "$1" "$2"; }
 
-echo "Installing Hashbang $VERSION into $DEST"
+echo "Installing Steel Thread $VERSION into $DEST"
 
 # 0. Choose the agent: --agent, else the one recorded, else detect, else ask.
 saved_agent=
@@ -139,7 +105,7 @@ fi
 if [ -n "$saved_agent" ] && [ "$saved_agent" != "$AGENT" ]; then
   old_dir=$(skills_dir_for "$saved_agent")
   mkdir -p "$DEST/$SKILLS_DIR"
-  for dir in "$DEST/$old_dir"/hb-*; do
+  for dir in "$DEST/$old_dir"/st-*; do
     [ -d "$dir" ] || continue
     name=$(basename "$dir")
     if [ -e "$DEST/$SKILLS_DIR/$name" ]; then
@@ -160,50 +126,9 @@ dest_of() {
   esac
 }
 
-# 1. Turn an old fingerprint manifest into base files. An item that still
-#    matches its fingerprint was never customized, so it is its own base.
-#    Copies in other agents' folders are removed unless they were edited.
-if [ -f "$MANIFEST" ] && [ ! -d "$INSTALLED" ]; then
-  mkdir -p "$INSTALLED"
-  awk -F '\t' '{ print $1 "\t" $2 }' "$MANIFEST" | while IFS="$(printf '\t')" read -r rel sum; do
-    clean=false
-    if [ -e "$DEST/$rel" ] && [ "$(fingerprint "$DEST/$rel")" = "$sum" ]; then clean=true; fi
-    case "$rel" in
-      .hashbang/framework/*) base=$rel ;;
-      "$SKILLS_DIR"/*) base="skills/${rel#"$SKILLS_DIR"/}" ;;
-      .claude/skills/*|.agents/skills/*|.kiro/skills/*)
-        if [ "$clean" = true ]; then
-          rm -rf "$DEST/$rel"
-          echo "  removed $rel: Hashbang now installs for one agent, $AGENT"
-        elif [ -e "$DEST/$rel" ]; then
-          echo "  kept $rel: it has local changes. Delete it once you no longer need it."
-        fi
-        continue ;;
-      *) continue ;;
-    esac
-    if [ "$clean" = true ]; then
-      mkdir -p "$(dirname "$INSTALLED/$base")"
-      cp -R "$DEST/$rel" "$INSTALLED/$base"
-    fi
-  done
-  for dir in .claude .agents .kiro; do
-    rmdir "$DEST/$dir/skills" "$DEST/$dir" 2>/dev/null || true
-  done
-  rm -f "$MANIFEST"
-fi
-
-# Remove the retired manual after a legacy install is migrated.
-if [ "$migrated_legacy" = true ]; then
-  legacy_manual=.hashbang/framework/steel-thread.md
-  if [ -e "$DEST/$legacy_manual" ]; then
-    rm -f "$DEST/$legacy_manual"
-    echo "  removed $legacy_manual"
-  fi
-fi
-
 mkdir -p "$INSTALLED"
 
-# 2. Framework files and skills, one file at a time.
+# 1. Framework files and skills, one file at a time.
 PENDING=$(mktemp)
 LIST=$(mktemp)
 trap 'rm -f "$PENDING" "$LIST"' EXIT
@@ -215,7 +140,7 @@ set_base() {
   cp -p "$SRC/$1" "$INSTALLED/$1"
 }
 
-(cd "$SRC" && find .hashbang/framework skills -type f ! -name .DS_Store \
+(cd "$SRC" && find .steel-thread/framework skills -type f ! -name .DS_Store \
   ! -path '*/__pycache__/*' | LC_ALL=C sort) > "$LIST"
 
 while IFS= read -r s; do
@@ -223,7 +148,7 @@ while IFS= read -r s; do
   src="$SRC/$s" dst="$DEST/$d" base="$INSTALLED/$s"
   if [ ! -e "$dst" ]; then
     if [ -e "$base" ]; then
-      # Deleted on purpose. Only worth a look if Hashbang changed it since.
+      # Deleted on purpose. Only worth a look if Steel Thread changed it since.
       same "$src" "$base" || flag deleted "$s" "$d"
     else
       mkdir -p "$(dirname "$dst")"
@@ -238,13 +163,13 @@ while IFS= read -r s; do
     set_base "$s"
     echo "  updated $d"
   elif [ -e "$base" ] && same "$src" "$base"; then
-    : # Customized, and Hashbang's version hasn't changed. Nothing to do.
+    : # Customized, and Steel Thread's version hasn't changed. Nothing to do.
   else
     flag modified "$s" "$d"
   fi
 done < "$LIST"
 
-# Files Hashbang no longer ships: delete them unless they were customized.
+# Files Steel Thread no longer ships: delete them unless they were customized.
 (cd "$INSTALLED" && find . -type f | sed 's|^\./||' | LC_ALL=C sort) > "$LIST"
 while IFS= read -r s; do
   [ -e "$SRC/$s" ] && continue
@@ -256,11 +181,11 @@ while IFS= read -r s; do
     flag removed "$s" "$d"
   fi
 done < "$LIST"
-for dir in "$DEST/.hashbang/framework" "$DEST/$SKILLS_DIR" "$INSTALLED"; do
+for dir in "$DEST/.steel-thread/framework" "$DEST/$SKILLS_DIR" "$INSTALLED"; do
   [ -d "$dir" ] && find "$dir" -mindepth 1 -depth -type d -empty -delete
 done
 
-# 3. Hand customized files to hb-update: the new version of each, and a
+# 2. Hand customized files to st-update: the new version of each, and a
 #    list of what needs merging. Their base stays in installed/ until then.
 from=$(cat "$UP/version" 2>/dev/null || echo unknown)
 if [ -f "$INCOMING/PENDING" ]; then
@@ -279,7 +204,7 @@ fi
 printf '%s\n' "$VERSION" > "$UP/version"
 printf '%s\n' "$AGENT" > "$UP/agent"
 
-# 4. AGENTS.md — the entry point every agent reads. The Hashbang block
+# 3. AGENTS.md — the entry point every agent reads. The Steel Thread block
 #    from project/AGENTS.md is added or replaced; the rest is left alone.
 BLOCK=$(cat "$SRC/AGENTS.md")
 
@@ -290,8 +215,7 @@ AGENTS="$DEST/AGENTS.md"
 # merge). A broken block is never rewritten — that could delete the user's
 # own content after the start marker.
 markers() {
-  marker_begin=$2 marker_end=$3
-  BEGIN="$marker_begin" END="$marker_end" awk '
+  BEGIN="$BEGIN" END="$END" awk '
     $0 == ENVIRON["BEGIN"] { b++; if (e) bad = 1 }
     $0 == ENVIRON["END"]   { e++; if (!b) bad = 1 }
     END {
@@ -304,30 +228,14 @@ markers() {
 if [ ! -f "$AGENTS" ]; then
   printf '%s\n' "$BLOCK" > "$AGENTS"
 else
-  marker_state=$(markers "$AGENTS" "$BEGIN" "$END")
-  legacy_marker_state=$(markers "$AGENTS" "$LEGACY_BEGIN" "$LEGACY_END")
-  if [ "$marker_state" != none ] && [ "$legacy_marker_state" != none ]; then
-    echo "  skipped AGENTS.md: it contains both Hashbang and legacy Steel Thread sections." >&2
-    echo "  Remove one section by hand, then run the installer again." >&2
-  elif [ "$marker_state" = broken ]; then
-    echo "  skipped AGENTS.md: its Hashbang section is damaged." >&2
+  marker_state=$(markers "$AGENTS")
+  if [ "$marker_state" = broken ]; then
+    echo "  skipped AGENTS.md: its Steel Thread section is damaged." >&2
     echo "  It needs exactly one '$BEGIN' line followed by one '$END' line." >&2
-    echo "  Fix or remove the markers by hand, then run the installer again." >&2
-  elif [ "$legacy_marker_state" = broken ]; then
-    echo "  skipped AGENTS.md: its legacy Steel Thread section is damaged." >&2
-    echo "  It needs exactly one '$LEGACY_BEGIN' line followed by one '$LEGACY_END' line." >&2
     echo "  Fix or remove the markers by hand, then run the installer again." >&2
   elif [ "$marker_state" = ok ]; then
     tmp=$(mktemp)
     BEGIN="$BEGIN" END="$END" BLOCK="$BLOCK" awk '
-      $0 == ENVIRON["BEGIN"] { print ENVIRON["BLOCK"]; skip = 1; next }
-      $0 == ENVIRON["END"]   { skip = 0; next }
-      !skip                  { print }
-    ' "$AGENTS" > "$tmp"
-    mv "$tmp" "$AGENTS"
-  elif [ "$legacy_marker_state" = ok ]; then
-    tmp=$(mktemp)
-    BEGIN="$LEGACY_BEGIN" END="$LEGACY_END" BLOCK="$BLOCK" awk '
       $0 == ENVIRON["BEGIN"] { print ENVIRON["BLOCK"]; skip = 1; next }
       $0 == ENVIRON["END"]   { skip = 0; next }
       !skip                  { print }
@@ -338,7 +246,7 @@ else
   fi
 fi
 
-# 5. .ignore — ripgrep-based search tools skip what it lists, and git
+# 4. .ignore — ripgrep-based search tools skip what it lists, and git
 #    ignores the file itself. Planning docs stay committed but out of
 #    agents' searches; the rule in AGENTS.md covers agents that don't use it.
 IGNORE="$DEST/.ignore"
@@ -352,7 +260,7 @@ elif ! grep -qxF "$WORK_LINE" "$IGNORE"; then
   echo "  added $WORK_LINE to .ignore"
 fi
 
-# 6. CLAUDE.md — Claude Code reads CLAUDE.md, not AGENTS.md, so the import
+# 5. CLAUDE.md — Claude Code reads CLAUDE.md, not AGENTS.md, so the import
 #    line from project/CLAUDE.md goes at the top to pull AGENTS.md in.
 if [ "$AGENT" = claude ]; then
   IMPORT=$(cat "$SRC/CLAUDE.md")
@@ -367,8 +275,8 @@ if [ "$AGENT" = claude ]; then
 fi
 
 case "$AGENT" in
-  codex) run='$hb-' ;;
-  *) run='/hb-' ;;
+  codex) run='$st-' ;;
+  *) run='/st-' ;;
 esac
 if [ -f "$INCOMING/PENDING" ]; then
   n=$(awk -F '\t' 'NR > 2' "$INCOMING/PENDING" | wc -l | tr -d ' ')

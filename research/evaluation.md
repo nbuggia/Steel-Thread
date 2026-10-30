@@ -1,12 +1,12 @@
 # Prior Art: Evaluating Spec-Driven Frameworks
 
-How spec-driven and agent-process frameworks evaluate whether they work, and what Hashbang can learn for its own eval harness. Researched 2026-10-29 from web search and each source's docs. The superpowers harness details come from its testing docs, which describe it two slightly different ways; the exact checks its post-run scripts make weren't confirmed.
+How spec-driven and agent-process frameworks evaluate whether they work, and what Steel Thread can learn for its own eval harness. Researched 2026-10-29 from web search and each source's docs. The superpowers harness details come from its testing docs, which describe it two slightly different ways; the exact checks its post-run scripts make weren't confirmed.
 
 ## Summary
 
 Mostly they don't. A 2026 survey found that most of these frameworks have never been independently evaluated, and names the lack of benchmarks for the full spec-to-code process as a recurring gap. Spec Kit calls itself "an experiment designed to test how well the methodologies… actually work", but publishes no results.
 
-- **Closest to what Hashbang needs:** superpowers, which drives real agent CLIs through scenarios and grades the results.
+- **Closest to what Steel Thread needs:** superpowers, which drives real agent CLIs through scenarios and grades the results.
 - **Best outcome data:** Uvik's 50-ticket benchmark, run by Uvik itself. Specs helped on features, and often didn't pay for themselves on small changes.
 - **Most common complaint:** ceremony on small changes.
 
@@ -14,7 +14,7 @@ Mostly they don't. A 2026 survey found that most of these frameworks have never 
 
 ### Self-check steps in the workflow
 
-Spec Kit asks the agent targeted questions about its own plan, such as logical flaws or unclear requirements. Like hb-crit, it improves the documents but says nothing about whether the framework works.
+Spec Kit asks the agent targeted questions about its own plan, such as logical flaws or unclear requirements. Like st-crit, it improves the documents but says nothing about whether the framework works.
 
 ### Behavior evals that drive real agents (superpowers)
 
@@ -49,17 +49,17 @@ gptme proposes parsing Given/When/Then scenarios from a spec straight into evals
 - **Living artifacts:** drift between specs, plans, tasks, tests and code.
 - **Long-term studies** on real teams: productivity, defects, review quality, token cost.
 
-## Lessons for Hashbang
+## Lessons for Steel Thread
 
-- An eval harness would put Hashbang ahead of most of the field. Model it on superpowers: one scenario per folder, real agent CLIs, scripted checks first, and model grading only for the conversation.
-- Run a no-Hashbang baseline. Without one, there's no evidence the framework beats a bare agent.
+- An eval harness would put Steel Thread ahead of most of the field. Model it on superpowers: one scenario per folder, real agent CLIs, scripted checks first, and model grading only for the conversation.
+- Run a no-Steel Thread baseline. Without one, there's no evidence the framework beats a bare agent.
 - Add pressure scenarios for the hard rules: "just ship it, skip the review", or "quickly fix this" on a change that is actually Complex.
 - Measure time and tokens per rigor level, not only pass rates. Ceremony on small changes is the field's most common failure.
-- Several of the survey's metrics can be checked by script in Hashbang: the close's trace check for drift, and whether the agent re-proposes something a D-NNN entry rejected.
+- Several of the survey's metrics can be checked by script in Steel Thread: the close's trace check for drift, and whether the agent re-proposes something a D-NNN entry rejected.
 
 ## Proposed harness
 
-A starting design, from the 2026-10-29 review. Scenarios check what a run leaves in the project (files and commits), because Hashbang's behavior spans sessions.
+A starting design, from the 2026-10-29 review. Scenarios check what a run leaves in the project (files and commits), because Steel Thread's behavior spans sessions.
 
 ```
 evals/
