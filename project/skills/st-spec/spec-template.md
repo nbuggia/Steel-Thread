@@ -45,12 +45,12 @@ Every spec has Summary, Current Behavior, and Behavior; a new feature also has U
 
 ## 7. Behavior
 
-\[The delta. Number rules within this spec so the design and the close can refer to them; the numbers are never cited outside this task. Each rule should read as a test name.
+\[The delta. Number rules within this spec so the design and the diff review can refer to them; the numbers are never cited outside this task. Each rule should read as a test name.
 
 - A rule with a trigger: `WHEN <condition> THE SYSTEM SHALL <behavior>`.
 - When the outcome depends on state, use a table instead of a list of rules.
 - When rules are checked in order, say so.
-- Under any rule whose reason is not obvious, add a `Why:` line. A rule that settled an open question always gets one. At close, a reason that isn't obvious from the code becomes a code comment.\]
+- Under any rule whose reason is not obvious, add a `Why:` line. A rule that settled an open question always gets one. When the code is written, a reason that isn't obvious from it becomes a code comment.\]
 
 ### New
 

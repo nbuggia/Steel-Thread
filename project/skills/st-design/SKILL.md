@@ -5,7 +5,7 @@ description: Create a technical design before it is implemented, at the rigor le
 
 # Create Tech Design
 
-This is step 3 of `.steel-thread/framework/development.md`. This file describes the process; the rigor level you pick in step 1 decides which template you fill in. Every design belongs to one task in TASKS.md, and goes in that task's folder in `docs/work/`. List what must outlast it in its Lasting Changes section, which the close step applies when the task closes.
+This is step 3 of `.steel-thread/framework/development.md`. This file describes the process; the rigor level you pick in step 1 decides which template you fill in. Every design belongs to one task in TASKS.md, and goes in that task's folder in `docs/work/`. List what must outlast it in its Lasting Changes section, which the st-verify skill applies when the task is finished.
 
 ## 1. Rigor Level
 
@@ -56,7 +56,7 @@ Judge the design by what it costs the _next_ change, not today's tidiness. Ask: 
 
 Before adding a coordinator, a framework, durable state, a replay protocol, a generic abstraction, new CI infrastructure, or more than 3 separate implementation units, explain why the smallest local fix can't meet the requirements. Reuse is never an excuse to weaken validation, data-loss prevention, security, accessibility, or anything the requirements explicitly ask for.
 
-List the Lasting Changes: what this design adds to the lasting documents, each with the home "Where information lives" in `.steel-thread/framework/docs-layout.md` gives it. The why goes to DECISIONS.md only when it meets the bar in `.steel-thread/framework/files/decisions.md`. List a narrowed requirement the user accepts, and an accepted risk whose exposure outlasts this task, the same way. Don't edit those documents now: the close applies the list once the code is built, so they describe what was actually built. Anything not on the list is lost when the task closes.
+List the Lasting Changes: what this task adds to the lasting documents, each with the home "Where information lives" in `.steel-thread/framework/docs-layout.md` gives it. That covers the design's new structure, boundaries, formats, contracts, and practices, and from the spec, a change to the feature's intent, Not Doing, or Done Means in the PRD, and deferred use cases for BACKLOG.md. The why goes to DECISIONS.md only when it meets the bar in `.steel-thread/framework/files/decisions.md`. List a narrowed requirement the user accepts, and an accepted risk whose exposure outlasts this task, the same way. Spec rules are not Lasting Changes: they live on in the tests at the test points below. List only what changes a document; a row that confirms a document already says it is noise. Don't edit those documents now: st-verify applies the list once the code is built, so they describe what was actually built. Anything not on the list is lost when the task is done.
 
 Choose the test points: where the change will be tested, preferring existing test points to new ones, and the highest-level one that can prove the behavior. Fewer is better. Each names the spec rules it proves, such as B.2, E.1, or a limit, and every rule needs a test point or a manual test. The st-verify skill writes the tests against these and nowhere else.
 
@@ -83,7 +83,7 @@ Don't expand the scope. Raise a finding that adds work only if it names a requir
 Then, for the passes here:
 
 ```text
-The design is discarded when the task closes, and its Lasting Changes section is all that survives. Check that it lists every structure, contract, practice, and rejected alternative a later change will need.
+The design is discarded when the task is done, and its Lasting Changes section is all that survives. Check that it lists every structure, contract, practice, and rejected alternative a later change will need.
 
 1. Check the design's claims against the actual source it cites — every table, every claimed absence — by tracing it or searching for it directly.
 

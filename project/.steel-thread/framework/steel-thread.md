@@ -10,8 +10,8 @@ These never bend. The rest of this manual explains them and covers the judgment 
 2. **The customer's files change only with their approval:** PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, and DECISIONS.md. Marking progress on a task is the one exception.
 3. **Change TASKS.md only through the st-tasks skill.** Before you first create or edit PRD.md, CONTEXT.md, BACKLOG.md, DECISIONS.md, or customizations.md in a session, read its rules in `.steel-thread/framework/files/`.
 4. **Size every code change before you start it.** Read `.steel-thread/framework/development.md`, set the rigor level, and say which criterion decided it.
-5. **Never search `docs/work/`.** It is scaffolding. Open an entry only by its path, and never treat a closed one as current behavior.
-6. **Every Simple and Complex diff gets an st-crit review before the task closes.**
+5. **Never search `docs/work/`.** It is scaffolding. Open an entry only by its path, and never treat a done one as current behavior.
+6. **Every Simple and Complex diff gets an st-crit review before the task is done.**
 7. **Keep `.steel-thread/pickup.md` current at checkpoints.** The customer can stop at any moment.
 8. **Use CONTEXT.md's vocabulary exactly, and never do what it forbids.**
 9. **Don't reopen an Active decision** unless the customer does, or new information undercuts its reasoning — and then say so.

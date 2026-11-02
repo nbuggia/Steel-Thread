@@ -13,8 +13,6 @@ Start from what the Session Start Protocol in `.steel-thread/framework/steel-thr
 
 If there is no objective or no CONTEXT.md, first look for one the project already has, as `files/prd.md` and `files/context.md` describe, and point to it.
 
-Also list `docs/work/`. A task marked done whose folder has no `close.md` was never closed.
-
 Then find the first row that matches. A skipped objective counts as done, unless the customer asked for one:
 
 | State | Next step |
@@ -24,8 +22,7 @@ Then find the first row that matches. A skipped objective counts as done, unless
 | No `docs/engineering/ARCHITECTURE.md` | Setup: tailor development |
 | TASKS.md has no phases | Setup: plan phases and first tasks |
 | The customer says the direction has changed | Reframe |
-| A task was marked done without being closed | Close the task |
-| The current task's code is finished, and it has a work entry | Close the task |
+| The current task's code is finished, and it has a work entry | Finish the task |
 | Open tasks in the current phase | Resume |
 | Every task in the current phase is done | Close the phase |
 | Every phase is done | Check against Done Means |
@@ -120,9 +117,9 @@ Want to start there?"
 
 The next step must be concrete and small enough to start immediately — a specific file, function, section, or question. Not "continue working on T-002."
 
-## Close the task
+## Finish the task
 
-A task's code is finished, or a task was marked done without being closed. Say so in one line, "T-014's code is done, so the next step is closing it — moving what lasts into the tests and docs," and use the st-close skill. If the code hasn't been validated against its spec and its diff reviewed yet, do that first with the st-verify skill. Then come back to Choose the next step.
+A task's code is finished. Say so in one line, "T-014's code is done, so the next step is finishing it — applying its design's Lasting Changes to the docs," and use the st-verify skill: it validates the code and reviews the diff first if that hasn't happened yet. Then come back to Choose the next step.
 
 ## Close the phase
 

@@ -56,7 +56,7 @@ Exit when every ready slice has a valid predecessor and demo, design findings ar
 
 ## Checkpoints and drift
 
-After each slice, mark it Done, put its evidence — tests added, results, drift — in the commit message, and add a Checkpoint Log entry naming the commit. Review only affected remaining slices plus their dependency edges, and update them in place; explain why others are unchanged.
+After each slice, mark it Done, put its evidence — tests added, results, drift — in the commit message, and add a Checkpoint Log entry naming the commit. Drift that changes a lasting fact also gets a row in the design's Lasting Changes. Review only affected remaining slices plus their dependency edges, and update them in place; explain why others are unchanged.
 
 Recognize a design failure, not just a slice failure, before patching around it. A single hard case is not a design failure — some problems are legitimately complex, and complexity in the data is not complexity in the design. The signal is a pattern: the same shape of trouble recurring across two or more otherwise- unrelated slices. Tells:
 

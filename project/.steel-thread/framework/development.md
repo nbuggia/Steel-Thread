@@ -53,7 +53,7 @@ What each level runs:
 | Slicing plan (step 4) | None | None; needing more than two slices is a reason to re-size | When the design needs more than two slices |
 | Tests and code (step 5) | A bug's reproducing test, then the fix | Tests first, at the design's test points, then validate against the spec | Tests first, slice by slice, then validate against the spec |
 | Diff review (step 5) | None | One st-crit pass on the diff | One st-crit pass on the diff |
-| Close (step 6) | None; the commit message records the cause and the test | st-close steps 1–4 and 6; check the rows by eye | Every st-close step, including the searches |
+| Finish (step 6) | None; the commit message records the cause and the test | Apply the design's Lasting Changes | Apply the design's Lasting Changes |
 
 ## Trivial Changes
 
@@ -84,18 +84,18 @@ A prototype answers a question, and it is thrown away. Its `README.md` starts wi
 
 **Produces:** the tests and code, a commit per slice, and a reviewed diff. Write the code your own way, inside the st-verify skill's gates: tests first at the design's test points, a commit per slice, validation against the spec and design, and one st-crit pass on the whole diff.
 
-## Step 6 — Close
+## Step 6 — Finish
 
-**Produces:** `close.md` in the work entry. **Skip when:** the task is Trivial, or has no work entry. Use the st-close skill as soon as the diff review is clean. A task with a work entry is not done until it is closed.
+**Produces:** the design's Lasting Changes, applied to the lasting documents, and the task marked done. **Skip when:** the task is Trivial, or has no work entry. Follow Finish the task in the st-verify skill as soon as the diff review is clean. A task with a work entry is not done until its Lasting Changes are applied.
 
 ## Commits
 
-Commit the work yourself, so the record never depends on someone remembering to: one commit for a Trivial change, one per slice (or for the whole design, if it has no slicing plan), one for the fixes from validation and the diff review, and one for the close.
+Commit the work yourself, so the record never depends on someone remembering to: one commit for a Trivial change, one per slice (or for the whole design, if it has no slicing plan), one for the fixes from validation and the diff review, and one for the lasting documents and TASKS.md when the task is finished.
 
 - Stage only the files the work changed. Leave the customer's unrelated changes out; if a file holds both, ask before committing it.
 - The first line names the change and cites the task ID. The body records the evidence: the tests added and that they pass, any drift from the design and why, and for a bug the cause and the reproducing test.
 - Commit on the current branch. Never push, amend, rebase, or rewrite history unless the customer asks, and follow CONTEXT.md's never-do rules.
-- In a project without version control, the close records the evidence in close.md instead.
+- In a project without version control, add the evidence to an Evidence section at the end of the design instead.
 
 ## Testing
 
@@ -121,11 +121,11 @@ A bug follows the same flow with a shorter spec:
 3. **Spec,** only if the correct behavior was never a promise or the promise was wrong: use the st-spec skill to write the rule for the fixed behavior, and `SHALL CONTINUE TO` rules for what must not change.
 4. **Tech design,** unless the fix is Trivial.
 5. **Tests and code,** starting with the failing reproduction.
-6. **Close,** unless the fix is Trivial.
+6. **Finish,** unless the fix is Trivial.
 
 ## Between Steps
 
 - **When a step finishes,** start the next one and say so in one line: "Spec approved after review. Starting the tech design."
 - **st-elevate** is for when a step is blocked: it resolves a high-judgment decision or gathers critical input with the customer in one focused session.
-- **st-crit** comes after work is written: its review is what lets a spec become Approved, and what lets a diff go to the close. Every review's findings are settled as `.steel-thread/framework/reviews.md` says.
+- **st-crit** comes after work is written: its review is what lets a spec become Approved, and what lets a task be finished. Every review's findings are settled as `.steel-thread/framework/reviews.md` says.
 - **Steel Thread files stay current throughout.** Each approved document is a checkpoint for pickup.md. Choices all future work has to follow go to DECISIONS.md, new terms to CONTEXT.md, future features to BACKLOG.md, and follow-up work to TASKS.md through the st-tasks skill, each with the customer's approval.

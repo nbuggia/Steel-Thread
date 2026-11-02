@@ -131,8 +131,8 @@ Severities, decisions, and the Source column: `.steel-thread/framework/reviews.m
 
 ## 16. Lasting Changes
 
-\[What this design adds to the lasting documents, as st-design's Draft step says. The close applies these once the code is built; anything not listed here is lost when the task closes.\]
+\[What this task adds to the lasting documents, as st-design's Draft step says. st-verify applies these once the code is built; anything not listed here is lost when the task is done. Add a row during the build when drift changes a lasting fact.\]
 
 | Change | Goes to |
 | ------ | ------- |
-|        | ARCHITECTURE.md / CONVENTIONS.md / CONTRACTS.md / COMMON-FAILURE-MODES.md / DECISIONS.md |
+|        | ARCHITECTURE.md / CONVENTIONS.md / CONTRACTS.md / COMMON-FAILURE-MODES.md / DECISIONS.md / PRD.md / BACKLOG.md |

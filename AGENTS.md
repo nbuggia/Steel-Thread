@@ -52,8 +52,8 @@ project/                   ← the product: what lands in a user's project
     st-design/                ← installed; tech design at a rigor level fitted to the change, with review passes
     st-slice/                 ← installed; splits a Complex design into thin vertical slices
     st-verify/SKILL.md        ← installed; gates around the code: tests first, a commit per slice,
-                                validation against the spec, and the diff review
-    st-close/                 ← installed; closes a task: moves what lasts out of its planning docs
+                                validation against the spec, the diff review, and finishing the task
+                                by applying the design's Lasting Changes
 ```
 
 `install.sh` copies `project/.steel-thread/framework/` into the user's `.steel-thread/framework/`, creates the empty state folders, copies every skill in `project/skills/` into the chosen agent's skills folder, merges `project/AGENTS.md` (and, for Claude Code, `project/CLAUDE.md`) into the user's files, and adds `docs/work/` to the user's `.ignore`. The customer's Steel Thread files (PRD, CONTEXT, TASKS, BACKLOG, DECISIONS) live in the user's `docs/`; Steel Thread's working files live in `.steel-thread/`.

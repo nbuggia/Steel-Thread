@@ -29,8 +29,8 @@ date created: YYYY-MM-DD
 
 ## Lasting Changes
 
-\[What this change adds to the lasting documents. The close applies these; anything not listed is lost then. Write "None." when it adds nothing.\]
+\[What this change adds to the lasting documents. st-verify applies these when the task is finished; anything not listed is lost then. Write "None." when it adds nothing.\]
 
 | Change | Goes to |
 | --- | --- |
-|  | ARCHITECTURE.md / CONVENTIONS.md / CONTRACTS.md / COMMON-FAILURE-MODES.md / DECISIONS.md |
+|  | ARCHITECTURE.md / CONVENTIONS.md / CONTRACTS.md / COMMON-FAILURE-MODES.md / DECISIONS.md / PRD.md / BACKLOG.md |
