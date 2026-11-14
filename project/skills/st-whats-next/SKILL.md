@@ -11,8 +11,6 @@ The customer's files live in `docs/`: PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, 
 
 Start from what the Session Start Protocol in `.steel-thread/framework/steel-thread.md` reads, and read whatever of it this session hasn't yet. Never ask the customer for something these files already answer.
 
-If `.steel-thread/pickup.md` exists, it is from an older Steel Thread version. Read it once, move anything still true that no other file holds into where it belongs (Where State Lives in `.steel-thread/framework/steel-thread.md`): usually the next step into the task's Notes, and unapproved proposals into one question to the customer. Then delete it.
-
 If there is no objective or no CONTEXT.md, first look for one the project already has, as `files/prd.md` and `files/context.md` describe, and point to it.
 
 Then find the first row that matches. A skipped objective counts as done, unless the customer asked for one:
