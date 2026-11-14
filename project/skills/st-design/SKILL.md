@@ -68,7 +68,7 @@ Scope can still change while you draft. If an edge case turns up that costs more
 
 A Simple design gets no review pass: go to §5. Its review is the st-crit pass on the diff, in the st-verify skill.
 
-At Complex rigor, run the review passes your rigor level's budget calls for (Rigor Levels in `.steel-thread/framework/development.md`). `.steel-thread/framework/reviews.md` says how each pass runs: a fresh context, numbered passes recorded in §15's Source column, what a later pass checks, and what happens when a BLOCKER outlasts the budget.
+At Complex rigor, review it until the verdict is READY, at most three passes. `.steel-thread/framework/reviews.md` says how each pass runs: a fresh context, what counts as a finding, numbered passes recorded in §15's Source column, why a later pass checks only the fixes, and what happens when the third pass isn't READY.
 
 Give each reviewer: the draft, the task's spec, the architecture, conventions, and contracts docs, the convention skills for the areas it touches, the failure modes that apply, and read-only repo access, plus `design-red-flags.md` at Complex rigor.
 
@@ -77,10 +77,10 @@ Every reviewer prompt, here and in §6, opens with this framing:
 ```text
 You're a principal engineer reviewing this design before anyone implements it. You have the design, its spec, conventions, architecture, contracts, applicable failure modes, read-only repo access, and whatever else was provided. Your job is to keep it simple: built on the existing code, standards, and frameworks, testable with integration tests through every boundary it crosses, and easy to change later. Challenge the design where it falls short of that.
 
-Don't expand the scope. Raise a finding that adds work only if it names a requirement the design fails without that work. Anything else that adds work is out of scope, however good the idea is: leave it out.
+Don't expand the scope. Raise a finding only for a spec rule the design fails, a promise or project rule it breaks, or a real bug with the steps that trigger it. A guard for a situation counts only if you can say how that situation happens in this product. Anything else that adds work is out of scope, however good the idea is: list it as an IDEA, at most three, and don't count it toward the verdict.
 ```
 
-Then, for the passes here:
+Then, for the first pass:
 
 ```text
 The design is discarded when the task is done, and its Lasting Changes section is all that survives. Check that it lists every structure, contract, practice, and rejected alternative a later change will need.
@@ -90,6 +90,14 @@ The design is discarded when the task is done, and its Lasting Changes section i
 2. Weigh the problem against the design's size. If a rare edge case drives most of the cost, propose narrowing the requirement to remove it, not a cheaper mechanism.
 
 3. For each finding, give the evidence, a severity from `.steel-thread/framework/reviews.md` (BLOCKER, MAJOR, MINOR, or QUESTION), the smallest fix, and what it costs to leave unaddressed instead. If you find nothing, say so — a clean pass is a legitimate result.
+
+4. End with a verdict: READY, or CHANGES NEEDED with the findings that stop it.
+```
+
+For a later pass, replace the first-pass instructions with:
+
+```text
+This is a follow-up pass. You have the findings table from earlier passes and the sections that changed since. Check only that each accepted finding is resolved, and that no change broke something or added scope the finding didn't require. Don't raise new findings on unchanged sections. End with a verdict: READY, or CHANGES NEEDED with the findings that stop it.
 ```
 
 Decide each finding as Deciding Findings in `reviews.md` says, checking it against the repo's existing guidance and the spec, and record it in §15. If it touches the spec, contracts, or architecture, mark that in the `Arch?` column. Deferred findings go in the design's Open Questions. If a finding suggests a new reusable failure mode, add it as provisional until the design is Approved. Never add one for something that was rejected or deferred.
@@ -110,7 +118,7 @@ A Complex design is **not** ready for implementation if any of these are true:
 - This is a bug fix and it's missing its reproduction proof.
 - An assumption about the OS or framework hasn't been proven or spiked.
 - The acceptance gate can't actually be run.
-- A blocker is still unresolved or unverified.
+- The last review pass's verdict wasn't READY.
 - A spec conflict hasn't been resolved.
 - A slice has no concrete predecessor or demo.
 - Something driving most of the design's complexity has no recorded decision behind it.

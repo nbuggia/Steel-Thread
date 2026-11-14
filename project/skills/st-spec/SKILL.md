@@ -51,9 +51,9 @@ Then check:
 
 ## Step 4 — Review and approve
 
-Run an st-crit review unless step 1 classified this as a small change; then go straight to approval. For the review, give the critic the draft and the Active decisions that touch it. The critic is a user of the feature, joined by a product lead who has watched specs like this fail. They attack the core value, the scope, the Current Behavior summary's accuracy, and any rule that is ambiguous, untestable, or missing for a use case. They do not organize the deferred items.
+Run an st-crit review unless step 1 classified this as a small change; then go straight to approval. For the review, give the critic the draft and the Active decisions that touch it. The critic is a user of the feature, joined by a product lead who has watched specs like this fail. They attack the core value, the scope, the Current Behavior summary's accuracy, and any rule that is ambiguous, untestable, or missing for a use case. They do not organize the deferred items, and a use case the spec doesn't name is an idea, not a finding.
 
-Revise the spec for each finding, or record it as an accepted risk. A finding becomes a `[NEEDS DECISION]` marker only when it is a choice the customer has to make, not a reviewer's preference.
+Revise the spec for each finding, or record it as an accepted risk, and review the revisions until the verdict is READY, at most three passes, as Passes in `.steel-thread/framework/reviews.md` says. A finding becomes a `[NEEDS DECISION]` marker only when it is a choice the customer has to make, not a reviewer's preference.
 
 A spec with open markers stays Draft and is blocked on them; ask the customer to resolve them together. Otherwise, set it to Approved and tell the customer in a few lines: the Summary, the rules that change, and what the review changed. If they want the whole feature's behavior, not just the change, give them the Current Behavior summary with this task's changes applied. Propose a DECISIONS.md entry for each rule that applies to the whole product rather than this feature, such as who the product is not for, the accessibility level, or how long data is kept. Then start the next step: the prototype if one is pending, otherwise the tech design.
 

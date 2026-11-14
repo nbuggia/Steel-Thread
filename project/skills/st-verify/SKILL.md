@@ -22,7 +22,7 @@ Write the code your own way. This skill adds the checks before, between, and aft
 - **Fix the code** when the spec is right. That is yours to do.
 - **Fix the spec** when the implementation found something better, or the rule was wrong. A change users would notice is a high-judgment decision: put every such mismatch to the customer in one message, with your recommendation. Revise the spec, and send it back through review only if a use case changed.
 
-**Review the diff.** Use the st-crit skill, as a senior reviewer for this stack, on the change's whole diff against its base, with the spec and design. Fix what it finds, or settle it with the customer as above, and re-run the checks for what changed.
+**Review the diff.** Use the st-crit skill, as a senior reviewer for this stack, on the change's whole diff against its base, with the spec and design. Fix what it finds with the smallest change that resolves each finding, or settle it with the customer as above, re-run the checks for what changed, and commit the fixes. Then run a follow-up pass on the diff of the fixes alone, with the findings. Repeat until the verdict is READY, at most three passes, as Passes in `.steel-thread/framework/reviews.md` says.
 
 As each finding is resolved, append one line to `.steel-thread/review-log.md`, creating it if needed, so the customer can later see whether the review earns its cost. Record what happened, not whether it was worth it:
 
@@ -30,9 +30,9 @@ As each finding is resolved, append one line to `.steel-thread/review-log.md`, c
 2026-11-03 · T-012 · MAJOR · No test for an empty vault · fixed
 ```
 
-The outcome is one of `fixed` (the code or tests changed), `spec changed`, `rejected`, or `accepted risk`. A review with no findings gets one line with `CLEAN` in place of the severity, finding, and outcome.
+The outcome is one of `fixed` (the code or tests changed), `spec changed`, `rejected`, or `accepted risk`. A review with no findings gets one line with `CLEAN` in place of the severity, finding, and outcome. Ideas aren't logged here.
 
-When no mismatch or finding is open, finish the task.
+When the verdict is READY and no mismatch is open, finish the task.
 
 ## Finish the task
 
@@ -43,7 +43,7 @@ This is step 6. **Skip when:** the task is Trivial, or has no work entry. A task
 3. **Check for links.** Search the project, outside `docs/work/`, `.steel-thread/`, and the agent's skills folder, for `docs/work` and this entry's folder name. Code, tests, lasting documents, and TASKS.md cite a task ID, D-NNN, FM-NNN, or commit instead.
 4. **Queue the checks left for the customer,** if any (see below), in `docs/manual-tests/next-pass.md`, creating it from `next-pass-template.md` in this skill's folder if needed: one section for this task, one line per check.
 5. **Mark the task** with the st-tasks skill: `awaiting test`, with the number of checks in Notes, if step 4 queued any; otherwise `done`, citing the task's last code commit, if the project uses version control, and the D- and FM- IDs the task added. Commit the lasting documents, next-pass.md, and TASKS.md (Commits in development.md).
-6. **Tell the customer** in a few lines what changed in the lasting documents, what went to BACKLOG.md, and which checks wait for their test pass. Then use the st-whats-next skill to recommend the next task.
+6. **Tell the customer** in a few lines what changed in the lasting documents, what went to BACKLOG.md, and which checks wait for their test pass. If the task's reviews listed ideas, show them one line each and ask which, if any, go to BACKLOG.md; add only those. Then use the st-whats-next skill to recommend the next task.
 
 The work entry stays in `docs/work/` as history.
 

@@ -49,10 +49,10 @@ What each level runs:
 | Spec (step 1) | None | When users would notice the change | When users would notice the change |
 | Prototype (step 2) | None | When step 2 calls for one | When step 2 calls for one |
 | Bug diagnosis review | None; the failing test is the proof | Only when a failing test doesn't prove the cause | Always |
-| Tech design (step 3) | None | Simple template, no review pass | Complex template, two review passes, plus at most one blocker-verification pass |
+| Tech design (step 3) | None | Simple template, no review pass | Complex template, reviewed until READY, at most three passes |
 | Slicing plan (step 4) | None | None; needing more than two slices is a reason to re-size | When the design needs more than two slices |
 | Tests and code (step 5) | A bug's reproducing test, then the fix | Tests first, at the design's test points, then validate against the spec | Tests first, slice by slice, then validate against the spec |
-| Diff review (step 5) | None | One st-crit pass on the diff | One st-crit pass on the diff |
+| Diff review (step 5) | None | st-crit on the diff until READY, at most three passes | st-crit on the diff until READY, at most three passes |
 | Finish (step 6) | None; the commit message records the cause and the test | Apply the design's Lasting Changes | Apply the design's Lasting Changes |
 
 ## Trivial Changes
@@ -82,7 +82,7 @@ A prototype answers a question, and it is thrown away. Its `README.md` starts wi
 
 ## Step 5 — Tests and Code
 
-**Produces:** the tests and code, a commit per slice, and a reviewed diff. Write the code your own way, inside the st-verify skill's gates: tests first at the design's test points, a commit per slice, validation against the spec and design, and one st-crit pass on the whole diff.
+**Produces:** the tests and code, a commit per slice, and a reviewed diff. Write the code your own way, inside the st-verify skill's gates: tests first at the design's test points, a commit per slice, validation against the spec and design, and an st-crit review of the whole diff until it is READY.
 
 ## Step 6 — Finish
 
@@ -128,5 +128,5 @@ A bug follows the same flow with a shorter spec:
 
 - **When a step finishes,** start the next one and say so in one line: "Spec approved after review. Starting the tech design."
 - **st-elevate** is for when a step is blocked: it resolves a high-judgment decision or gathers critical input with the customer in one focused session.
-- **st-crit** comes after work is written: its review is what lets a spec become Approved, and what lets a task be finished. Every review's findings are settled as `.steel-thread/framework/reviews.md` says.
+- **st-crit** comes after work is written: its READY verdict is what lets a spec become Approved, and what lets a task be finished. Every review's findings are settled as `.steel-thread/framework/reviews.md` says.
 - **Steel Thread files stay current throughout.** Each approved document is a checkpoint for pickup.md. Choices all future work has to follow go to DECISIONS.md, new terms to CONTEXT.md, future features to BACKLOG.md, and follow-up work to TASKS.md through the st-tasks skill, each with the customer's approval.

@@ -30,7 +30,7 @@ Create `slices.md` from the template, in the same task folder as the design: `do
 
 ## 4. Review
 
-Budget: one broad pass, plus one targeted blocker-verification pass if needed. All reviewers and user-supplied feedback share this budget.
+Review it until the verdict is READY, at most three passes, as Passes in `.steel-thread/framework/reviews.md` says. All reviewers and user-supplied feedback share this budget.
 
 Give a reviewer in a fresh context (`.steel-thread/framework/reviews.md`) only the design, plan, and this request:
 
@@ -46,7 +46,7 @@ Classify each change:
 
 Apply accepted SLICING changes. Route DESIGN findings back to the design and block only affected slices; do not solve them in the plan. Reject/defer EXPANSION unless the user broadens scope. Independent slices remain startable.
 
-Decide each finding as Deciding Findings in `reviews.md` says. Use the second pass only to verify the original blocker against changed sections and dependency edges.
+Decide each finding as Deciding Findings in `reviews.md` says. A later pass checks only the fixes: the changed slices and their dependency edges.
 
 ## 5. Verify and exit
 
