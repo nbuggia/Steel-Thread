@@ -93,6 +93,7 @@ A prototype answers a question, and it is thrown away. Its `README.md` starts wi
 Commit the work yourself, so the record never depends on someone remembering to: one commit for a Trivial change, one per slice (or for the whole design, if it has no slicing plan), one for the fixes from validation and the diff review, and one for the lasting documents and TASKS.md when the task is finished.
 
 - Stage only the files the work changed. Leave the customer's unrelated changes out; if a file holds both, ask before committing it.
+- Steel Thread's own files go in the next commit with the work, so they travel with the code: TASKS.md, `.steel-thread/review-log.md`, `.steel-thread/customizations.md`, and approved edits to PRD.md, CONTEXT.md, BACKLOG.md, and DECISIONS.md. When the customer stops and only these have changed, commit them on their own: `Update Steel Thread files`.
 - The first line names the change and cites the task ID. The body records the evidence: the tests added and that they pass, any drift from the design and why, and for a bug the cause and the reproducing test.
 - Commit on the current branch. Never push, amend, rebase, or rewrite history unless the customer asks, and follow CONTEXT.md's never-do rules.
 - In a project without version control, add the evidence to an Evidence section at the end of the design instead.

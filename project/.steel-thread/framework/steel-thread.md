@@ -60,7 +60,7 @@ The customer can close the terminal at any moment, so keep the project's state i
 | Choices future work must follow | DECISIONS.md |
 | Changes to the customer's files they haven't approved | Nowhere: propose them when they come up |
 
-- **Before a stop or a long step,** make sure the task in progress names its very next step in Notes, and commit finished work.
+- **Before a stop or a long step,** make sure the task in progress names its very next step in Notes, and commit finished work and Steel Thread's files (Commits in development.md).
 - **Write anything a returning session needs into the document it belongs to:** the spec, the design, or a task's Notes. If it fits none of them, it probably doesn't need keeping.
 
 ## Keeping the Customer's Files
