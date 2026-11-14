@@ -94,7 +94,7 @@ E.1 WHEN \[condition\] THE SYSTEM SHALL \[behavior\].
 
 ## 12. Deferred
 
-\[Use cases and ideas that wait. Each becomes a BACKLOG.md row at close, with this task as its Source. Rows may stay rough.\]
+\[Use cases that wait, chosen while shaping the spec. Each becomes a BACKLOG.md row at close, with this task as its Source. Rows may stay rough. A reviewer's ideas go in Reviewer Ideas, not here.\]
 
 - \[feature\] — \[why it waits\]
 
@@ -107,3 +107,9 @@ E.1 WHEN \[condition\] THE SYSTEM SHALL \[behavior\].
 \[Only unanswered questions. Mark each one inline where it applies as `[NEEDS DECISION: …]` and list it here, with what will answer it: the customer, or a prototype. When one is answered, move the answer into the rules with a `Why:` line, and delete it from this list.\]
 
 - \[question\] — \[rule or section it blocks\] — \[who or what answers it\]
+
+## 15. Reviewer Ideas
+
+\[Optional. Ideas the spec review raised that the spec doesn't ask for, at most three per review. Nothing here is built in this task. When the task finishes, the customer sees them in one line each, and only the ones they pick go to BACKLOG.md.\]
+
+- \[idea\] — \[Pass N\]

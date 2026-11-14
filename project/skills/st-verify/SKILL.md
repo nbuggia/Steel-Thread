@@ -30,7 +30,7 @@ As each finding is resolved, append one line to `.steel-thread/review-log.md`, c
 2026-11-03 · T-012 · MAJOR · No test for an empty vault · fixed
 ```
 
-The outcome is one of `fixed` (the code or tests changed), `spec changed`, `rejected`, or `accepted risk`. A review with no findings gets one line with `CLEAN` in place of the severity, finding, and outcome. Ideas aren't logged here.
+The outcome is one of `fixed` (the code or tests changed), `spec changed`, `rejected`, or `accepted risk`. A review with no findings gets one line with `CLEAN` in place of the severity, finding, and outcome. Ideas aren't logged here; they go in the design's Reviewer Feedback table as IDEA rows, adding the table to a Simple design if it has none.
 
 When the verdict is READY and no mismatch is open, finish the task.
 
@@ -43,7 +43,7 @@ This is step 6. **Skip when:** the task is Trivial, or has no work entry. A task
 3. **Check for links.** Search the project, outside `docs/work/`, `.steel-thread/`, and the agent's skills folder, for `docs/work` and this entry's folder name. Code, tests, lasting documents, and TASKS.md cite a task ID, D-NNN, FM-NNN, or commit instead.
 4. **Queue the checks left for the customer,** if any (see below), in `docs/manual-tests/next-pass.md`, creating it from `next-pass-template.md` in this skill's folder if needed: one section for this task, one line per check.
 5. **Mark the task** with the st-tasks skill: `awaiting test`, with the number of checks in Notes, if step 4 queued any; otherwise `done`, citing the task's last code commit, if the project uses version control, and the D- and FM- IDs the task added. Commit the lasting documents, next-pass.md, and TASKS.md (Commits in development.md).
-6. **Tell the customer** in a few lines what changed in the lasting documents, what went to BACKLOG.md, and which checks wait for their test pass. If the task's reviews listed ideas, show them one line each and ask which, if any, go to BACKLOG.md; add only those. Then use the st-whats-next skill to recommend the next task.
+6. **Tell the customer** in a few lines what changed in the lasting documents, what went to BACKLOG.md, and which checks wait for their test pass. If the task's reviews listed ideas, in the spec's Reviewer Ideas or as IDEA rows in the design's Reviewer Feedback table, show them one line each and ask which, if any, go to BACKLOG.md; add only those. Then use the st-whats-next skill to recommend the next task.
 
 The work entry stays in `docs/work/` as history.
 
