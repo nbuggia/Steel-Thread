@@ -19,7 +19,7 @@ Find the design's slicing strategy: `Implementation Slicing Strategy` in the Com
 
 ## 3. Slice
 
-Create `slices.md` from the template, in the same task folder as the design: `docs/work/T-NNN-<name>/slices.md`. Do not copy slices into TASKS.md: the task stays the unit of work there. Keep its detail line, through the st-tasks skill, naming the slice in progress: `Slice 2 of 4 in docs/work/T-014-first-save-filename/slices.md.`
+Create `slices.md` from the template, in the same task folder as the design: `docs/work/T-NNN-<name>/slices.md`. Do not copy slices into TASKS.md: the task stays the unit of work there. Keep its Notes, through the st-tasks skill, naming the slice in progress: `Slice 2 of 4 in docs/work/T-014-first-save-filename/slices.md.`
 
 - Prefer few slices.
 - Each slice closes one cohesive, independently verifiable outcome.

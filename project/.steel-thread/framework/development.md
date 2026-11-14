@@ -86,7 +86,7 @@ A prototype answers a question, and it is thrown away. Its `README.md` starts wi
 
 ## Step 6 — Finish
 
-**Produces:** the design's Lasting Changes, applied to the lasting documents, and the task marked done. **Skip when:** the task is Trivial, or has no work entry. Follow Finish the task in the st-verify skill as soon as the diff review is clean. A task with a work entry is not done until its Lasting Changes are applied.
+**Produces:** the design's Lasting Changes, applied to the lasting documents, and the task marked done, or awaiting test when checks are left for the customer's test pass. **Skip when:** the task is Trivial, or has no work entry. Follow Finish the task in the st-verify skill as soon as the diff review is clean. A task with a work entry is not done until its Lasting Changes are applied and its test-pass checks have passed.
 
 ## Commits
 
@@ -111,6 +111,7 @@ Choose the kind of test by what it has to prove:
 - Each use case gets at least one automated UI or integration test. Unit tests alone do not prove a use case works.
 - Follow the project's `docs/engineering/TESTING.md` for tools and commands, and for its validation order: which checks a change runs, and when the full suite runs. If it does not exist, propose creating it the first time you write a test, with the commands that run each kind.
 - When automated testing can't reach a behavior, add a step to its product area's manual test in `docs/manual-tests/<area>.md`, from st-dev-setup's `manual-test-template.md`, instead of skipping the check. Without one, that behavior has no lasting home.
+- Run every check you can. A check you can't run, or one TESTING.md or the customer leaves for their test pass, waits in `docs/manual-tests/next-pass.md`, and the task waits as `awaiting test` until it passes (see the st-verify skill). Never mark a task done with checks that haven't run.
 
 ## Bugs
 

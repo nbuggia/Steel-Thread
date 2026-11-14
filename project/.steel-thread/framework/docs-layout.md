@@ -13,6 +13,7 @@ docs/
   DECISIONS.md                  ← log of decisions and why they were made
   manual-tests/                 ← human-run checks, by product area
     <area>.md
+    next-pass.md                ← checks waiting for the customer's next test pass
   work/                         ← scaffolding, never searched: one folder per task
     T-014-first-save-filename/
       spec.md                   ← the behavior delta
@@ -51,7 +52,7 @@ Rules:
 - A work entry is always a folder, even when it holds a single document, so adding a second one never moves the first.
 - `docs/work/` holds every task's work entry, open and done. Finishing a task leaves its folder in place.
 - Never search `docs/work/`. It is scaffolding, and the installer lists it in `.ignore` so search tools skip it. Open an entry only by its path: the open task you are working on, or a done one for history — why something was built the way it was, when DECISIONS.md and the lasting documents don't say, or when the customer asks. Never use a done entry as current behavior; current behavior is in the code, the tests, and the lasting documents.
-- Nothing lasting links into `docs/work/`: no code comment, test, lasting document, or done task. Cite a task ID, D-NNN, FM-NNN, or commit instead. While a task is open, its detail line in TASKS.md may name its folder.
+- Nothing lasting links into `docs/work/`: no code comment, test, lasting document, or done task. Cite a task ID, D-NNN, FM-NNN, or commit instead. Until a task is done, its Notes in TASKS.md may name its folder.
 
 ## Planning Docs Are Scaffolding
 
@@ -83,7 +84,7 @@ What each state means:
 - **Approved** — it passed its review and has no open `[NEEDS DECISION]` markers, so the next step can start from it. You set it.
 - **Pending** — the slice has not started.
 - **Done** — the slice is finished.
-- **Blocked** — the document or slice cannot proceed without the customer: a high-judgment decision or critical input. Say why on the next line, starting `Blocked:`, the same as a task in TASKS.md.
+- **Blocked** — the document or slice cannot proceed without the customer: a high-judgment decision or critical input. Say why on the next line, starting `Blocked:`.
 
 Rules:
 
@@ -112,7 +113,7 @@ DECISIONS.md never states the current rule; the other two do, and cite the decis
 The neighbors:
 
 - **Tests** hold behavior. Each test's name states the behavior it proves, in users' terms, and suites are grouped by product area.
-- **Manual tests** hold behavior that automation can't reach, by product area, in `docs/manual-tests/<area>.md`. A person runs them, often the customer.
+- **Manual tests** hold behavior that automation can't reach, by product area, in `docs/manual-tests/<area>.md`. A person runs them, often the customer. Checks waiting for the customer's next run are queued in `docs/manual-tests/next-pass.md`, which the st-verify skill keeps.
 - **CONTRACTS.md** holds the promises other systems and users' files rely on: file formats, on-device filenames, URL schemes, update feeds, public APIs. ARCHITECTURE.md names the component that implements each one.
 - **PRD.md** holds the objective, and product intent per feature area: who it is for, why it matters, what it doesn't do, and what done means. `.steel-thread/framework/files/prd.md` has its format.
 - **Convention skills** hold the rules for one area of the code, such as UI or logging, or the steps for one recurring kind of change, such as adding a feature flag. They live in the agent's skills folder, named without the `st-` prefix, so Steel Thread updates never touch them. A skill that keeps project paths in its examples can be copied to another project on the same stack.

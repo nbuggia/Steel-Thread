@@ -40,10 +40,10 @@ Run this silently.
 1. **Read the objective.** Every suggestion you make this session should serve it.
 2. **Read docs/CONTEXT.md.** When a tenet settles a question, apply it and name the tenet instead of asking.
 3. **Read .steel-thread/pickup.md if it exists:** what was accomplished, what is in flight, blocked, or deferred. Leave it in place; the first checkpoint replaces it, and earlier notes are in git history.
-4. **Read docs/TASKS.md from the current phase onward,** skipping phases marked ✓. Form a view on what the customer should work on next.
+4. **Read docs/TASKS.md from the current phase onward,** skipping phases marked ✓. Form a view on what the customer should work on next, and note any tasks awaiting the customer's test pass.
 5. **Scan docs/DECISIONS.md:** the headings, and the full entries for any Active decision that touches the work in flight.
 6. **Read the git log since the pickup note's date,** including changes to `docs/`. Significant changes may shift priorities.
-7. **Greet the customer with orientation, not a blank slate.** Never ask "How can I help you today?" when you know what's in flight, and never make them re-explain context you already have. Be specific and brief: "You're working on \[project\]. Last session you \[what happened\]. \[The most important open task\] is up next. \[Any blockers worth flagging\]. Want to pick up there, or is something else on your mind?"
+7. **Greet the customer with orientation, not a blank slate.** Never ask "How can I help you today?" when you know what's in flight, and never make them re-explain context you already have. Be specific and brief: "You're working on \[project\]. Last session you \[what happened\]. \[The most important open task\] is up next. \[Any blockers worth flagging, and how many tasks await their test pass\]. Want to pick up there, or is something else on your mind?"
 
 If there is no `docs/PRD.md`, look for an objective the project already has, as `files/prd.md` describes, and point to it. If there is none, say once in the greeting that the project has no objective yet, and offer the st-whats-next skill to write one. If the customer doesn't take it up, write the skipped form at the first checkpoint.
 

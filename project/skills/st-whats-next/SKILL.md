@@ -23,8 +23,9 @@ Then find the first row that matches. A skipped objective counts as done, unless
 | TASKS.md has no phases | Setup: plan phases and first tasks |
 | The customer says the direction has changed | Reframe |
 | The current task's code is finished, and it has a work entry | Finish the task |
-| Open tasks in the current phase | Resume |
-| Every task in the current phase is done | Close the phase |
+| Tasks await a test pass, and either the current phase has no other open work, three or more are waiting, or one has waited a week | Run the test pass |
+| Open or in-progress tasks in the current phase | Resume |
+| Every task in the current phase is done or dropped | Close the phase |
 | Every phase is done | Check against Done Means |
 
 ## Setup steps
@@ -89,14 +90,14 @@ This is the moment the customer would otherwise spend reconstructing where they 
 
 ### Rebuild where they left off
 
-1. Start from pickup.md's In Flight and Suggested Start, and the current task in TASKS.md with its detail lines.
+1. Start from pickup.md's In Flight and Suggested Start, and the current task in TASKS.md with its Notes.
 2. Read the Active decisions that touch that task.
 3. Open the actual files the in-flight work lives in. Check that their state matches the pickup note. Files may have changed outside the session — if version control is available, check what changed since the date on the pickup note.
 4. If the note and the files disagree, trust the files and say so: "The pickup note says calculate_window() has no logic, but it's half written — the frost offset is done, the crop lookup isn't."
 
 ### Choose the next step
 
-Default to the current task: the first incomplete task in the current phase. Recommend something else only when it is clearly better, and say why in one sentence:
+Default to the current task, as the st-tasks skill defines it: the first task in the current phase that is in progress, or else open. Recommend something else only when it is clearly better, and say why in one sentence:
 
 - **Work is half done** — finishing it beats starting something new
 - **A blocker can be cleared now** — if a decision would unblock a task and the objective or existing decisions already point to the answer, propose making it
@@ -121,9 +122,13 @@ The next step must be concrete and small enough to start immediately — a speci
 
 A task's code is finished. Say so in one line, "T-014's code is done, so the next step is finishing it — applying its design's Lasting Changes to the docs," and use the st-verify skill: it validates the code and reviews the diff first if that hasn't happened yet. Then come back to Choose the next step.
 
+## Run the test pass
+
+Checks have piled up in `docs/manual-tests/next-pass.md`, or nothing else in the phase can move until they run. Say how many tasks and checks are waiting and roughly how long they'll take, and offer to walk the customer through them: "Three tasks are waiting on your test pass — 7 checks, about 15 minutes. Want to run them now?" If they'd rather keep going, recommend the next open task instead. When they report back, use Record a Test Pass in the st-verify skill.
+
 ## Close the phase
 
-Every task in the current phase is done.
+Every task in the current phase is done or dropped.
 
 - Summarize what the phase produced, in two or three lines
 - Mark the phase complete with the st-tasks skill

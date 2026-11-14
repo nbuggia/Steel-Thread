@@ -1,6 +1,6 @@
 ---
 name: st-verify
-description: The gates around writing a Simple or Complex task's code from its Approved design — tests first, a commit per slice, validation against the spec and design, the diff review — and finishing the task by applying the design's Lasting Changes. Use once a task's design is Approved and before writing its code, when resuming work on a slice, when asked to implement a planned change, or when a task's code is done but its Lasting Changes aren't applied.
+description: The gates around writing a Simple or Complex task's code from its Approved design — tests first, a commit per slice, validation against the spec and design, the diff review — then finishing the task by applying the design's Lasting Changes, and closing it once the customer's test pass succeeds. Use once a task's design is Approved and before writing its code, when resuming work on a slice, when asked to implement a planned change, when a task's code is done but its Lasting Changes aren't applied, or when the customer reports the results of a test pass.
 ---
 
 This is steps 5 and 6 of `.steel-thread/framework/development.md`. A Trivial change doesn't use this skill; follow Trivial Changes there. Start only from an Approved design, or an Approved slicing plan at Complex rigor.
@@ -41,7 +41,22 @@ This is step 6. **Skip when:** the task is Trivial, or has no work entry. A task
 1. **Apply the Lasting Changes.** Write each row of the design's Lasting Changes into the document it names, describing what was actually built. Create what doesn't exist yet: CONTRACTS.md from st-dev-setup's `contracts-template.md`, or the feature's PRD section in the format `.steel-thread/framework/files/prd.md` gives. Nothing else from the planning docs needs saving: the spec's rules already live in the tests and manual tests you just validated, and the evidence is in the commit messages.
 2. **Get one approval.** The engineering docs are yours to update. PRD.md, BACKLOG.md, and DECISIONS.md are the customer's: propose all of this task's changes to them, and any row you'd drop, in one message.
 3. **Check for links.** Search the project, outside `docs/work/`, `.steel-thread/`, and the agent's skills folder, for `docs/work` and this entry's folder name. Code, tests, lasting documents, and TASKS.md cite a task ID, D-NNN, FM-NNN, or commit instead.
-4. **Mark it done** with the st-tasks skill, citing the task's last code commit, if the project uses version control, and the D- and FM- IDs the task added. Commit the lasting documents and TASKS.md (Commits in development.md).
-5. **Tell the customer** in a few lines what changed in the lasting documents and what went to BACKLOG.md. Then use the st-whats-next skill to recommend the next task.
+4. **Queue the checks left for the customer,** if any (see below), in `docs/manual-tests/next-pass.md`, creating it from `next-pass-template.md` in this skill's folder if needed: one section for this task, one line per check.
+5. **Mark the task** with the st-tasks skill: `awaiting test`, with the number of checks in Notes, if step 4 queued any; otherwise `done`, citing the task's last code commit, if the project uses version control, and the D- and FM- IDs the task added. Commit the lasting documents, next-pass.md, and TASKS.md (Commits in development.md).
+6. **Tell the customer** in a few lines what changed in the lasting documents, what went to BACKLOG.md, and which checks wait for their test pass. Then use the st-whats-next skill to recommend the next task.
 
 The work entry stays in `docs/work/` as history.
+
+### Checks left for the customer
+
+Run every check you can before the task gets here. A check can wait for the customer's test pass only when you can't run it, such as a manual test or an automated test that needs their machine, devices, or accounts, or when TESTING.md or the customer says to leave it for their test pass. Waiting for a test pass never holds back the next task: the Lasting Changes are already applied, so the documents describe what was built, and the task closes when its checks pass.
+
+## Record a Test Pass
+
+When the customer reports what they ran, or ticks checks in next-pass.md, go through each task section in it:
+
+- **Every check passed:** remove the section, and mark the task `done` with the st-tasks skill, citing its last code commit and the D- and FM- IDs it added.
+- **A check failed:** the task's code has a bug. Remove the checks that passed, set the task to `in progress` with the failure in Notes, and fix it as a bug (Bugs in development.md), sized and reviewed like any other, inside the same task and work entry. Then set the task back to `awaiting test` with today's date; the failed check stays queued for the next pass.
+- **A check wasn't run:** leave it.
+
+Delete next-pass.md once it has no sections. Commit it with TASKS.md, and say in one line which tasks closed and which reopened.
