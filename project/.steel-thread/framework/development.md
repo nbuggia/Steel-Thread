@@ -14,7 +14,7 @@ Each step produces one document, and the next step reads it. Move through the st
 
 Stop for the customer only when the work is blocked, for one of two reasons:
 
-- **A high-judgment decision.** The choice is hard to reverse, changes what users would notice in a way the spec does not settle, or trades off things the customer cares about with no clear winner. A choice you can make well from the spec, the code, and the project's conventions is not one of these; make it and record why.
+- **A high-judgment decision.** The choice is hard to reverse, changes what users would notice in a way the spec does not settle, or trades off things the customer cares about with no clear winner. A choice you can make well from the spec, the code, and the patterns it already follows is not one of these; make it and record why.
 - **Critical input.** Something only the customer can supply, such as a fact, an access, or an intent the spec leaves open, without which the next step would be a guess.
 
 When you stop, ask one question, give your recommendation, and keep working on anything that does not depend on the answer.
@@ -39,7 +39,7 @@ Check the Trivial criteria first; they need no file reads, except to check a pro
 
 - A close call is Simple. Choosing Complex names its trigger: "Complex: it adds a field to the settings file."
 - **A change to a product rule is never Trivial, however small the edit.** It gets a task, and a spec that states the rule as it was and as it becomes. If it reverses a rule that was set on purpose, propose a DECISIONS.md entry too, so the old rule isn't restored by a later change.
-- Following an existing convention is a sign a change is Simple, not a requirement. In a new project, the first change in an area sets its conventions: record them in the design's Lasting Changes rather than raising the level.
+- Following the pattern the surrounding code uses is a sign a change is Simple, not a requirement. A Trivial change always follows it; needing a new pattern means it isn't Trivial. In a new project, the first change in an area sets the pattern the next ones follow.
 - A bug with more than one independent cause is more than one task. Size each one.
 - **Re-size when the work shows the level was wrong,** in either direction, and say so: "This touches the export format, so it's Complex now." The steps the new level adds start from there. A Trivial change that grows gets a task and a work entry; a Simple design that grows is rewritten from the Complex template.
 
@@ -100,6 +100,15 @@ Commit the work yourself, so the record never depends on someone remembering to:
 - The first line names the change and cites the task ID. The body records the evidence: the tests added and that they pass, any drift from the design and why, and for a bug the cause and the reproducing test.
 - Commit on the current branch. Never push, amend, rebase, or rewrite history unless the customer asks, and follow CONTEXT.md's never-do rules.
 - In a project without version control, add the evidence to an Evidence section at the end of the design instead.
+
+## Code Comments
+
+The code is the project's convention: changes follow the patterns the surrounding code uses. Comments carry what the code can't show. Keep these defaults unless the code follows other rules:
+
+- Comments explain why: a reason that isn't obvious, a workaround, an unexpected edge case, or a trap where the obvious approach breaks. Never restate what the code does. Cite D-NNN or FM-NNN when one holds the full reason.
+- Comments describe the code as it is. What a change did goes in its commit message, never in a comment such as "changed from X" or "added for T-014".
+- Explain each thing once: in the doc comment on the declaration, not again at each call site. A doc comment describes behavior, not its callers.
+- Don't remove a comment during an unrelated change. Change it only when the code it describes changes.
 
 ## Testing
 

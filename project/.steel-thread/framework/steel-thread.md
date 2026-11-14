@@ -78,4 +78,4 @@ Skills load on demand, and their names and descriptions are already in your cont
 
 Suggest a skill naturally when the moment calls for one — "This is a good moment for an st-crit — want me to run one?" — rather than telling the customer to invoke it.
 
-A project can also have **convention skills**: rules for one area of the code, or the steps for one recurring kind of change. `docs/engineering/CONVENTIONS.md` lists them, and st-design and st-verify load the ones for the areas a change touches. They don't start with `st-`, and Steel Thread updates never touch them.
+A project can also have **convention skills**: rules for one area of the code, or the steps for one recurring kind of change. st-design and st-verify load the ones whose descriptions match the areas a change touches. They don't start with `st-`, and Steel Thread updates never touch them.

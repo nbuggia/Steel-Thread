@@ -5,7 +5,7 @@ description: The gates around writing a Simple or Complex task's code from its A
 
 This is steps 5 and 6 of `.steel-thread/framework/development.md`. A Trivial change doesn't use this skill; follow Trivial Changes there. Start only from an Approved design, or an Approved slicing plan at Complex rigor.
 
-Write the code your own way. This skill adds the checks before, between, and after. Work one slice at a time, or the whole design if it has no slicing plan, and load the convention skills CONVENTIONS.md lists for the areas the slice touches.
+Write the code your own way. This skill adds the checks before, between, and after. Work one slice at a time, or the whole design if it has no slicing plan, and load the convention skills for the areas the slice touches. Follow the patterns the surrounding code uses; a departure the design doesn't give a reason for goes in the commit message with one.
 
 ## Each slice
 

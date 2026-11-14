@@ -48,6 +48,9 @@ Verify from source; include applicable entry points, state owners, IPC/event wir
 
 \[Each component or layer the change touches, the boundaries between them, state ownership, and one end-to-end success/failure flow. Add a diagram when &gt;3 components participate.\]
 
+| Area | Existing code it follows | Departure, and why |
+| ---- | ------------------------ | ------------------ |
+
 | New state | Owner | Lifetime | Persist? | Why |
 | --------- | ----- | -------- | -------- | --- |
 
@@ -135,4 +138,4 @@ Severities, decisions, and the Source column: `.steel-thread/framework/reviews.m
 
 | Change | Goes to |
 | ------ | ------- |
-|        | ARCHITECTURE.md / CONVENTIONS.md / CONTRACTS.md / COMMON-FAILURE-MODES.md / DECISIONS.md / PRD.md / BACKLOG.md |
+|        | ARCHITECTURE.md / CONTRACTS.md / COMMON-FAILURE-MODES.md / DECISIONS.md / PRD.md / BACKLOG.md |

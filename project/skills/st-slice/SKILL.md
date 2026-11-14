@@ -9,7 +9,7 @@ This is step 4 of `.steel-thread/framework/development.md`. Use only after an Ap
 
 ## 1. Load
 
-Read the design, `tech-design-slices-template.md`, `AGENTS.md`, and `docs/engineering/CONVENTIONS.md` in full, and the convention skills it lists for the areas the design touches. Read the task's spec where boundaries need it. Record the design commit; if dirty, also record `uncommitted working tree`.
+Read the design, `tech-design-slices-template.md`, and `AGENTS.md` in full, and the convention skills for the areas the design touches. Read the task's spec where boundaries need it. Record the design commit; if dirty, also record `uncommitted working tree`.
 
 If no design is named, use the one for the task in progress in TASKS.md. Ask only if that leaves more than one candidate.
 

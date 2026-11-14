@@ -14,7 +14,7 @@ The standard is the task's spec, not everything the work could do. A finding nam
 
 - **A spec rule or limit** it doesn't meet.
 - **A promise** in CONTRACTS.md it breaks: a file format, a public API, anything other systems or users' files rely on.
-- **A project rule** it ignores: CONVENTIONS.md, an Active decision in DECISIONS.md, or CONTEXT.md's never-do rules.
+- **A project rule** it ignores: a boundary in ARCHITECTURE.md, an Active decision in DECISIONS.md, CONTEXT.md's never-do rules, or the pattern the surrounding code follows, departed from without a stated reason.
 - **A real bug:** a crash, lost or corrupted data, or a wrong result, with the steps that trigger it. In a design, a claim about the code that isn't true counts.
 
 A guard or check for a situation is a finding only if the reviewer can say how that situation happens in this product. "What if the file is empty?" with no way for it to become empty is not one.
