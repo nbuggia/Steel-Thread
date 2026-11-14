@@ -12,7 +12,7 @@ Write the code your own way. This skill adds the checks before, between, and aft
 1. **Tests first,** at the test points the design chose, each named for the behavior it proves, following Testing in development.md. Run them and confirm they fail for the right reason. For a bug, the reproduction from its diagnosis is the first test.
 2. **Code until they pass,** then run the checks TESTING.md lists for the areas the slice touches. Don't re-run a check on code that hasn't changed since it passed.
 3. **Spec coverage:** every spec rule the slice covers has a test whose name states it, or a manual test.
-4. **Commit the slice,** following Commits in development.md, then checkpoint pickup.md.
+4. **Commit the slice,** following Commits in development.md, then update the task's Notes with the next slice.
 5. **Drift that changes a lasting fact,** such as a different component or boundary, a new practice, or a rejected alternative someone will propose again, gets a row in the design's Lasting Changes. Other drift goes only in the commit message.
 
 ## After the last slice

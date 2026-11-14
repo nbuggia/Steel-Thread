@@ -31,7 +31,6 @@ docs/
     COMMON-FAILURE-MODES.md     ← traps hit here or known for the stack
     REVIEW-PATTERNS.md
 .steel-thread/
-  pickup.md                     ← the latest session's note
   customizations.md             ← what this project changed in Steel Thread, and why
   review-log.md                 ← each diff review finding and what happened to it
   framework/                    ← Steel Thread itself; customize it for this project

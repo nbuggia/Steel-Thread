@@ -29,7 +29,7 @@ TASKS.md is the project's plan: phases in order, and tasks in priority order wit
 - A phase is a heading, `## Phase N — Name`, followed by its table. The current phase is the first one without a ✓.
 - Each task is one row, in priority order. Priority is high, medium, or low.
 - IDs are `T-` plus three digits. A new task takes the highest existing ID plus one. IDs are never reused or changed, so other files can cite a task by ID even after its title changes.
-- Notes are one short phrase. Anything longer belongs in the task's work entry or pickup.md. Never put a `|` in a cell; write `\|` if one is unavoidable.
+- Notes are one short phrase. Anything longer belongs in the task's work entry. Never put a `|` in a cell; write `\|` if one is unavoidable.
 
 ### Status
 
@@ -51,7 +51,7 @@ The current task is the first row in the current phase that is `in progress`, or
 Adding tasks and phases needs the customer's approval; ask in one line as the work comes up, never as a wrap-up list: "I noticed X needs doing — want me to add it?" Changing a task's status or Notes needs no approval.
 
 - **Add a task:** add its row to the phase it serves, in priority order: after the open tasks of the same or higher priority, before lower ones, with status `open`. A task belongs to exactly one phase. Before adding, check that no unfinished task already covers it.
-- **Start a task:** set it to `in progress`, with what is in progress in Notes.
+- **Start a task:** set it to `in progress`, with what is in progress in Notes. Keep the very next step there as the work moves, since it is what a returning session resumes from.
 - **Block a task:** set it to `blocked`, with what would unblock it in Notes. **Unblock:** set it back to `open` or `in progress`, and say which decision or event cleared it.
 - **Wait for a test pass:** set it to `awaiting test` with today's date, when the st-verify skill leaves checks for the customer's test pass.
 - **Finish a task:** set it to `done` with today's date, and replace Notes with what the task produced.

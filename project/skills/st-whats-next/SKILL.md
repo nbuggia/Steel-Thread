@@ -11,6 +11,8 @@ The customer's files live in `docs/`: PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, 
 
 Start from what the Session Start Protocol in `.steel-thread/framework/steel-thread.md` reads, and read whatever of it this session hasn't yet. Never ask the customer for something these files already answer.
 
+If `.steel-thread/pickup.md` exists, it is from an older Steel Thread version. Read it once, move anything still true that no other file holds into where it belongs (Where State Lives in `.steel-thread/framework/steel-thread.md`): usually the next step into the task's Notes, and unapproved proposals into one question to the customer. Then delete it.
+
 If there is no objective or no CONTEXT.md, first look for one the project already has, as `files/prd.md` and `files/context.md` describe, and point to it.
 
 Then find the first row that matches. A skipped objective counts as done, unless the customer asked for one:
@@ -47,7 +49,7 @@ Interview, in order:
 3. **Not doing** — what is explicitly out of scope? Get at least two items. If the customer can't name any, the project isn't scoped yet — say so.
 4. **Constraints** — deadlines, platforms, budgets, anything that cannot change.
 
-Write `docs/PRD.md` from the template. Feature sections come later, as tasks close. At the same time, create whichever of these don't exist yet, from the templates: `docs/DECISIONS.md`, and in `.steel-thread/`, pickup.md and customizations.md. Never overwrite a file that exists.
+Write `docs/PRD.md` from the template. Feature sections come later, as tasks close. At the same time, create whichever of these don't exist yet, from the templates: `docs/DECISIONS.md`, and `.steel-thread/customizations.md`. Never overwrite a file that exists.
 
 If `docs/OBJECTIVE.md` exists from an older install, propose moving its sections into the PRD instead of interviewing (see `files/prd.md`).
 
@@ -90,10 +92,10 @@ This is the moment the customer would otherwise spend reconstructing where they 
 
 ### Rebuild where they left off
 
-1. Start from pickup.md's In Flight and Suggested Start, and the current task in TASKS.md with its Notes.
+1. Start from the current task in TASKS.md and its Notes, its slicing plan if it has one, and the recent git log.
 2. Read the Active decisions that touch that task.
-3. Open the actual files the in-flight work lives in. Check that their state matches the pickup note. Files may have changed outside the session — if version control is available, check what changed since the date on the pickup note.
-4. If the note and the files disagree, trust the files and say so: "The pickup note says calculate_window() has no logic, but it's half written — the frost offset is done, the crop lookup isn't."
+3. Open the actual files the in-flight work lives in, and check for uncommitted changes. Files may have changed outside the session.
+4. If the Notes and the files disagree, trust the files, say so, and correct the Notes: "T-002's Notes say calculate_window() has no logic, but it's half written — the frost offset is done, the crop lookup isn't."
 
 ### Choose the next step
 
@@ -140,4 +142,4 @@ Every phase is done. Go through each Done Means criterion in the objective, or t
 
 ## After the recommendation
 
-Update pickup.md with the recommendation as the Suggested Start. If the customer picks something else, that's their call — update pickup.md and help them start it.
+If the customer picks something else, that's their call — help them start it, and set that task to `in progress` with the st-tasks skill.

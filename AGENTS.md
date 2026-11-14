@@ -40,7 +40,7 @@ project/                   ← the product: what lands in a user's project
       docs-layout.md       ← file structure, planning docs as scaffolding, document states,
                              and which lasting document holds what
       templates/           ← starter files used during setup: PRD, CONTEXT, TASKS,
-                             BACKLOG, DECISIONS, pickup, customizations
+                             BACKLOG, DECISIONS, customizations
   skills/
     st-whats-next/SKILL.md    ← installed; setup, resume, and recommend the next step
     st-elevate/SKILL.md       ← installed; interview that clarifies intent and stress-tests plans

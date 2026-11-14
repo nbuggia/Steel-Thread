@@ -129,4 +129,4 @@ A bug follows the same flow with a shorter spec:
 - **When a step finishes,** start the next one and say so in one line: "Spec approved after review. Starting the tech design."
 - **st-elevate** is for when a step is blocked: it resolves a high-judgment decision or gathers critical input with the customer in one focused session.
 - **st-crit** comes after work is written: its READY verdict is what lets a spec become Approved, and what lets a task be finished. Every review's findings are settled as `.steel-thread/framework/reviews.md` says.
-- **Steel Thread files stay current throughout.** Each approved document is a checkpoint for pickup.md. Choices all future work has to follow go to DECISIONS.md, new terms to CONTEXT.md, future features to BACKLOG.md, and follow-up work to TASKS.md through the st-tasks skill, each with the customer's approval.
+- **Steel Thread files stay current throughout.** Choices all future work has to follow go to DECISIONS.md, new terms to CONTEXT.md, future features to BACKLOG.md, and follow-up work to TASKS.md through the st-tasks skill, each with the customer's approval.
