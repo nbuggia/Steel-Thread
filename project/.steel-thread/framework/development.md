@@ -27,15 +27,18 @@ A step is skipped only when the task's rigor level or the rules below say so. Wh
 
 **Every change gets a rigor level before work starts: Trivial, Simple, or Complex.** The level decides which steps run and how heavy each one is, so a one-line fix doesn't pay for a feature's process. Set it once, at the start of the task, and tell the customer in one line which criterion decided it: "This is Trivial: one comparison, and a failing test proves the fix."
 
-Check the Trivial criteria first; they need no file reads. If the change isn't clearly Trivial, read `AGENTS.md`, `docs/engineering/ARCHITECTURE.md`, and `docs/engineering/CONTRACTS.md` before choosing between Simple and Complex.
+Size by what the change touches, never by how the request sounds. "Quick", "just", "polish", or a list of small tweaks still gets sized, each tweak on its own; a batch that goes into one commit takes the level of its largest tweak.
+
+Check the Trivial criteria first; they need no file reads, except to check a product rule when the change might alter one. If the change isn't clearly Trivial, read `AGENTS.md`, `docs/engineering/ARCHITECTURE.md`, and `docs/engineering/CONTRACTS.md` before choosing between Simple and Complex.
 
 | Rigor level | Criteria | Examples |
 | --- | --- | --- |
-| Trivial | All of these:<br>1. One local edit; nothing else depends on what it changes.<br>2. No promise changes, unless a bug fix restores one.<br>3. A mistake is visible on sight, or one test settles it. | A copy fix, a style value, a default. A wrong comparison in one function, with a failing test that reproduces the bug. |
+| Trivial | All of these:<br>1. One local edit; nothing else depends on what it changes.<br>2. No product rule changes: nothing the PRD, CONTRACTS.md, an Active decision, or an existing test or manual test states. A bug fix that restores a rule is fine.<br>3. A mistake is visible on sight, or one test settles it. | A copy fix, a style value, a default. A wrong comparison in one function, with a failing test that reproduces the bug. |
 | Simple | Anything that is not Trivial and hits no Complex trigger. | A save handler that skips a validation the other handlers apply. A new settings screen built from existing components and commands. |
 | Complex | Any of these triggers:<br>1. **Not revertible:** it changes a persisted format or stored data, so reverting the commit can't undo it.<br>2. **Contract:** it adds or changes a promise in CONTRACTS.md, such as a file format, URL scheme, or public API.<br>3. **Structure:** it adds a component, a process or thread boundary, or a dependency, or moves a boundary in ARCHITECTURE.md.<br>4. **Risky ground:** it touches concurrency, security, or permissions.<br>5. **Not fully testable:** correctness depends on timing or on behavior invented as you go. | Adding a field to the persisted settings file. Builds already shipped wrote the old shape to disk, so reverting a commit can't undo it. |
 
 - A close call is Simple. Choosing Complex names its trigger: "Complex: it adds a field to the settings file."
+- **A change to a product rule is never Trivial, however small the edit.** It gets a task, and a spec that states the rule as it was and as it becomes. If it reverses a rule that was set on purpose, propose a DECISIONS.md entry too, so the old rule isn't restored by a later change.
 - Following an existing convention is a sign a change is Simple, not a requirement. In a new project, the first change in an area sets its conventions: record them in the design's Lasting Changes rather than raising the level.
 - A bug with more than one independent cause is more than one task. Size each one.
 - **Re-size when the work shows the level was wrong,** in either direction, and say so: "This touches the export format, so it's Complex now." The steps the new level adds start from there. A Trivial change that grows gets a task and a work entry; a Simple design that grows is rewritten from the Complex template.
