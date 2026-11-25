@@ -27,6 +27,7 @@ Before drafting, read the following files:
 - the template for the selected rigor level
 - the task's `spec.md`, if it has one
 - the documents that hold the area's current behavior ("Planning Docs Are Scaffolding" in `.steel-thread/framework/docs-layout.md`)
+- the Active decisions in `docs/DECISIONS.md` that touch the area
 - the convention skills for the areas the change touches, by their descriptions
 - the current implementation, and the existing code that already does something similar
 - `docs/engineering/COMMON-FAILURE-MODES.md` (if missing, create from template `templates/common-failure-modes-template.md`)

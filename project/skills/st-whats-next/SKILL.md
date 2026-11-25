@@ -9,7 +9,7 @@ The customer's files live in `docs/`: PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, 
 
 ## Step 1 — Read the state
 
-Start from what the Session Start Protocol in `.steel-thread/framework/steel-thread.md` reads, and read whatever of it this session hasn't yet. Never ask the customer for something these files already answer.
+Read the objective, the headings of `docs/DECISIONS.md` and the full entries for any Active decision that touches the work in flight, and what the Session Start Protocol in `.steel-thread/framework/steel-thread.md` reads that this session hasn't yet. Never ask the customer for something these files already answer.
 
 If there is no objective or no CONTEXT.md, first look for one the project already has, as `files/prd.md` and `files/context.md` describe, and point to it.
 

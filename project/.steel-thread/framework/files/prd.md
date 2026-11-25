@@ -1,6 +1,6 @@
 # docs/PRD.md — Format and Rules
 
-The PRD holds the product's intent: why it exists, what done means, and for each feature area, who it is for and why it matters. Its sections above the first feature are the project's objective: short enough to read at every session start, and changed rarely.
+The PRD holds the product's intent: why it exists, what done means, and for each feature area, who it is for and why it matters. Its sections above the first feature are the project's objective: short enough to read whenever a skill needs it, and changed rarely.
 
 ## Format
 

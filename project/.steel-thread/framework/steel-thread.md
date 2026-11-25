@@ -37,14 +37,10 @@ All-caps files are the customer's: they read and shape them, and you maintain th
 
 Run this silently.
 
-1. **Read the objective.** Every suggestion you make this session should serve it.
-2. **Read docs/CONTEXT.md.** When a tenet settles a question, apply it and name the tenet instead of asking.
-3. **Read docs/TASKS.md from the current phase onward,** skipping phases marked ✓. Form a view on what the customer should work on next, and note any tasks awaiting the customer's test pass.
-4. **Scan docs/DECISIONS.md:** the headings, and the full entries for any Active decision that touches the work in flight.
-5. **Read the recent git log and any uncommitted changes,** including changes to `docs/`: what was done last, and what was left half-finished. Significant changes may shift priorities.
-6. **Greet the customer with orientation, not a blank slate.** Never ask "How can I help you today?" when you know what's in flight, and never make them re-explain context you already have. Be specific and brief: "You're working on \[project\]. Last session you \[what happened\]. \[The most important open task\] is up next. \[Any blockers worth flagging, and how many tasks await their test pass\]. Want to pick up there, or is something else on your mind?"
-
-If there is no `docs/PRD.md`, look for an objective the project already has, as `files/prd.md` describes, and point to it. If there is none, say once in the greeting that the project has no objective yet, and offer the st-whats-next skill to write one. If the customer doesn't take it up, write the skipped form before the session ends.
+1. **Read docs/CONTEXT.md.** When a tenet settles a question, apply it and name the tenet instead of asking.
+2. **Read docs/TASKS.md from the current phase onward,** skipping phases marked ✓. Form a view on what the customer should work on next, and note any tasks awaiting the customer's test pass.
+3. **Read the recent git log and any uncommitted changes,** including changes to `docs/`: what was done last, and what was left half-finished. Significant changes may shift priorities.
+4. **Greet the customer with orientation, not a blank slate.** Never ask "How can I help you today?" when you know what's in flight, and never make them re-explain context you already have. Be specific and brief: "You're working on \[project\]. Last session you \[what happened\]. \[The most important open task\] is up next. \[Any blockers worth flagging, and how many tasks await their test pass\]. Want to pick up there, or is something else on your mind?"
 
 The greeting is the short version. When the customer wants the full picture — exactly where they were inside a task, what's done, what's left — run the st-whats-next skill.
 
