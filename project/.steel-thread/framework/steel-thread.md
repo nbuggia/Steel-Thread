@@ -15,11 +15,7 @@ These never bend. The rest of this manual explains them and covers the judgment 
 7. **Keep state in the files that own it,** as Where State Lives says. The customer can stop at any moment.
 8. **Use CONTEXT.md's vocabulary exactly, and never do what it forbids.**
 9. **Don't reopen an Active decision** unless the customer does, or new information undercuts its reasoning — and then say so. Before you propose a choice the project may already have made, check the headings in `docs/DECISIONS.md`.
-10. **Never edit `.steel-thread/upstream/`.** Log every change to the framework or the skills in `.steel-thread/customizations.md`.
-
-## Philosophy
-
-Your job is to carry the project's working memory so the customer doesn't have to. Every minute they spend remembering where they left off, what was decided, or what comes next is a minute not spent on the product itself. You are the system of record for everything operational; they bring the judgment. Watch for the moments to help them think higher: go deeper when something interesting emerges, and step back when the work loses shape.
+10. **The framework and the skills are this project's to adapt.** Before changing one, read `.steel-thread/framework/files/customizations.md`. Never edit `.steel-thread/upstream/`.
 
 ## Steel Thread Files
 
@@ -28,10 +24,6 @@ The project's memory lives in files; keep them current as you work. The customer
 All-caps files are the customer's: they read and shape them, and you maintain them with their approval. Lowercase files are working files you maintain on your own.
 
 **The objective** is the sections of `docs/PRD.md` above its first feature. Wherever this manual or a skill says to read the objective, read those.
-
-**PRD.md and CONTEXT.md can point elsewhere.** When either says its content lives in another file, read that file instead. When PRD.md says the objective was skipped, work without one and don't bring it up.
-
-**Customizing Steel Thread.** The framework files and the skills are this project's to adapt. Change them when the customer asks or the st-dev-setup skill tailors them to the stack, and propose changes that would help. Keep the formats other files read — file names and locations, IDs such as T-NNN and D-NNN, headings a skill looks for, frontmatter fields, and status values — and when you change one, change everything that reads it in the same edit. Log each change and why in customizations.md: updates never overwrite a customized file, and the st-update skill uses the log to merge new versions into it.
 
 ## Session Start Protocol
 
@@ -47,15 +39,7 @@ When the customer asks what's next or where things stand, or wants to resume wit
 
 ## Where State Lives
 
-The customer can close the terminal at any moment, so keep the project's state in the files that own it, as you work. There is no separate session note: a returning session rebuilds where things stand from these.
-
-| What | Where |
-| --- | --- |
-| What was done | The git log, and done tasks in TASKS.md |
-| What is in progress, and the very next step | The task's status and Notes in TASKS.md, its slicing plan, and uncommitted changes |
-| What is blocked, and what's next | TASKS.md |
-| Choices future work must follow | DECISIONS.md |
-| Changes to the customer's files they haven't approved | Nowhere: propose them when they come up |
+The customer can close the terminal at any moment, so keep the project's state in the files that own it, as you work: TASKS.md, DECISIONS.md, the work entry, and git. There is no separate session note.
 
 - **Before a stop or a long step,** make sure the task in progress names its very next step in Notes, and commit finished work and Steel Thread's files (Commits in development.md).
 - **Write anything a returning session needs into the document it belongs to:** the spec, the design, or a task's Notes. If it fits none of them, it probably doesn't need keeping.
@@ -67,12 +51,10 @@ The customer can close the terminal at any moment, so keep the project's state i
 - **Guard the objective.** If work drifts from it, ask whether the objective is changing or this is a detour.
 - **When in doubt about priority, ask.** The customer's judgment is the final word.
 
-**Vocabulary.** Consistent terms make conversations sharper and shorter; inconsistency produces drift. Correct your own slips inline, without fuss. When the customer uses a non-canonical term, reconfirm gently, like a colleague rather than a teacher: "Just to confirm — by 'the folder' you mean the vault?" When they keep using a different term, propose updating the vocabulary instead of enforcing the old one: the goal is the right terms, not the first ones.
+**Vocabulary.** Correct your own slips inline. When the customer uses a non-canonical term, confirm it gently: "Just to confirm — by 'the folder' you mean the vault?" If they keep using it, propose changing the vocabulary: the goal is the right terms, not the first ones.
 
 ## Skills
 
 Skills load on demand, and their names and descriptions are already in your context. The customer only needs to know **st-whats-next**, the entry point for every project; task, decision, and context upkeep happen in the background, so the system feels like it just works. `development.md` names the skill for each development step.
 
 Suggest a skill naturally when the moment calls for one — "This is a good moment for an st-crit — want me to run one?" — rather than telling the customer to invoke it.
-
-A project can also have **convention skills**: rules for one area of the code, or the steps for one recurring kind of change. st-design and st-verify load the ones whose descriptions match the areas a change touches. They don't start with `st-`, and Steel Thread updates never touch them.

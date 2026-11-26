@@ -47,7 +47,7 @@ The st-whats-next skill writes the objective during setup, from `.steel-thread/f
 
 Before offering to write an objective, look for one the project already has, and use the first that exists: `PRD.md`, `.claude/PRD.md`, `.kiro/steering/product.md`, then `OBJECTIVE.md` at the project root. Match file names in any case.
 
-If you find one, write `docs/PRD.md` as a pointer to it, and tell the customer in one line: "Using PRD.md as this project's objective." Don't interview to fill in sections it lacks. Feature sections go in the file it points to.
+If you find one, write `docs/PRD.md` as a pointer to it, and tell the customer in one line: "Using PRD.md as this project's objective." Don't interview to fill in sections it lacks. Feature sections go in the file it points to, and wherever the objective is read, read that file.
 
 ```markdown
 # Product
@@ -65,4 +65,4 @@ If no objective exists and the customer declines to write one, or doesn't take u
 Objective not set. The customer chose not to write one (YYYY-MM-DD). Don't offer it again.
 ```
 
-When they later ask for one, replace that line with the objective's sections. Pointer and skipped forms need no DECISIONS.md entry.
+With the skipped form, work without an objective and don't bring it up. When they later ask for one, replace that line with the objective's sections. Pointer and skipped forms need no DECISIONS.md entry.

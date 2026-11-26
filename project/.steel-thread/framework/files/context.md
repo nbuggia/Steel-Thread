@@ -12,7 +12,7 @@ What the project is for belongs in the PRD. How the code is built belongs in `do
 
 ## When context already exists elsewhere
 
-If the project root has a `CONTEXT.md`, write CONTEXT.md as a pointer to it, the same way as the PRD, instead of capturing context again.
+If the project root has a `CONTEXT.md`, write CONTEXT.md as a pointer to it, the same way as the PRD, instead of capturing context again. Wherever CONTEXT.md is read, read the file it points to.
 
 ## When to update it
 
