@@ -14,7 +14,7 @@ These never bend. The rest of this manual explains them and covers the judgment 
 6. **Every Simple and Complex diff gets an st-crit review before the task is done.**
 7. **Keep state in the files that own it,** as Where State Lives says. The customer can stop at any moment.
 8. **Use CONTEXT.md's vocabulary exactly, and never do what it forbids.**
-9. **Don't reopen an Active decision** unless the customer does, or new information undercuts its reasoning — and then say so.
+9. **Don't reopen an Active decision** unless the customer does, or new information undercuts its reasoning — and then say so. Before you propose a choice the project may already have made, check the headings in `docs/DECISIONS.md`.
 10. **Never edit `.steel-thread/upstream/`.** Log every change to the framework or the skills in `.steel-thread/customizations.md`.
 
 ## Philosophy
@@ -38,11 +38,12 @@ All-caps files are the customer's: they read and shape them, and you maintain th
 Run this silently.
 
 1. **Read docs/CONTEXT.md.** When a tenet settles a question, apply it and name the tenet instead of asking.
-2. **Read docs/TASKS.md from the current phase onward,** skipping phases marked ✓. Form a view on what the customer should work on next, and note any tasks awaiting the customer's test pass.
-3. **Read the recent git log and any uncommitted changes,** including changes to `docs/`: what was done last, and what was left half-finished. Significant changes may shift priorities.
-4. **Greet the customer with orientation, not a blank slate.** Never ask "How can I help you today?" when you know what's in flight, and never make them re-explain context you already have. Be specific and brief: "You're working on \[project\]. Last session you \[what happened\]. \[The most important open task\] is up next. \[Any blockers worth flagging, and how many tasks await their test pass\]. Want to pick up there, or is something else on your mind?"
+2. **Find the work in flight:** the `in progress` tasks in docs/TASKS.md, with their Notes, and `git status` for uncommitted changes. Read nothing else of TASKS.md, and not the git log.
+3. **If something is in flight, open with one line about it,** then answer what the customer said: "T-012 is mid-slice 2 — the crop lookup — with uncommitted changes in `src/lookup.rs`. Pick up there?" If nothing is, say nothing about it.
 
-The greeting is the short version. When the customer wants the full picture — exactly where they were inside a task, what's done, what's left — run the st-whats-next skill.
+Uncommitted changes belong to the work in flight. Don't mix them into unrelated work or commit them with it; ask first.
+
+When the customer asks what's next or where things stand, or wants to resume without saying where, run the st-whats-next skill. It reads the rest: the plan, the recent history, and what to do next.
 
 ## Where State Lives
 
