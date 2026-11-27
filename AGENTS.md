@@ -56,7 +56,7 @@ project/                   ← the product: what lands in a user's project
                                 by applying the design's Lasting Changes, and the customer's test pass
 ```
 
-`install.sh` copies `project/.steel-thread/framework/` into the user's `.steel-thread/framework/`, creates the empty state folders, copies every skill in `project/skills/` into the chosen agent's skills folder, merges `project/AGENTS.md` (and, for Claude Code, `project/CLAUDE.md`) into the user's files, and adds `docs/work/` to the user's `.ignore`. The customer's Steel Thread files (PRD, CONTEXT, TASKS, BACKLOG, DECISIONS) live in the user's `docs/`; Steel Thread's working files live in `.steel-thread/`.
+`install.sh` copies `project/.steel-thread/framework/` into the user's `.steel-thread/framework/`, creates the empty state folders, copies every skill in `project/skills/` into the chosen agent's skills folder, merges `project/AGENTS.md` (and, for Claude Code, `project/CLAUDE.md`) into the user's files, and adds `docs/work/` to the user's `.ignore`. The customer's Steel Thread files (PRD, CONTEXT, TASKS, BACKLOG, DECISIONS, and `engineering/CONVENTIONS.md`) live in the user's `docs/`; Steel Thread's working files live in `.steel-thread/`.
 
 Users customize their copies; that is the extensibility model. The installer keeps the Steel Thread version each installed file is based on in `.steel-thread/upstream/installed/`. On update it replaces only files that still match their base, and leaves customized ones, with the new version and a `PENDING` list in `.steel-thread/upstream/incoming/`, for the st-update skill to merge.
 

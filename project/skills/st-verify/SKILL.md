@@ -5,7 +5,7 @@ description: The gates around writing a Simple or Complex task's code from its A
 
 This is steps 5 and 6 of `.steel-thread/framework/development.md`. A Trivial change doesn't use this skill; follow Trivial Changes there. Start only from an Approved design, or an Approved slicing plan at Complex rigor.
 
-Write the code your own way. This skill adds the checks before, between, and after. Work one slice at a time, or the whole design if it has no slicing plan, and load the convention skills for the areas the slice touches. Follow the patterns the surrounding code uses; a departure the design doesn't give a reason for goes in the commit message with one.
+Write the code your own way. This skill adds the checks before, between, and after. Work one slice at a time, or the whole design if it has no slicing plan, and read the sections of `docs/engineering/CONVENTIONS.md`, and the convention skills, for the areas the slice touches. Follow those rules and the patterns the surrounding code uses; a departure the design doesn't give a reason for goes in the commit message with one. Where the code you're following breaks a rule, follow the rule, not the code. A pattern the design didn't agree needs the customer's agreement before you use it (`.steel-thread/framework/files/conventions.md`).
 
 ## Each slice
 
@@ -39,7 +39,7 @@ When the verdict is READY and no mismatch is open, finish the task.
 This is step 6. **Skip when:** the task is Trivial, or has no work entry. A task with a work entry is not done until its design's Lasting Changes are applied.
 
 1. **Apply the Lasting Changes.** Write each row of the design's Lasting Changes into the document it names, describing what was actually built. Create what doesn't exist yet: CONTRACTS.md from st-dev-setup's `contracts-template.md`, or the feature's PRD section in the format `.steel-thread/framework/files/prd.md` gives. Nothing else from the planning docs needs saving: the spec's rules already live in the tests and manual tests you just validated, and the evidence is in the commit messages.
-2. **Get one approval.** The engineering docs are yours to update. PRD.md, BACKLOG.md, and DECISIONS.md are the customer's: propose all of this task's changes to them, and any row you'd drop, in one message.
+2. **Get one approval.** The engineering docs are yours to update, except CONVENTIONS.md, whose changes were agreed before the code used them. PRD.md, BACKLOG.md, and DECISIONS.md are the customer's: propose all of this task's changes to them, and any row you'd drop, in one message.
 3. **Check for links.** Search the project, outside `docs/work/`, `.steel-thread/`, and the agent's skills folder, for `docs/work` and this entry's folder name. Code, tests, lasting documents, and TASKS.md cite a task ID, D-NNN, FM-NNN, or commit instead.
 4. **Queue the checks left for the customer,** if any (see below), in `docs/manual-tests/next-pass.md`, creating it from `next-pass-template.md` in this skill's folder if needed: one section for this task, one line per check.
 5. **Mark the task** with the st-tasks skill: `awaiting test`, with the number of checks in Notes, if step 4 queued any; otherwise `done`, citing the task's last code commit, if the project uses version control, and the D- and FM- IDs the task added. Commit the lasting documents, next-pass.md, and TASKS.md (Commits in development.md).

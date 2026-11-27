@@ -25,6 +25,7 @@ docs/
     T-009-file-conflicts/       ← a done task; history only
   engineering/                  ← project-wide technical reference
     ARCHITECTURE.md             ← what is there
+    CONVENTIONS.md              ← how to make a change here, and why
     CONTRACTS.md                ← promises to users' files and other systems
     TESTING.md                  ← how to check a change
     COMMON-FAILURE-MODES.md     ← traps hit here or known for the stack
@@ -94,18 +95,21 @@ Rules:
 
 Each lasting document answers one question, and each fact lives in exactly one of them; the others link to it.
 
-|  | ARCHITECTURE.md | DECISIONS.md |
-| --- | --- | --- |
-| **Answers** | What is there, and which boundaries a change must not cross? | Why is it this way, and what was rejected? |
-| **Voice** | Describes: "The Rust core owns all file access." | Explains: "We chose X over Y because…" |
-| **Holds** | The stack and key dependencies, components, boundaries, where state lives, data flow, persistence, and which component implements each contract | Choices future work must follow that are expensive to undo or likely to be argued again, with what was rejected |
-| **Belongs here if** | You would draw it on a diagram | Someone will propose the opposite, and the answer is "we considered that" |
-| **Changes by** | Editing in place; it always describes now | Appending; an old entry is superseded, never edited |
+|  | ARCHITECTURE.md | CONVENTIONS.md | DECISIONS.md |
+| --- | --- | --- | --- |
+| **Answers** | What is there? | How do I make a change here, and why that way? | Why is it this way, and what was rejected? |
+| **Voice** | Describes: "The Rust core owns all file access." | Instructs, with the reason: "Never read files from UI code; add a command. The core checks every path." | Explains: "We chose X over Y because…" |
+| **Holds** | The stack and key dependencies, components, boundaries, where state lives, data flow, persistence, and which component implements each contract | The patterns every change follows, by area: each rule, why it exists, where it applies, and the code that follows it, by name; with a changelog | Choices future work must follow that are expensive to undo or likely to be argued again, with what was rejected |
+| **Belongs here if** | You would draw it on a diagram | A reviewer would flag a violation in a diff | Someone will propose the opposite, and the answer is "we considered that" |
+| **Changes by** | Editing in place; it always describes now | Agreeing with the customer first, then editing in place, with a changelog line | Appending; an old entry is superseded, never edited |
 
-There is no conventions file: how to make a change is shown by the code itself, and a change follows the patterns the surrounding code uses. DECISIONS.md never states the current rule; ARCHITECTURE.md does, and cites the decision for the reason. One fact can touch both without repeating itself:
+DECISIONS.md never states the current rule; the other two do, and cite the decision for the full reason. One fact can touch all three without repeating itself:
 
-- **ARCHITECTURE.md:** "Tauri 2 app: a Rust core and a WebView UI. Only the core touches the filesystem (D-003)."
+- **ARCHITECTURE.md:** "Tauri 2 app: a Rust core and a WebView UI. All file access is in the core."
+- **CONVENTIONS.md:** "UI code never touches the filesystem; add a command, as `readNote` in `src/commands.ts` does (D-003)."
 - **DECISIONS.md:** "D-003 · Tauri over Electron. Why: bundle size and memory. Rejected: Electron, which ships a second runtime."
+
+CONVENTIONS.md is the customer's: a new pattern, a rule change, or an exception is agreed with them before code uses it. `.steel-thread/framework/files/conventions.md` has its format and rules.
 
 The neighbors:
 
@@ -113,7 +117,7 @@ The neighbors:
 - **Manual tests** hold behavior that automation can't reach, by product area, in `docs/manual-tests/<area>.md`. A person runs them, often the customer. Checks waiting for the customer's next run are queued in `docs/manual-tests/next-pass.md`, which the st-verify skill keeps.
 - **CONTRACTS.md** holds the promises other systems and users' files rely on: file formats, on-device filenames, URL schemes, update feeds, public APIs. ARCHITECTURE.md names the component that implements each one.
 - **PRD.md** holds the objective, and product intent per feature area: who it is for, why it matters, what it doesn't do, and what done means. `.steel-thread/framework/files/prd.md` has its format.
-- **Convention skills** hold the rules for one area of the code, such as UI or logging, or the steps for one recurring kind of change, such as adding a feature flag. They live in the agent's skills folder, named without the `st-` prefix, so Steel Thread updates never touch them. A skill that keeps project paths in its examples can be copied to another project on the same stack.
+- **Convention skills** hold the steps for one recurring kind of change, such as adding a feature flag, or the rules for one area of the code, such as UI or logging; the rules a recipe relies on stay in CONVENTIONS.md. They live in the agent's skills folder, named without the `st-` prefix, so Steel Thread updates never touch them. A skill that keeps project paths in its examples can be copied to another project on the same stack.
 - **Code comments** hold the why of non-obvious code, including traps where the obvious approach breaks, citing D-NNN or FM-NNN. They describe the code as it is now; what a change did belongs in its commit message.
 - **TESTING.md** says how to check a change: the kinds of test, where each lives, their tools, and the commands that run them.
 - **COMMON-FAILURE-MODES.md** records traps the project has hit, or that its stack is known for.

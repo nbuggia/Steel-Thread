@@ -28,7 +28,7 @@ Before drafting, read the following files:
 - the task's `spec.md`, if it has one
 - the documents that hold the area's current behavior ("Planning Docs Are Scaffolding" in `.steel-thread/framework/docs-layout.md`)
 - the Active decisions in `docs/DECISIONS.md` that touch the area
-- the convention skills for the areas the change touches, by their descriptions
+- `docs/engineering/CONVENTIONS.md`, in full (if it's missing, propose the st-dev-setup skill, which writes it), and the convention skills for the areas the change touches, by their descriptions
 - the current implementation, and the existing code that already does something similar
 - `docs/engineering/COMMON-FAILURE-MODES.md` (if missing, create from template `templates/common-failure-modes-template.md`)
 - at Complex rigor, `docs/engineering/REVIEW-PATTERNS.md` (if missing, create from template `templates/review-patterns-template.md`)
@@ -51,7 +51,7 @@ The template's sections aren't rigid — add one when a design produces real con
 
 Trace every entry point the design touches — caller, API or IPC boundary, handler, registration, state, consumer, restore/cleanup, test — into the Operation table, with evidence.
 
-**The code is the convention.** Find the existing code that already does something similar, and follow it; the design names it by file. A departure from the pattern the surrounding code follows needs a one-line reason in the design. If that pattern is itself wrong, don't copy it: say what's wrong, and either fix it in this change or propose a task with the st-tasks skill. At Simple rigor, this goes in the Approach section.
+**Follow the code and the conventions.** Find the existing code that already does something similar, and follow it; the design names it by file, and names the CONVENTIONS.md rules the change must meet. A departure from the pattern the surrounding code follows needs a one-line reason in the design. Where that code breaks a rule, follow the rule, and fix the code or propose a task. A new pattern, a change to a rule, or an exception is agreed with the customer before the design relies on it, as `.steel-thread/framework/files/conventions.md` says. At Simple rigor, this goes in the Approach section.
 
 Look for something that already solves this before building anything new. Check, in order: do you actually need it (YAGNI)? Can the standard library, a framework already in use, an installed dependency or the OS do it already? Only after all of that, consider a new, actively-maintained dependency, and then design the smallest new code that covers the gap. Record what you checked in the Alternatives table.
 
@@ -59,7 +59,7 @@ Judge the design by what it costs the _next_ change, not today's tidiness. Ask: 
 
 Before adding a coordinator, a framework, durable state, a replay protocol, a generic abstraction, new CI infrastructure, or more than 3 separate implementation units, explain why the smallest local fix can't meet the requirements. Reuse is never an excuse to weaken validation, data-loss prevention, security, accessibility, or anything the requirements explicitly ask for.
 
-List the Lasting Changes: what this task adds to the lasting documents, each with the home "Where information lives" in `.steel-thread/framework/docs-layout.md` gives it. That covers the design's new structure, boundaries, formats, contracts, and practices, and from the spec, a change to the feature's intent, Not Doing, or Done Means in the PRD, and deferred use cases for BACKLOG.md. The why goes to DECISIONS.md only when it meets the bar in `.steel-thread/framework/files/decisions.md`. List a narrowed requirement the user accepts, and an accepted risk whose exposure outlasts this task, the same way. Spec rules are not Lasting Changes: they live on in the tests at the test points below. List only what changes a document; a row that confirms a document already says it is noise. Don't edit those documents now: st-verify applies the list once the code is built, so they describe what was actually built. Anything not on the list is lost when the task is done.
+List the Lasting Changes: what this task adds to the lasting documents, each with the home "Where information lives" in `.steel-thread/framework/docs-layout.md` gives it. That covers the design's new structure, boundaries, formats, and contracts, and from the spec, a change to the feature's intent, Not Doing, or Done Means in the PRD, and deferred use cases for BACKLOG.md. The why goes to DECISIONS.md only when it meets the bar in `.steel-thread/framework/files/decisions.md`. List a narrowed requirement the user accepts, and an accepted risk whose exposure outlasts this task, the same way. Spec rules are not Lasting Changes: they live on in the tests at the test points below. List only what changes a document; a row that confirms a document already says it is noise. Don't edit those documents now: st-verify applies the list once the code is built, so they describe what was actually built. Anything not on the list is lost when the task is done.
 
 Choose the test points: where the change will be tested, preferring existing test points to new ones, and the highest-level one that can prove the behavior. Fewer is better. Each names the spec rules it proves, such as B.2, E.1, or a limit, and every rule needs a test point or a manual test. The st-verify skill writes the tests against these and nowhere else.
 
@@ -73,12 +73,12 @@ A Simple design gets no review pass: go to §5. Its review is the st-crit pass o
 
 At Complex rigor, review it until the verdict is READY, at most three passes. `.steel-thread/framework/reviews.md` says how each pass runs: a fresh context, what counts as a finding, numbered passes recorded in §15's Source column, why a later pass checks only the fixes, and what happens when the third pass isn't READY.
 
-Give each reviewer: the draft, the task's spec, the architecture and contracts docs, the convention skills for the areas it touches, the failure modes that apply, and read-only repo access, plus `design-red-flags.md` at Complex rigor.
+Give each reviewer: the draft, the task's spec, the architecture, conventions, and contracts docs, the convention skills for the areas it touches, the failure modes that apply, and read-only repo access, plus `design-red-flags.md` at Complex rigor.
 
 Every reviewer prompt, here and in §6, opens with this framing:
 
 ```text
-You're a principal engineer reviewing this design before anyone implements it. You have the design, its spec, architecture, contracts, applicable failure modes, read-only repo access, and whatever else was provided. Your job is to keep it simple: built on the existing code, standards, and frameworks, following the patterns the surrounding code already uses unless the design gives a reason not to, testable with integration tests through every boundary it crosses, and easy to change later. Challenge the design where it falls short of that.
+You're a principal engineer reviewing this design before anyone implements it. You have the design, its spec, conventions, architecture, contracts, applicable failure modes, read-only repo access, and whatever else was provided. Your job is to keep it simple: built on the existing code, standards, and frameworks, following the project's conventions and the patterns the surrounding code already uses unless the design gives a reason not to, testable with integration tests through every boundary it crosses, and easy to change later. Challenge the design where it falls short of that.
 
 Don't expand the scope. Raise a finding only for a spec rule the design fails, a promise or project rule it breaks, or a real bug with the steps that trigger it. A guard for a situation counts only if you can say how that situation happens in this product. Anything else that adds work is out of scope, however good the idea is: list it as an IDEA, at most three, and don't count it toward the verdict.
 ```

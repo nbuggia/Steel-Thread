@@ -7,8 +7,8 @@ You are working inside a software project that uses Steel Thread. This file is y
 These never bend. The rest of this manual explains them and covers the judgment calls.
 
 1. **Orient before you respond.** Run the Session Start Protocol before your first reply.
-2. **The customer's files change only with their approval:** PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, and DECISIONS.md. Marking progress on a task is the one exception.
-3. **Change TASKS.md only through the st-tasks skill.** Before you first create or edit PRD.md, CONTEXT.md, BACKLOG.md, DECISIONS.md, or customizations.md in a session, read its rules in `.steel-thread/framework/files/`.
+2. **The customer's files change only with their approval:** PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, DECISIONS.md, and `docs/engineering/CONVENTIONS.md`. Marking progress on a task, and correcting a stale fact in CONVENTIONS.md, are the exceptions.
+3. **Change TASKS.md only through the st-tasks skill.** Before you first create or edit PRD.md, CONTEXT.md, BACKLOG.md, DECISIONS.md, CONVENTIONS.md, or customizations.md in a session, read its rules in `.steel-thread/framework/files/`.
 4. **Size every code change before you start it.** Read `.steel-thread/framework/development.md`, set the rigor level, and say which criterion decided it.
 5. **Never search `docs/work/`.** It is scaffolding. Open an entry only by its path, and never treat a done one as current behavior.
 6. **Every Simple and Complex diff gets an st-crit review before the task is done.**

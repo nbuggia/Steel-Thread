@@ -48,8 +48,8 @@ Verify from source; include applicable entry points, state owners, IPC/event wir
 
 \[Each component or layer the change touches, the boundaries between them, state ownership, and one end-to-end success/failure flow. Add a diagram when &gt;3 components participate.\]
 
-| Area | Existing code it follows | Departure, and why |
-| ---- | ------------------------ | ------------------ |
+| Area | Existing code it follows | CONVENTIONS.md rules it meets | Departure, and why |
+| ---- | ------------------------ | ----------------------------- | ------------------ |
 
 | New state | Owner | Lifetime | Persist? | Why |
 | --------- | ----- | -------- | -------- | --- |

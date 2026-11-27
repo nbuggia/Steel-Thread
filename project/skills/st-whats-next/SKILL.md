@@ -5,7 +5,7 @@ description: Recommend the single most valuable next step and give the customer 
 
 One job: recommend the single most valuable next step, and give the customer everything they need to start it right away. One recommendation, not a menu. Offer at most one alternative, and only when it is a real contender.
 
-The customer's files live in `docs/`: PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, and DECISIONS.md. Steel Thread's working files live in `.steel-thread/`. Starter files are in `.steel-thread/framework/templates/`, and the format and rules for each are in `.steel-thread/framework/files/` — read a file's rules before writing it.
+The customer's files live in `docs/`: PRD.md, CONTEXT.md, TASKS.md, BACKLOG.md, DECISIONS.md, and `engineering/CONVENTIONS.md`. Steel Thread's working files live in `.steel-thread/`. Starter files are in `.steel-thread/framework/templates/`, and the format and rules for each are in `.steel-thread/framework/files/` — read a file's rules before writing it.
 
 ## Step 1 — Read the state
 

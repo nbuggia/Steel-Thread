@@ -15,7 +15,7 @@ date created: YYYY-MM-DD
 
 ## Approach
 
-\[The files and functions the change touches, and the existing code whose pattern it follows, by file. For any departure from that pattern, one line on why. If the pattern itself is wrong, say so and whether this change fixes it. If it takes two slices, name them in one line each.\]
+\[The files and functions the change touches, the existing code whose pattern it follows, by file, and the CONVENTIONS.md rules it must meet. For any departure from that pattern, one line on why. If that code breaks a rule, say so and whether this change fixes it. Name any new pattern, already agreed with the customer. If it takes two slices, name them in one line each.\]
 
 ## Test Points
 

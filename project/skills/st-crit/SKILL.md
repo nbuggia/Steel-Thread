@@ -11,12 +11,12 @@ Used where `.steel-thread/framework/development.md` calls for it — a spec's re
 
 ## Step 1 — Identify the expert
 
-Read the objective, CONTEXT.md, and `docs/engineering/ARCHITECTURE.md` to understand the product, its users, and its stack. Determine who the most critical expert would be:
+Read the objective, CONTEXT.md, and `docs/engineering/ARCHITECTURE.md` to understand the product, its users, and its stack. For a tech design or code, also read the sections of `docs/engineering/CONVENTIONS.md` for the areas it touches. Determine who the most critical expert would be:
 
 - Spec → a product manager who has shipped this kind of feature, and asks whether the rules say what users need, clearly enough to build and test
 - Tech design → a principal engineer on this stack, who keeps it simple, checks it would actually work, and pushes back on scope the spec does not need
 - Bug diagnosis → a debugging expert, who asks "how do you know that's the cause?" and wants the evidence
-- Code → a senior reviewer for this stack, who reads the whole diff against its base, with its spec and design, for correctness, tests that prove behavior, and whether it follows the patterns the surrounding code uses
+- Code → a senior reviewer for this stack, who reads the whole diff against its base, with its spec and design, for correctness, tests that prove behavior, and whether it follows the project's conventions and the patterns the surrounding code uses
 
 ## Step 2 — Strongest case
 
@@ -30,7 +30,7 @@ Find where the work fails the standard in `reviews.md`: a spec rule or limit, a 
 
 - Does it do what each spec rule says, including its limits and edge cases?
 - Does it break a promise other code, systems, or users' files rely on?
-- Does it follow the patterns the surrounding code uses, the boundaries in ARCHITECTURE.md, and Active decisions? A departure needs a stated reason.
+- Does it follow the rules in CONVENTIONS.md, the patterns the surrounding code uses, and Active decisions? A departure needs a stated reason. A new pattern the customer hasn't agreed is a finding, and so is code copied from a place that breaks a rule.
 - Where does it crash, lose data, or give a wrong answer, and what steps get it there?
 - Do the tests prove the behavior, or would they pass if it were broken?
 - For a bug diagnosis: does the cause explain every symptom?
