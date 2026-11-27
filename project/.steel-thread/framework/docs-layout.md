@@ -99,14 +99,14 @@ Each lasting document answers one question, and each fact lives in exactly one o
 | --- | --- | --- | --- |
 | **Answers** | What is there? | How do I make a change here, and why that way? | Why is it this way, and what was rejected? |
 | **Voice** | Describes: "The Rust core owns all file access." | Instructs, with the reason: "Never read files from UI code; add a command. The core checks every path." | Explains: "We chose X over Y because…" |
-| **Holds** | The stack and key dependencies, components, boundaries, where state lives, data flow, persistence, and which component implements each contract | The patterns every change follows, by area: each rule, why it exists, where it applies, and the code that follows it, by name; with a changelog | Choices future work must follow that are expensive to undo or likely to be argued again, with what was rejected |
+| **Holds** | The stack and key dependencies, components, boundaries, where state lives, data flow, persistence, and which component implements each contract | The patterns every change follows, by area: each rule, why it exists, where it applies, and a short example written for the rule; with a changelog | Choices future work must follow that are expensive to undo or likely to be argued again, with what was rejected |
 | **Belongs here if** | You would draw it on a diagram | A reviewer would flag a violation in a diff | Someone will propose the opposite, and the answer is "we considered that" |
 | **Changes by** | Editing in place; it always describes now | Agreeing with the customer first, then editing in place, with a changelog line | Appending; an old entry is superseded, never edited |
 
 DECISIONS.md never states the current rule; the other two do, and cite the decision for the full reason. One fact can touch all three without repeating itself:
 
 - **ARCHITECTURE.md:** "Tauri 2 app: a Rust core and a WebView UI. All file access is in the core."
-- **CONVENTIONS.md:** "UI code never touches the filesystem; add a command, as `readNote` in `src/commands.ts` does (D-003)."
+- **CONVENTIONS.md:** "UI code never touches the filesystem; add a command in `commands.ts` (D-003)."
 - **DECISIONS.md:** "D-003 · Tauri over Electron. Why: bundle size and memory. Rejected: Electron, which ships a second runtime."
 
 CONVENTIONS.md is the customer's: a new pattern, a rule change, or an exception is agreed with them before code uses it. `.steel-thread/framework/files/conventions.md` has its format and rules.

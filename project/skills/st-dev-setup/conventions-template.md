@@ -16,6 +16,15 @@
 
 \[Where it applies: every component that handles Enter, including inline rename inputs.\]
 
-\[Code that follows it, by file and function: `src/components/FilterList.tsx` `handleKeyDown`.\]
+\[A short example written for the rule, when it's about the shape of code: only the lines the rule is about, with generic names. Never copied from the project.\]
+
+```typescript
+if (e.key === "Enter") {
+  if (e.nativeEvent.isComposing) return; // Enter confirms a character during IME composition
+  submit();
+}
+```
+
+\[Optionally, a file that follows it: "for example, `FilterList.tsx`".\]
 
 \[A narrow exception, if any: what it covers exactly, and why it's needed.\]
