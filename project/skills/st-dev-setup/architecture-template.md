@@ -1,6 +1,6 @@
 # Architecture
 
-\[What is there: the shape of the system as it is now. Describe, don't instruct: rules for making changes go in CONVENTIONS.md, and the reasons behind choices go in DECISIONS.md, cited here as D-NNN. Boundaries belong here, stated as facts: "Only the Rust core touches the filesystem (D-003)." Leave out any section with nothing in it.\]
+\[What is there: the shape of the system as it is now. Describe, don't instruct: rules for making changes go in CONVENTIONS.md, and the reasons behind choices go in DECISIONS.md, cited here as D-NNN. Boundaries belong here, stated as facts: "Only the Rust core touches the filesystem (D-003)." Describe the code's shape without copying it: what a type or module is for, and the file that defines it, never its fields, signatures, or a file tree. Leave out any section with nothing in it.\]
 
 ## Stack
 
@@ -20,7 +20,7 @@
 
 ## State and Persistence
 
-\[Who owns each piece of state, how long it lives, and where and how it is stored — including schema versions and how migrations run.\]
+\[Who owns each piece of state, how long it lives, where and how it is stored, and the file that defines its shape, without listing its fields. Include schema versions and how migrations run.\]
 
 ## External Interfaces
 

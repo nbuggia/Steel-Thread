@@ -95,6 +95,8 @@ Rules:
 
 Each lasting document answers one question, and each fact lives in exactly one of them; the others link to it.
 
+**Describe the code's shape; don't copy it.** Say what a type, module, or folder is for and what it groups, and name the file that defines it: "Each open document's state lives in `DocumentState` (`src/store/documents.ts`): its location, content, and save status." Field lists, signatures, and file trees go stale with every edit, and the next change trusts the stale copy. A contract in CONTRACTS.md is the exception: there the exact shape is the promise.
+
 |  | ARCHITECTURE.md | CONVENTIONS.md | DECISIONS.md |
 | --- | --- | --- | --- |
 | **Answers** | What is there? | How do I make a change here, and why that way? | Why is it this way, and what was rejected? |
