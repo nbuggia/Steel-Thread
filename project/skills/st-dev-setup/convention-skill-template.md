@@ -1,13 +1,13 @@
 ---
-name: [area]-guidelines for area guidelines, or [verb]-[thing] for a recipe; never starting with st-
-description: [What it covers and when to load it, in the words a task would use. Guidelines: "Rules for UI code in src/ui/. Load before any UI change." Recipe: "Add a feature flag. Use when gating a change behind a flag."]
+name: [area]-guidelines for an area's rules, or [verb]-[thing] for the steps of a recurring change; never starting with st-
+description: [What it covers and when to load it, in the words a task would use. Guidelines: "Rules for UI code in src/ui/. Load before any UI change." Steps: "Add a feature flag. Use when gating a change behind a flag."]
 ---
 
 # \[Name\]
 
 \[One line: what this covers and what it doesn't. Name the convention skill for each neighboring area.\]
 
-\[A convention skill is one of two kinds. **Area guidelines** are the rules for one area of the code: keep Rules and Red Flags. A **recipe** is the steps for one recurring kind of change: keep Steps and Check. Delete the other two sections. Put this project's paths in examples, not in the rules themselves, so the skill can be copied to another project on the same stack.\]
+\[A convention skill holds one of two things. **The rules for one area** of the code: keep Rules and Red Flags. **The steps for one recurring kind of change:** keep Steps and Check. Delete the other two sections. Put this project's paths in examples, not in the rules themselves, so the skill can be copied to another project on the same stack.\]
 
 ## Rules
 
